@@ -1,0 +1,9 @@
+#
+# Example command map, using the MailcapCommandMap.
+#
+# for our viewers
+#
+message/*;;		x-java-view=MessageViewer
+text/plain;;		x-java-view=TextViewer
+multipart/*;;		x-java-view=MultipartViewer
+

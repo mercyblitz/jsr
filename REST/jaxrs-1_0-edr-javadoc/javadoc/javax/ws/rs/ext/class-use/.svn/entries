@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="75"
+   name=""
+   committed-date="2007-08-30T18:07:41.977251Z"
+   url="https://jsr311.dev.java.net/svn/jsr311/trunk/www/javadoc/javax/ws/rs/ext/class-use"
+   last-author="mhadley"
+   kind="dir"
+   repos="https://jsr311.dev.java.net/svn/jsr311"
+   revision="78"/>
+<entry
+   committed-rev="85"
+   name="Contract.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="00207dfaf1836d5a07e1e355b097fc22"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="ProviderFactory.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="cfa8b08f187792929d1916920b718bbb"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="HeaderProvider.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="580f3abd1ea2b51877f0c227003c5a28"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="EntityProvider.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="b080251cd0272e6c46a048f3b7c6d668"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="Provider.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="74c9a605d6b318d05a0538faff416433"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+</wc-entries>

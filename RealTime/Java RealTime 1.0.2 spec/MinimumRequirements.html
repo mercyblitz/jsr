@@ -1,0 +1,113 @@
+<html>
+
+	<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+
+	<body>
+		<h1>Requirements and Conventions</h1>
+		<p>The base requirements of this specification are:</p>
+		<ol>
+			<li>Except as specifically required by this specification, any implementation shall fully conform to a Java platform configuration.
+			<li>Except as noted in this chapter, any implementation of this specification shall implement all classes and methods in this specification. In particular, every implementation must include a conformant implementation of the <code>PriorityScheduler</code> class.
+			<li>The <code>javax.realtime</code> package shall contain no public or protected methods not included in this specification.
+			<li>The JVM shall not be implemented in a way that permits unbounded priority inversion in any scheduling interaction it implements.
+			
+			<li>Subject to the usual assumptions, the methods in<code> javax.realtime</code> can safely be used concurrently by multiple threads unless it is otherwise documented.
+			<li>No specific instance of <code>PhysicalMemoryTypeFilter</code> is required, but every implementation must support at least one such instance with the characteristic that it supports access to the range of physical memory that can be made accessible to the implementation.
+		
+			<li>Static final values, as found in <code>AperiodicParameters</code>, <code>PhysicalMemoryManager</code>, <code>SporadicParameters</code>, <code>RealtimeSystem</code>, and <code>PriorityScheduler</code>, must be handled by the implementation such that their values cannot be resolved at compile time.
+		</ol>
+		<p>Many aspects of this specification set a minimum requirement, but permit the implementation latitude in its implementation. For instance, the required priority scheduler requires at least 28 consecutively numbered real-time priorities. It does not, however, specify the numeric value of the maximum and minimum priorities. Implementations are encouraged to offer as many real-time priority levels as they can support.</p>
+		<p>Except where otherwise specified, when this specification requires object creation the object is created in the current allocation context.</p>
+		<h2>Optional Facilities</h2>
+		<p>There are no bounds on extensions based on this specification, except that only extensions that conform with future versions of this specification may be implemented in the<code> javax.realtime</code> package.</p>
+		<p>Several optional extensions are included in this specification. An application cannot depend on these facilities in every implementation, but if an optional facility is implemented, the application may rely on it to behave as specified here. Those extensions are:</p>
+		<table width="80%" border="1">
+			<tr>
+				<td width="38%">Cost enforcement</td>
+				<td width="62%">Allows the application to control the processor utilization of a schedulable object.</td>
+			</tr>
+			<tr>
+				<td width="38%">Processing Group enforcement</td>
+				<td width="62%">Allows the application to control the processor utilization of a group of schedulable objects</td>
+			</tr>
+			<tr>
+				<td width="38%">Processing Group deadline less than period</td>
+				<td width="62%">Allows the application to specify a processing group deadline less than the processing group period</td>
+			</tr>
+			<tr>
+				<td>Priority Ceiling Emulation Protocol</td>
+				<td>An alternative to priority inheritance for priority inversion avoidance</td>
+			</tr>
+			<tr>
+				<td>Atomic access to raw memory</td>
+				<td>Most atomic access is optional. The implementation may provide the raw memory access characteristics in system properties of the form <code>javax.realtime.atomicaccess_&lt;xxx&gt;</code>.</td>
+			</tr>
+			<tr>
+				<td>Allocation-rate enforcement on heap allocation</td>
+				<td>Allows the application to limit the rate at which a schedulable object  creates objects in the heap. </td>
+			</tr>
+		</table>
+		<p>The <code>ProcessingGroupParameters</code> class is only functional on systems that support the processing group enforcement option. Cost enforcement, and cost overruns handlers are only functional on systems that support the cost enforcement option.  If processing group enforcement is supported, <code>ProcessingGroupParameters</code> must function as specified. If cost enforcement is supported,  cost enforcement, and cost overrun handlers must function as specified.</p>
+		<p>If the processing group deadline less than period is not supported, values passed to the constructor for <code>ProcessingGroupParameters</code> and its <code>setDeadline</code> method are constrained to be equal to the period.  If the option is supported, processing group deadlines less than the period must be supported and function as specified.</p>
+		<p>If priority ceiling emulation is supported, <code>PriorityCeilingEmulation</code> must be implemented as specified. If priority ceiling emulation is not supported, <code>PriorityCeilingEmulation</code> must be present, but the implementation may not permit its use as a monitor control policy.</p>
+		<p>If heap allocation rate enforcement is supported, it must be implemented as specified.  If heap allocation rate enforcement is not supported, the allocation rate attribute of <code>MemoryParameters</code> must be checked for validity but otherwise ignored by the implementation.</p>
+		<p>The following semantics are optional for an RTSJ implementation designed and licensed exclusively as a development tool:</p>
+		<ul>
+			<li>The priority scheduler need not support fixed-priority preemptive scheduling or priority inheritance.  This does not excuse an implementation from fully supporting the relevant APIs.  It only reduces the required behavior of the underlying scheduler to the level of the scheduler in the Java specification extended to at least 28 priorities.
+			<li>No semantics constraining timing beyond the requirements of the Java specifications need be supported. Specifically, garbage collection may delay any thread without bound and any delay in delivering asynchronously interrupted exceptions is permissible including never delivering the exception. Note, however, that if any AIE other than the generic AIE is delivered, it must meet the AIE semantics, and all heap-memory-related semantics other than preemption remain fully in effect. Further, relaxed timing does not imply relaxed sequencing. For instance, semantics for scoped memory must be fully implemented.
+			<li>The RTSJ semantics that alter standard Java method behavior&#151;such as the modified semantics for <code>Thread.setPriority</code> and <code>Thread.interrupt</code>&#151;are not required for a development tool, but such deviations from the RTSJ must be documented, and the implementation must be able to generate a run-time warning each time one of these methods deviates from standard RTSJ behavior.<li>These relaxed requirements set a floor for RTSJ development system tool implementations.  A development tool may choose to implement semantics that are not required.
+		</ul>
+		<h2>Conditionally-Required Facilities</h2>
+		<p>An implementation must support conditionally-required facilities if the underlying hardware and software permits. This specification includes three conditionally-required facilities:</p>
+		<table width="80%" border="1">
+			<tr>
+				<td><code>POSIXSignalHandler</code></td>
+				<td>This class shall be implemented on every platform where POSIX signals are supported</td>
+			</tr>
+			<tr>
+				<td><code>RawMemoryFloatAccess</code></td>
+				<td>This shall be implemented on every platform for which the base JVM includes support for the float and double types.</td>
+			</tr>
+			<tr>
+				<td>Mapping memory</td>
+				<td>If the system supports address translation, the implementation shall support the memory mapping features of the raw memory access classes.</td>
+			</tr>
+		</table>
+		<p>If POSIX signals are not supported, the <code>POSIXSignalHandler</code> class must not be present.  If POSIX signals are supported, <code>POSIXSignalHandler</code> must be implemented as specified.</p>
+		<p>If floating point is not supported by the platform, <code>RawMemoryFloatAccess</code> must not be present.  If floating point is supported, then <code>RawMemoryFloatAccess</code> must  be implemented as specified.</p>
+		<h2>Required Documentation</h2>
+		<p>Each implementation of the RTSJ is required to provide documentation for several behaviors:</p>
+		<ol>
+			<li>If the feasibility testing algorithm is not the default, document the feasibility testing algorithm.
+			<li>If schedulers other than the base priority scheduler are available to applications, document the behavior of the scheduler and its interaction with each other scheduler as detailed in the Scheduling chapter. Document the list of classes that constitute schedulable objects for the scheduler unless that list is the same as the list of schedulable objects for the base scheduler. If there are restrictions on use of the scheduler from a non-heap context, document those restrictions.<li>A schedulable object that is preempted by a higher-priority schedulable object is placed in the queue for its active priority, at a position determined by the implementation. If the preempted schedulable object is not placed at the front of the appropriate queue the implementation must document the algorithm used for such placement. Placement at the front of the queue may be required in a future version of this specification.
+			<li><a name="Anchor-If-3800" id="Anchor-If-3800"></a>If the implementation supports cost enforcement, then the implementation is required to document the granularity at which the current CPU consumption is updated.<li>The memory mapping implemented by any physical memory type filter must be documented unless it is a simple sequential mapping of contiguous bytes.
+			<li>The implementation must fully document the behavior of any subclasses of <code>GarbageCollector</code>.
+			<li>An implementation that provides any <code>MonitorControl</code> subclasses not detailed in this specification must document their effects, particularly with respect to priority inversion control and which (if any) schedulers fail to support the new policy.
+			<li>If on losing &quot;boosted&quot; priority due to a priority inversion avoidance algorithm, the schedulable object is not placed at the front of its new queue, the implementation must document the queuing behavior.
+			<li>For any available scheduler other than the base scheduler an implementation must document how, if at all, the semantics of synchronization differ from the rules defined for the default <code>PriorityInheritance</code> monitor control policy. It must supply documentation for the behavior of the new scheduler with priority inheritance (and, if it is supported, priority ceiling emulation protocol) equivalent to the semantics for the base priority scheduler found in the Synchronization chapter. If there are restrictions on use of the scheduler from a no-heap context, the documentation must detail the effect of these restrictions for each RTSJ API.<li>The worst-case response interval between firing an <code>AsyncEvent</code> because of a bound happening to releasing an associated <code>AsyncEventHandler</code> (assuming no higher-priority schedulable objects are runnable) must be documented for some reference architecture.
+			<li>The interval between firing an <code>AsynchronouslyInterruptedException</code> at an ATC-enabled thread and first delivery of that exception (assuming no higher-priority schedulable objects are runnable) must be documented for some reference architecture.
+		
+			<li>If cost enforcement is supported, and the implementation assigns the cost of running finalizers for objects in scoped memory to any  schedulable object other than the one that caused the scope's reference count to drop to zero by leaving the scope, the rules for assigning the cost shall be documented.
+		
+			
+			<li>If cost enforcement is supported, and enforcement (blocked-by-cost-overrun) can be delayed beyond the <a href="#Anchor-If-3800">enforcement time granularity</a>, the maximum such delay shall be documented.
+			<li>If the implementation of <code>RealtimeSecurity</code> is more restrictive than the required implementation, or has run-time configuration options, those features shall be documented.
+		
+			
+			<li>For each supported clock, the documentation must specify whether the resolution is settable, and if it is settable the documentation must indicate the supported values.
+			
+			<li>If an implementation includes any clocks other than the required real-time clock, their documentation must indicate in what contexts those clocks can be used.  If they cannot be used in no-heap context, the documentation must detail the consequences of passing the clock, or a time that uses the clock to a no-heap schedulable object.
+		</ol>
+		<h2>Conventions</h2>
+		Throughout the RTSJ, when we use the word <i>code</i>, we mean code written in the Java programming language. When we mention the Java language in the RTSJ, that also refers to the Java programming language. The use of the term <i>heap</i> in the RTSJ will refer to the heap used by the runtime of the Java language.
+		<h2>Definitions</h2>
+		<p>A <i>thread</i> is an instance of the <tt>java.lang.Thread </tt>class.</p>
+		<p>A <i>real-time thread</i> is an instance of the <tt>javax.realtime.RealtimeThread</tt> class.</p>
+		<p>A <i>Java thread</i> is a thread that is not a real-time thread.</p>
+		<p>A <i>no-heap real-time thread</i> is an instance of the <tt>javax.realtime.NoHeapRealtimeThread</tt> class.</p>
+		<p>An <i>asynchronous event handler</i> is an instance of the <tt>javax.realtime.AsyncEventHandler</tt> class.</p>
+		<p>The term <code>Schedulable</code> object is distinct from the term<i> schedulable object</i> (SO). Every object that implements the <code>Schedulable</code> interface can be termed a <code>Schedulable</code> object, but only objects that are recognized as dispatchable entities by the base scheduler are <i>schedulable objects</i> with respect to that scheduler. The base scheduler's set of schedulable objects comprises instances of <code>RealtimeThread </code>and <code>AsyncEventHandler</code>. Other schedulers may support a different set of schedulable objects, but this specification only defines the behavior of the base scheduler so the term schedulable object should be understood as &quot;schedulable by the base scheduler.&quot;</p>
+		<p></p>
+	</body>
+
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="75"
+   name=""
+   committed-date="2007-08-30T18:07:41.977251Z"
+   url="https://jsr311.dev.java.net/svn/jsr311/trunk/www/javadoc/javax"
+   last-author="mhadley"
+   kind="dir"
+   repos="https://jsr311.dev.java.net/svn/jsr311"
+   revision="78"/>
+<entry
+   name="ws"
+   kind="dir"/>
+</wc-entries>

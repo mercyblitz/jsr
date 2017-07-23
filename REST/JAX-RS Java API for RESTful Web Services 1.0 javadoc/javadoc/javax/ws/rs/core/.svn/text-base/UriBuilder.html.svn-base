@@ -1,0 +1,1040 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<TITLE>
+UriBuilder (JSR 311 API Draft)
+</TITLE>
+
+<META NAME="keywords" CONTENT="javax.ws.rs.core.UriBuilder class">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="UriBuilder (JSR 311 API Draft)";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UriBuilder.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/UriBuilder.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UriBuilder.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+javax.ws.rs.core</FONT>
+<BR>
+Class UriBuilder</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>javax.ws.rs.core.UriBuilder</B>
+</PRE>
+<HR>
+<DL>
+<DT><PRE><FONT SIZE="-1"><A HREF="../../../../javax/ws/rs/ext/Contract.html" title="annotation in javax.ws.rs.ext">@Contract</A>
+</FONT>public abstract class <B>UriBuilder</B><DT>extends java.lang.Object</DL>
+</PRE>
+
+<P>
+URI template aware utility class for building URIs from their components. See
+ <A HREF="../../../../javax/ws/rs/UriTemplate.html#value()"><CODE>UriTemplate.value()</CODE></A> for an explanation of URI templates.
+
+ <p>Many methods support automatic encoding of illegal characters, see
+ <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method. Encoding and validation of URI
+ components follow the rules of the 
+ <a href="http://www.w3.org/TR/html4/interact/forms.html#h-17.13.4.1">application/x-www-form-urlencoded</a>
+ media type for query parameters and
+ <a href="http://ietf.org/rfc/rfc3986.txt">RFC 3986</a> for all other
+ components.</p>
+
+ <p>URI templates are allowed in most components of a URI but their value is
+ restricted to a particular component. E.g. 
+ <blockquote><code>UriBuilder.fromPath("{arg1}").build("foo#bar");</code></blockquote>
+ would result in encoding of the '#' such that the resulting URI is 
+ "foo%23bar". To create a URI "foo#bar" use
+ <blockquote><code>UriBuilder.fromPath("{arg1}").fragment("{arg2}").build("foo", "bar")</code></blockquote>
+ instead.
+<P>
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><CODE>URI</CODE>, 
+<A HREF="../../../../javax/ws/rs/UriTemplate.html" title="annotation in javax.ws.rs"><CODE>UriTemplate</CODE></A></DL>
+<HR>
+
+<P>
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#UriBuilder()">UriBuilder</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;java.net.URI</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#build()">build</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build a URI, any URI template parameters will be replaced by the empty
+ string.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;java.net.URI</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#build(java.util.Map)">build</A></B>(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;values)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build a URI, any URI template parameters will be replaced by the value in
+ the supplied map.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;java.net.URI</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#build(java.lang.String...)">build</A></B>(java.lang.String...&nbsp;values)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build a URI, using the supplied values in order to replace any URI
+ template parameters.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#clone()">clone</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a copy of the UriBuilder preserving its state.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)">encode</A></B>(boolean&nbsp;enable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controls whether the UriBuilder will automatically encode URI components
+ added by subsequent operations or not.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#fragment(java.lang.String)">fragment</A></B>(java.lang.String&nbsp;fragment)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI fragment using an unencoded value.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#fromPath(java.lang.String)">fromPath</A></B>(java.lang.String&nbsp;path)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new instance initialized from an unencoded URI path,
+ equivalent to <code>fromPath(path, true)</code>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#fromPath(java.lang.String, boolean)">fromPath</A></B>(java.lang.String&nbsp;path,
+         boolean&nbsp;encode)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new instance initialized from a URI path.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#fromResource(java.lang.Class)">fromResource</A></B>(java.lang.Class&lt;?&gt;&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new instance initialized from a root resource class with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#fromUri(java.lang.String)">fromUri</A></B>(java.lang.String&nbsp;uri)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new instance initialized from an existing URI with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#fromUri(java.net.URI)">fromUri</A></B>(java.net.URI&nbsp;uri)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new instance initialized from an existing URI with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#host(java.lang.String)">host</A></B>(java.lang.String&nbsp;host)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI host.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#matrixParam(java.lang.String, java.lang.String)">matrixParam</A></B>(java.lang.String&nbsp;name,
+            java.lang.String&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Append a matrix parameter to the existing set of matrix parameters of 
+ the final segment of the current URI path.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected static&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#newInstance()">newInstance</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new instance of UriBuilder with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#path(java.lang.Class)">path</A></B>(java.lang.Class&nbsp;resource)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Append path segments from a UriTemplate-annotated class to the
+ existing list of segments.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#path(java.lang.Class, java.lang.String)">path</A></B>(java.lang.Class&nbsp;resource,
+     java.lang.String&nbsp;method)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Append path segments from a UriTemplate-annotated method to the
+ existing list of segments.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#path(java.lang.reflect.Method...)">path</A></B>(java.lang.reflect.Method...&nbsp;methods)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Append path segments from a list of UriTemplate-annotated methods to the
+ existing list of segments.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#path(java.lang.String...)">path</A></B>(java.lang.String...&nbsp;segments)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Append path segments to the existing list of segments.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#port(int)">port</A></B>(int&nbsp;port)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI port.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#queryParam(java.lang.String, java.lang.String)">queryParam</A></B>(java.lang.String&nbsp;name,
+           java.lang.String&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Append a query parameter to the existing set of query parameters.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#replaceMatrixParams(java.lang.String)">replaceMatrixParams</A></B>(java.lang.String&nbsp;matrix)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the matrix parameters of the final segment of the current URI path.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#replacePath(java.lang.String)">replacePath</A></B>(java.lang.String&nbsp;path)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI path.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#replaceQueryParams(java.lang.String)">replaceQueryParams</A></B>(java.lang.String&nbsp;query)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI query string.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#scheme(java.lang.String)">scheme</A></B>(java.lang.String&nbsp;scheme)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI scheme.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#schemeSpecificPart(java.lang.String)">schemeSpecificPart</A></B>(java.lang.String&nbsp;ssp)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI scheme-specific-part (see <CODE>URI</CODE>).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#uri(java.net.URI)">uri</A></B>(java.net.URI&nbsp;uri)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copies the non-null components of the supplied URI to the UriBuilder replacing
+ any existing values for those components.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/UriBuilder.html#userInfo(java.lang.String)">userInfo</A></B>(java.lang.String&nbsp;ui)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the URI user-info.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="UriBuilder()"><!-- --></A><H3>
+UriBuilder</H3>
+<PRE>
+public <B>UriBuilder</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="newInstance()"><!-- --></A><H3>
+newInstance</H3>
+<PRE>
+protected static <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>newInstance</B>()</PRE>
+<DL>
+<DD>Creates a new instance of UriBuilder with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new instance of UriBuilder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromUri(java.net.URI)"><!-- --></A><H3>
+fromUri</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>fromUri</B>(java.net.URI&nbsp;uri)</PRE>
+<DL>
+<DD>Create a new instance initialized from an existing URI with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>uri</CODE> - a URI that will be used to initialize the UriBuilder.
+<DT><B>Returns:</B><DD>a new UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if uri is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromUri(java.lang.String)"><!-- --></A><H3>
+fromUri</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>fromUri</B>(java.lang.String&nbsp;uri)</PRE>
+<DL>
+<DD>Create a new instance initialized from an existing URI with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>uri</CODE> - a URI that will be used to initialize the UriBuilder, may not
+ contain URI parameters.
+<DT><B>Returns:</B><DD>a new UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if uri is not a valid URI or is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromPath(java.lang.String)"><!-- --></A><H3>
+fromPath</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>fromPath</B>(java.lang.String&nbsp;path)</PRE>
+<DL>
+<DD>Create a new instance initialized from an unencoded URI path,
+ equivalent to <code>fromPath(path, true)</code>.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>path</CODE> - a URI path that will be used to initialize the UriBuilder, may contain URI template parameters.
+<DT><B>Returns:</B><DD>a new UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if path is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromPath(java.lang.String, boolean)"><!-- --></A><H3>
+fromPath</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>fromPath</B>(java.lang.String&nbsp;path,
+                                  boolean&nbsp;encode)
+                           throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Create a new instance initialized from a URI path.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>path</CODE> - a URI path that will be used to initialize the UriBuilder, may contain URI template parameters.<DD><CODE>encode</CODE> - controls whether the supplied value is automatically encoded
+ (true) or not (false). If false, the value must be valid with all illegal
+ characters already escaped. The supplied value will remain in force for subsequent
+ operations and may be altered by calling the encode method.
+<DT><B>Returns:</B><DD>a new UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if encode is false and path contains illegal characters
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if path is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fromResource(java.lang.Class)"><!-- --></A><H3>
+fromResource</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>fromResource</B>(java.lang.Class&lt;?&gt;&nbsp;resource)
+                               throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Create a new instance initialized from a root resource class with automatic encoding 
+ (see <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#encode(boolean)"><CODE>encode(boolean)</CODE></A> method) turned on.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>resource</CODE> - a root resource whose @UriTemplate value will be used 
+ to initialize the UriBuilder. The value of the encode property of the UriTemplate 
+ annotation will be used when processing the value of the @UriTemplate but it
+ will not be used to modify the state of automaic encoding for the builder.
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource is not annotated with UriTemplate
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource.encode is false and resource.value
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource is null
+ contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clone()"><!-- --></A><H3>
+clone</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>clone</B>()</PRE>
+<DL>
+<DD>Create a copy of the UriBuilder preserving its state. This is a more
+ efficient means of creating a copy than constructing a new UriBuilder
+ from a URI returned by the <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#build()"><CODE>build()</CODE></A> method.
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE>clone</CODE> in class <CODE>java.lang.Object</CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a copy of the UriBuilder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="encode(boolean)"><!-- --></A><H3>
+encode</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>encode</B>(boolean&nbsp;enable)</PRE>
+<DL>
+<DD>Controls whether the UriBuilder will automatically encode URI components
+ added by subsequent operations or not.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>enable</CODE> - automatic encoding (true) or disable it (false). 
+ If false, subsequent components added must be valid with all illegal
+ characters already escaped.
+<DT><B>Returns:</B><DD>the updated UriBuilder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="uri(java.net.URI)"><!-- --></A><H3>
+uri</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>uri</B>(java.net.URI&nbsp;uri)</PRE>
+<DL>
+<DD>Copies the non-null components of the supplied URI to the UriBuilder replacing
+ any existing values for those components.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>uri</CODE> - the URI to copy components from
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if uri is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="scheme(java.lang.String)"><!-- --></A><H3>
+scheme</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>scheme</B>(java.lang.String&nbsp;scheme)</PRE>
+<DL>
+<DD>Set the URI scheme.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>scheme</CODE> - the URI scheme, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if scheme is invalid or is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="schemeSpecificPart(java.lang.String)"><!-- --></A><H3>
+schemeSpecificPart</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>schemeSpecificPart</B>(java.lang.String&nbsp;ssp)
+                                       throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI scheme-specific-part (see <CODE>URI</CODE>). This 
+ method will overwrite any existing
+ values for authority, user-info, host, port and path.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>ssp</CODE> - the URI scheme-specific-part, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if ssp cannot be parsed or is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="userInfo(java.lang.String)"><!-- --></A><H3>
+userInfo</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>userInfo</B>(java.lang.String&nbsp;ui)
+                             throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI user-info.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>ui</CODE> - the URI user-info, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ ui contains illegal characters
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if ui is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="host(java.lang.String)"><!-- --></A><H3>
+host</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>host</B>(java.lang.String&nbsp;host)
+                         throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI host.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>host</CODE> - the URI host, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if host is invalid or is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="port(int)"><!-- --></A><H3>
+port</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>port</B>(int&nbsp;port)
+                         throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI port.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>port</CODE> - the URI port, a value of -1 will unset an explicit port.
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if port is invalid</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="replacePath(java.lang.String)"><!-- --></A><H3>
+replacePath</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>replacePath</B>(java.lang.String&nbsp;path)
+                                throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI path. This method will overwrite 
+ any existing path segments and associated matrix parameters.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>path</CODE> - the URI path, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ path contains illegal characters
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if path is null</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="path(java.lang.String...)"><!-- --></A><H3>
+path</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>path</B>(java.lang.String...&nbsp;segments)
+                         throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Append path segments to the existing list of segments. When constructing
+ the final path, each segment will be separated by '/' if necessary. 
+ Existing '/' characters are preserved thus a single segment value can 
+ represent multiple URI path segments.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>segments</CODE> - the path segments, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if any element of segments is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ any element of segments contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="path(java.lang.Class)"><!-- --></A><H3>
+path</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>path</B>(java.lang.Class&nbsp;resource)
+                         throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Append path segments from a UriTemplate-annotated class to the
+ existing list of segments. When constructing
+ the final path, each segment will be separated by '/' if necessary.
+ The value of the encode property of the UriTemplate 
+ annotation will be used when processing the value of the @UriTemplate but it
+ will not be used to modify the state of automaic encoding for the builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>resource</CODE> - a resource whose @UriTemplate value will be 
+ used to obtain the path segment.
+<DT><B>Returns:</B><DD>a new UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource.encode is false and
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource is not annotated with UriTemplate
+ resource.value contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="path(java.lang.Class, java.lang.String)"><!-- --></A><H3>
+path</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>path</B>(java.lang.Class&nbsp;resource,
+                                java.lang.String&nbsp;method)
+                         throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Append path segments from a UriTemplate-annotated method to the
+ existing list of segments. When constructing
+ the final path, each segment will be separated by '/' if necessary.
+ This method is a convenience shortcut to <code>path(Method)</code>, it
+ can only be used in cases where there is a single method with the
+ specified name that is annotated with @UriTemplate.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>resource</CODE> - the resource containing the method<DD><CODE>method</CODE> - the name of the method whose @UriTemplate value will be 
+ used to obtain the path segment
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if resource or method is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if the specified method does not exist
+ or there is more than or less than one variant of the method annotated with 
+ UriTemplate</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="path(java.lang.reflect.Method...)"><!-- --></A><H3>
+path</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>path</B>(java.lang.reflect.Method...&nbsp;methods)
+                         throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Append path segments from a list of UriTemplate-annotated methods to the
+ existing list of segments. When constructing
+ the final path, each segment will be separated by '/' if necessary.
+ The value of the encode property of the UriTemplate 
+ annotation will be used when processing the value of the @UriTemplate but it
+ will not be used to modify the state of automaic encoding for the builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>methods</CODE> - a list of methods whose @UriTemplate values will be 
+ used to obtain the path segments
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if any element of methods is null or is
+ not annotated with a UriTemplate</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="replaceMatrixParams(java.lang.String)"><!-- --></A><H3>
+replaceMatrixParams</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>replaceMatrixParams</B>(java.lang.String&nbsp;matrix)
+                                        throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the matrix parameters of the final segment of the current URI path.
+ This method will overwrite any existing matrix parameters on the final
+ segment of the current URI path.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>matrix</CODE> - the matrix parameters, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if matrix cannot be parsed or is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ any matrix parameter name or value contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="matrixParam(java.lang.String, java.lang.String)"><!-- --></A><H3>
+matrixParam</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>matrixParam</B>(java.lang.String&nbsp;name,
+                                       java.lang.String&nbsp;value)
+                                throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Append a matrix parameter to the existing set of matrix parameters of 
+ the final segment of the current URI path.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the matrix parameter name, may contain URI template parameters<DD><CODE>value</CODE> - the matrix parameter value, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if name or value is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ name or value contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="replaceQueryParams(java.lang.String)"><!-- --></A><H3>
+replaceQueryParams</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>replaceQueryParams</B>(java.lang.String&nbsp;query)
+                                       throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI query string. This method will overwrite any existing query
+ parameters.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>query</CODE> - the URI query string, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if query cannot be parsed or is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ any query parameter name or value contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="queryParam(java.lang.String, java.lang.String)"><!-- --></A><H3>
+queryParam</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>queryParam</B>(java.lang.String&nbsp;name,
+                                      java.lang.String&nbsp;value)
+                               throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Append a query parameter to the existing set of query parameters.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the query parameter name, may contain URI template parameters<DD><CODE>value</CODE> - the query parameter value, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if name or value is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ name or value contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fragment(java.lang.String)"><!-- --></A><H3>
+fragment</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core">UriBuilder</A> <B>fragment</B>(java.lang.String&nbsp;fragment)
+                             throws java.lang.IllegalArgumentException</PRE>
+<DL>
+<DD>Set the URI fragment using an unencoded value.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>fragment</CODE> - the URI fragment, may contain URI template parameters
+<DT><B>Returns:</B><DD>the updated UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if fragment is null
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ fragment contains illegal characters</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="build()"><!-- --></A><H3>
+build</H3>
+<PRE>
+public abstract java.net.URI <B>build</B>()
+                            throws <A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></PRE>
+<DL>
+<DD>Build a URI, any URI template parameters will be replaced by the empty
+ string. The <code>build</code> method does not change the state of the
+ <code>UriBuilder</code> and it may be called multiple times on the same
+ builder instance.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the URI built from the UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></CODE> - if there are any URI template parameters
+<DD><CODE><A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></CODE> - if a URI cannot be constructed based on the
+ current state of the builder.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="build(java.util.Map)"><!-- --></A><H3>
+build</H3>
+<PRE>
+public abstract java.net.URI <B>build</B>(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;values)
+                            throws java.lang.IllegalArgumentException,
+                                   <A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></PRE>
+<DL>
+<DD>Build a URI, any URI template parameters will be replaced by the value in
+ the supplied map. The <code>build</code> method does not change the state of the
+ <code>UriBuilder</code> and it may be called multiple times on the same
+ builder instance.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>values</CODE> - a map of URI template parameter names and values
+<DT><B>Returns:</B><DD>the URI built from the UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ a supplied value contains illegal characters
+<DD><CODE><A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></CODE> - if there are any URI template parameters without
+ a supplied value
+<DD><CODE><A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></CODE> - if a URI cannot be constructed based on the
+ current state of the builder.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="build(java.lang.String...)"><!-- --></A><H3>
+build</H3>
+<PRE>
+public abstract java.net.URI <B>build</B>(java.lang.String...&nbsp;values)
+                            throws java.lang.IllegalArgumentException,
+                                   <A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></PRE>
+<DL>
+<DD>Build a URI, using the supplied values in order to replace any URI
+ template parameters. The <code>build</code> method does not change the state of the
+ <code>UriBuilder</code> and it may be called multiple times on the same
+ builder instance.
+ <p>All instances of the same template parameter
+ will be replaced by the same value that corresponds to the position of the
+ first instance of the template parameter. e.g. the template "{a}/{b}/{a}"
+ with values {"x", "y", "z"} will result in the the URI "x/y/x", <i>not</i>
+ "x/y/z".
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>values</CODE> - a list of URI template parameter values
+<DT><B>Returns:</B><DD>the URI built from the UriBuilder
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.IllegalArgumentException</CODE> - if automatic encoding is disabled and
+ a supplied value contains illegal characters
+<DD><CODE><A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></CODE> - if there are any URI template parameters without
+ a supplied value
+<DD><CODE><A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core">UriBuilderException</A></CODE> - if a URI cannot be constructed based on the
+ current state of the builder.</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UriBuilder.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilderException.html" title="class in javax.ws.rs.core"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/UriBuilder.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UriBuilder.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

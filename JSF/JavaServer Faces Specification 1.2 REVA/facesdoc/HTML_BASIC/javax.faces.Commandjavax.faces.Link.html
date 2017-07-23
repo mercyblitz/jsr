@@ -1,0 +1,481 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN""http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<title>
+<font size="-1">component-family:</font> javax.faces.Command <font size="-1">renderer-type:</font> javax.faces.Link
+</title>
+<link REL ="stylesheet" TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+</head>
+<script>
+function asd()
+{
+  parent.document.title=<font size="-1">component-family:</font> javax.faces.Command <font size="-1">renderer-type:</font> javax.faces.Link
+}
+</SCRIPT>
+<body BGCOLOR="white" onload="asd();">
+
+<H2><font size="-1">HTML_BASIC render-kit</font>
+<br />
+<font size="-1">component-family:</font> javax.faces.Command <font size="-1">renderer-type:</font> javax.faces.Link
+</H2>
+<HR />
+<P><p>Render an HTML "a" anchor element that acts like a
+      form submit button when clicked.</p>
+
+      <p>General Behaviour</p>
+
+      <p>Both the encode and decode behavior require the ability to get
+      the id/name for a hidden field whose value is set by the
+      JavaScript form submit.  This name must be constructed as
+      follows:</p>
+
+      <ul>
+
+      <li><p>Get the clientId for the form of which this component is a
+      child.</p></li>
+
+      <li><p>Append
+      <code>NamingContainer.SEPARATOR_CHAR</code>.</p></li>
+
+      <li><p>Append a constant string that is the same for all command
+      link components in the tree.</p></li>
+
+      </ul>
+
+      <p>In the following text, this String is called
+      hiddenFieldName.</p>
+
+      <p>Decode Behavior</p>
+
+      <ul>
+
+      <p>Obtain the "clientId" property of the component.  Obtain the
+      <code>Map</code> from the "requestParameterMap" property of the
+      <code>ExternalContext</code>.  Derive hiddenFieldName as above.
+      Get the entry in the <code>Map</code> under the key that is the
+      hiddenFieldName.  If the there is no entry, or the entry is the
+      empty String, or the entry is not equal to the value of the
+      "clientId" property, return immediately.  If there is an entry,
+      and its value is equal to the value of the "clientId" property,
+      create a new <code>javax.faces.event.ActionEvent</code> instance
+      around the component and call <code>queueActionEvent()</code> on
+      the component, passing the event.</p>
+
+      </ul>
+
+
+      <p>Encode Behavior</p>
+
+      <ul>
+
+      <p>If the value of the <code>disabled</code> attribute is
+      <code>true</code>, render a span element.  Render all the passthru
+      attributes and the <code>target</code> attribute as pass-through
+      attributes on the span, even though the <code>target</code>
+      attribute will have no effect on a span.  Render the current value
+      of the component as the content of the span.  Return.</p>
+
+      <p>If the <code>disabled</code> attribute is not present, or its
+      value is <code>false</code>, render an HTML <code>a</code>
+      element.  Render "#" as the value of the "href" attribute. Render
+      the current value of the component as the link text if it is
+      specified. Render JavaScript that is functionally equivalent to
+      the following as the value of the "onclick" attribute:</p>
+
+      <p><code>document.forms['CLIENT_ID']['hiddenFieldName'].value='CLIENT_ID';
+      document.forms['CLIENT_ID']['PARAM1_NAME'].value='PARAM1_VALUE';
+      document.forms['CLIENT_ID']['PARAM2_NAME'].value='PARAM2_VALUE';
+      return false;</code></p>
+
+      <p>document.forms['CLIENT_ID'].submit()" where hiddenFieldName is
+      as described above, CLIENT_ID is the clientId of the UICommand
+      component, PARAM*_NAME and PARAM*_VALUE are the names and values,
+      respectively, of any nested UIParameter children.  The name and
+      the value must be URLEncoded.  If an "onclick" attribute was 
+      specified by the user, render this JavaScript in a function,
+      and render the user's JavaScript in a function.  Render both functions
+      in a choice function as follows:</p>
+
+      <p><code>var a=function(){#USER_FUNCTION#};
+      var b=function(){#JSF_FUNCTION#};
+      return (a()==false) ? false : b();</code></p>
+      <p>where #USER_FUNCTION# is the user's JavaScript and
+      #JSF_FUNCTION# is the JavaScript rendered by JSF.  The choice
+      function should operate such that if the user's JavaScript returns
+      true, then the rendered JavaScript will also execute.</p>
+      <p>If the "styleClass" attribute is specified, render its value as
+      the value of the "class" attribute.  Render any non-UIParameter
+      output children as normal inside of the "a" element.  These will
+      appear as the link text.  Allow the form renderer to output a
+      single "input" element (for the entire page, regardless of how
+      many command link components are in the page) of "type" "hidden"
+      whose "name" is the value of hiddenFieldName, and which must not
+      have a "value" attribute.  Multiple occurrences of command link
+      components in the tree should not cause multiple hiddenFieldName
+      hidden fields.  Allow the form renderer to output an "input"
+      element of "type" "hidden" for each of the nested UIParameter
+      children, taking the name property (but not the value) from each
+      one in turn.  If the "disabled" attribute is specified, do not
+      render the HTML "a" anchor element or its "href" attribute.
+      Instead, render a "span" element.  If the "styleClass" attribute
+      is specified, render its value as the value of the "class"
+      attribute on the "span".  Render any pass-through attributes on
+      the "span".  The content of the span element comes from the value
+      of the component or its children as specified above.</p>
+
+      <p>If the user specified a <code>target</code> attribute, its
+      value must be set using javascript since the <code>onclick</code>
+      handler will prevent the target attribute from being generated.
+      This must be accomplished using JavaScript that is equivalent to
+      the following.</p>
+
+      <p><code>document.forms['CLIENT_ID'].target='TARGET';</p>
+
+      <p>Where TARGET is the value of the target attribute on the JSP
+      tag.</p>
+
+      </ul></P>
+<P>This renderer is responsible for rendering its children.</P><HR />
+<a NAME="attributes"><!-- --></a>
+
+<h3>Note:</h3>
+
+<p>Attributes with a <code>pass-through</code> value of
+<code>true</code> are not interpreted by the renderer and are passed
+straight through to the rendered markup, without checking for validity.  Attributes with a
+<code>pass-through</code> value of <code>false</code> are interpreted
+by the renderer, and may or may not be checked for validity by the renderer.</p>
+
+<table BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td COLSPAN="5"><font SIZE="+2">
+<b>Attributes</b></font></td>
+</tr>
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<th><b>attribute-name</b></th>
+<th><b>pass-through</b></th>
+<th><b>attribute-class</b></th>
+<th><b>description</b></th>
+<th><b>default-value</b></th>
+</tr>
+	    
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;accesskey
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Access key that, when pressed, transfers focus
+          to this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;charset
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The character encoding of the resource designated
+          by this hyperlink.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;coords
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The position and shape of the hot spot on the screen
+          (for use in client-side image maps).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;dir
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Direction indication for text that does not inherit directionality.
+          Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;disabled
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>boolean</code></td>
+<td>
+          Flag indicating that this element must never
+          receive focus or be included in a subsequent
+          submit.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;hreflang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The language code of the resource designated
+          by this hyperlink.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;lang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Code describing the language used in the generated markup
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onblur
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element loses focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onclick
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;ondblclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          double clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onfocus
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element receives focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeydown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeypress
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed and released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeyup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousedown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousemove
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved within this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseout
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved away from this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseover
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is       moved onto this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;rel
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The relationship from the current document
+          to the anchor specified by this hyperlink.
+          The value of this attribute is a space-separated
+          list of link types.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;rev
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          A reverse link from the anchor specified
+          by this hyperlink to the current document.
+          The value of this attribute is a space-separated
+          list of link types.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;shape
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The shape of the hot spot on the screen
+          (for use in client-side image maps).  Valid
+          values are:  default (entire region); rect
+          (rectangular region); circle (circular region);
+          and poly (polygonal region).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;style
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to be applied when this component is rendered.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;styleClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Space-separated list of CSS style class(es) to be applied when
+          this element is rendered.  This value must be passed through
+          as the "class" attribute on generated markup.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;tabindex
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Position of this element in the tabbing order
+          for the current document.  This value must be
+          an integer between 0 and 32767.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;target
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Name of a frame where the resource
+          retrieved via this hyperlink is to
+          be displayed.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;title
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Advisory title information about markup elements generated
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;type
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The content type of the resource designated
+          by this hyperlink.</td>
+<td>undefined<td>
+</tr>
+</table>
+<hr>
+Copyright (c) 2003-2004 Sun Microsystems, Inc. All Rights Reserved.
+</body>
+</html>

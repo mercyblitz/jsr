@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="75"
+   name=""
+   committed-date="2007-08-30T18:07:41.977251Z"
+   url="https://jsr311.dev.java.net/svn/jsr311/trunk/www/javadoc/javax/ws/rs/class-use"
+   last-author="mhadley"
+   kind="dir"
+   repos="https://jsr311.dev.java.net/svn/jsr311"
+   revision="78"/>
+<entry
+   committed-rev="85"
+   name="HttpMethod.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="08d6b65d4702cd47245a1fa69ced3d92"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="UriParam.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="8a8c6f5fbe109d769b9bf145e2e92a6c"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="WebApplicationException.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="28a06798b9ad23a886fffbb02eb694d6"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="ConsumeMime.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="81bdc22427e4733539b3b9e78e6a2d67"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="DefaultValue.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="cabd2769d7236b292a264869c026c465"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="Encoded.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="1fb3923ce05f76e97cda8a06ad02504d"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="MatrixParam.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="35df0c67171f0cd7f8b932601b28838e"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="QueryParam.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="3af3caf4b801655a501bd68ff87b0088"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="HeaderParam.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="698cc74a1a32edd79b1ac533427d90d2"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="ProduceMime.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="560d2107ec707bb583e6a037ae313733"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="UriTemplate.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="5fde7cb7c77f7e76381f786fe9b2811c"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+</wc-entries>

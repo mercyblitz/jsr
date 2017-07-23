@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Launching and Application Environment</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>5 Launching and Application Environment</h1>
+<hr>
+<p><br>
+  This section describes the steps a JNLP Client must take to download and launch 
+  an application, Applet, library, or extension installer/uninstaller, and the 
+  environments these applications will be run in. </p>
+<h2><a name="launch"></a>5.1 Launch Sequence</h2>
+<p>A JNLP Client performs the following steps to launch an application:</p>
+<ol>
+  <li>Retrieve a JNLP file. The JNLP file might, for example, be supplied as an 
+    argument, looked up in a cache managed by the JNLP Client, or downloaded from 
+    a URL. 
+    <p>The JNLP file can either be an application descriptor or an extension descriptor. 
+      For an application descriptor, it will describe how to launch an Application 
+      or Applet. For an extension descriptor, it will describe how to launch an 
+      installer/uninstaller for the extension. </p>
+  </li>
+  <li>Parse the JNLP file. 
+    <p>The JNLP Client must abort the launch if the JNLP file could not be parsed 
+      due to, e.g., syntax errors, missing fields, or fields with illegal values.</p>
+    <p>There must always be a title and vendor specified based on the current 
+      locale.</p>
+  </li>
+  <li>Determine the right JRE to use. This might require downloading and installing 
+    the appropriate JRE. (See section <a href="app-resources.html#selecting">4.6.2</a>.)</li>
+  <li>Download extension descriptors for all the extensions used in the JNLP file. 
+    This step continues recursively with the extensions specified in the downloaded 
+    extension descriptors. Section <a href="download.html">6</a> specifies how 
+    extension descriptors are downloaded and cached.</li>
+  <li>Run the installer for any required extension for which the installer has 
+    not yet been run. This is explained in section <a href="#trusted">5.6</a>. 
+  </li>
+  <li>Download all eager JAR files (<code>jar</code> and <code>nativelib</code> 
+    elements) specified in the JNLP file from Step 1 (i.e., defined by the <code>resources</code> 
+    sub-element of the <code>jnlp</code> element), and recursively defined by 
+    extension descriptors. Section <a href="app-resources.html">4</a> describes 
+    which resources are eager.</li>
+  <li>Verify the signing and security requirements. 
+    <p>This is explained in detail in section <a href="#application">5.3</a>.</p>
+  </li>
+  <li>Setup the JNLP Services. 
+    <p>This is explained in detail in section <a href="jnlp-api.html">7</a>.</p>
+  </li>
+  <li>Launch the application/Applet/installer/uninstaller.
+    <p>This is explained in detail in section <a href="#launching">5.2</a>.</p>
+  </li>
+</ol>
+<h3>5.1.1 Launch Offline</h3>
+<p>An application can be launched offline if the launch sequence described above 
+  can be completed without the need to download any resources, i.e., all JAR resources 
+  in Step 6 must already be downloaded and cached, all JNLP files must be cached 
+  locally, and the JRE must be available locally.</p>
+<p>The application itself might not support offline operation. See the description 
+  of the <code>offline-allowed</code> element in section <a href="jnlp-file.html#descriptor">3.5</a>.</p>
+<h2><a name="launching"></a>5.2 Launching Details</h2>
+<h3>5.2.1 Launching an Application</h3>
+<p>If the JNLP file contains the <code>application-desc</code> element, then an 
+  application must be launched.</p>
+<p>The main class for the application is by default determined by the main-class 
+  attribute of the <code>application-desc</code> element. If this is not specified, 
+  then the Main-Class manifest entry for the main JAR file is used. If neither 
+  is specified, then the launch must be aborted.</p>
+<p>The application is launched by invoking the static public void main(String[] 
+  argv) method of the main class. The argv argument is constructed from the <code>argument</code> 
+  elements of the application-descriptor element. </p>
+<h3>5.2.2 Launching an Applet</h3>
+<p>If the JNLP file contains the <code>applet-desc</code> element, then an applet 
+  must be launched.</p>
+<p>The main class for the Applet is by determined by the main-class attribute 
+  of the <code>applet-desc</code> elements.</p>
+<p>Launching an Applet requires setting up an Applet containter, instantiating 
+  the Applet, and invoking the init and start methods.</p>
+<h3>5.2.3 Launching an Extension Installer/Uninstaller</h3>
+<p>If the JNLP file contains the <code>installer-desc</code> element, then the 
+  JNLP file defines an extension installer/uninstaller. This section describes 
+  how the installer/uninstaller gets invoked. </p>
+<p>The main class for the extension installer/uninstaller is by default determined 
+  by the main-class attribute of the <code>installer-desc</code> element. If this 
+  is not specified, then the <code>Main-Class</code> manifest entry for the main 
+  JAR file is used. If neither is specified, then the the launch must be aborted.</p>
+<p>The extension installer must be executed before the application that depends 
+  on it is launched. Furthermore, the installer must only be run once, the 
+  first time the installer extension is downloaded. However, if the uninstaller 
+  is later executed, the JNLP Client must ensure that the extension is installed 
+  again before it is used the next time.</p>
+<p>For installation, the JNLP Client must invoke the public static void main(String[]) method 
+  in the specified class with the String array {&quot;install&quot;} as an argument. 
+</p>
+<p>For uninstallation, the JNLP Client must invoke the public static void main(String[]) method 
+  in the specified class with the String array {&quot;uninstall&quot;} as an argument. 
+</p>
+<p>An installer is launched through an extension descriptor just like an application 
+  is launched through an application descriptor. Thus, an extension installer 
+  is by default run in a restricted environment. The <code>all-permissions</code> 
+  element can be specified in the security section to request unrestricted access. 
+  An extension with an installer will typically need to be signed, so the installer 
+  can gain access to the local file system.</p>
+<h2><a name="application"></a>5.3 Application Environment</h2>
+<p>An application launched with a JNLP Client must be run in an environment according 
+  to the specification below. </p>
+<p>At the core of the environment is the Java 2 SE platform standard environment, 
+  i.e., the environment provided by the Java 2 SE JRE for all Java Technology-based 
+  applications. On top of this core environment, this specification defines the 
+  following additional requirements:</p>
+<ul>
+  <li>A preconfigured set of proxies for HTTP, so basic communication with HTTP 
+    through the java.net.URL class works correctly.</li>
+  <li>A restricted execution environment (aka. sandbox) for untrusted applications, 
+    and two execution environments for trusted applications. The trusted environments 
+    are the all-permissions and j2ee-application-client environments.</li>
+  <li>A basic set of services that are available through the javax.jnlp package.</li>
+  <li>The ability to download application resources (such as JAR files) lazily 
+    as the application executes. This download will typically be initiated based 
+    on a class resolution request in the JVM.</li>
+  <li>Validating signing of the JAR files.</li>
+</ul>
+<p>The execution environments are described in more detail in the following sections. 
+</p>
+<h2><a name="signed"></a>5.4 Signed Applications</h2>
+<p>The signing infrastructure for JNLP is built on top of the existing signing 
+  infrastructure for the Java 2 Platform. The Java 2 Platform supports signed 
+  JAR files. A JAR file can be signed and verified using, e.g., the standard jarsigner 
+  tool from the Java 2 SDK.</p>
+<p>An application launched by a JNLP Client is considered to be signed, if and 
+  only if:</p>
+<ul>
+  <li>All the JAR files are signed (both for <code>jar</code> and <code>nativelib</code> 
+    elements) and can be verified. A JAR file is signed if all the entries (excluding 
+    manifest entries, the signature iteself, and empty directories) are signed 
+    by a single signature.</li>
+  <li>If a signed version of the JNLP file exists, then it must be verified, and 
+    it must match the JNLP file used to launch the application. This is described 
+    in the following subsection.</li>
+  <li>The same certificate is used to sign all JAR files (<code>jar</code> and <code>nativelib</code> 
+    elements) that are part of a single JNLP file. This simplifies user management 
+    since only one certificate needs to be presented to the user during a launch 
+    per JNLP file (and hardly restricts the signing process in practice).</li>
+  <li>The certificate used for signing the JAR files and JNLP file (if signed) 
+    must be verified against a set of trusted root certificates.</li>
+</ul>
+<p>How the set of trusted root certificates are obtained depends on the particular 
+  JNLP Client implementation. Typically, a JNLP Client will be shipped with a 
+  set of trusted root certificates for all the major Certificate Authorities (CAs).</p>
+<p>The JNLP Client must check a JAR file for signing information before it is 
+  used, i.e., before a class file or another resource is retrieved from it. If 
+  a JAR file is signed and the digital signature does not verify, the application 
+  must be aborted. For a lazily downloaded JAR file, i.e., a JAR file that is 
+  downloaded after the application is launched, this might require aborting an 
+  already-running application.</p>
+<h3>5.4.1 Signing of JNLP Files</h3>
+<p>A JNLP file can optionally be signed. A JNLP Client must check if a signed 
+  version of the JNLP file exists, and if so, verify that it matches the JNLP 
+  file that is used to launch the application. If it does not match, then the 
+  launch must be aborted. If no signed JNLP file exists, then the JNLP file is 
+  not signed, and no check needs to be performed.</p>
+<p>A JNLP file is signed by including a copy of it in the signed main JAR file. 
+  The copy must match the JNLP file used to launch the application. The signed 
+  copy must be named: JNLP-INF/APPLICATION.JNLP. The APPLICATION.JNLP filename 
+  should be generated in upper case, but should be recognized in any case.</p>
+<p>The signed JNLP file must be compared byte-wise against the JNLP file used 
+  to launch the application. If the two byte streams are identical, then the verification 
+  succeeds, otherwise it fails.</p>
+<p>As described above, a JNLP file is not required to be signed in order for an 
+  application to be signed. This is similar to the behavior of Applets, where 
+  the Applet tags in the HTML pages are not signed, even when granting unrestricted 
+  access to the Applet.</p>
+<h2><a name="untrusted"></a>5.5 Untrusted Environment</h2>
+<p>All applications are by default run in an untrusted, or restricted environment, 
+  by a JNLP Client. The restricted environment is similar to the well-known Applet 
+  sandbox, and is designed so untrusted applications are prevented from intentionally 
+  or unintentionally harming the local system. For example, the restricted environment 
+  limits access to local disk and the network.</p>
+<p>When run in the restricted execution environment, the following restrictions 
+  must be enforced on the application:</p>
+<blockquote> 
+  <p><strong>Single download host:</strong> All JAR files specified in the <code>resources</code> 
+    elements of the JNLP file must be downloaded from the same host, the download 
+    host.</p>
+  <p><strong>Native libraries:</strong> No <code>nativelib</code> elements can 
+    be used. </p>
+  <p><strong>Security Manager:</strong> The application must be run with a SecurityManager 
+    installed. The following table list the exact set of permissions<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#13','','scrollbars=yes,resizable=yes,width=500,height=700')">13</a></SUP> 
+    that must be granted to the application's resources:<br>
+  </p>
+</blockquote>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Security Permissions</font></strong></td>
+    <td><strong><font size="+2">Target</font></strong></td>
+    <td><strong><font size="+2">Action</font></strong></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.net.SocketPermission <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>localhost:1024-</code></td>
+    <td align="left" valign="top"><code>listen</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>java.net.SocketPermission <br>
+        <br>
+        </code></p></td>
+    <td align="left" valign="top"> <p><code>&lt;Download Host&gt;<br>
+        </code>(see above)</p></td>
+    <td align="left" valign="top"><code>connect, accept</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.version</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vendor</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vendor.url</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.class.version</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>os.name</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>os.version</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>os.arch</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>file.separator</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>path.separator</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>line.separator</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.specification.version</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.specification.vendor</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.specification.name</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vm.specification.vendor</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vm.specification.name</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vm.version</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vm.vendor</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>java.vm.name</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.lang.RuntimePermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>exitVM</code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.lang.RuntimePermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>stopThread</code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>java.awt.AWTPermission<br>
+        </code></p></td>
+    <td align="left" valign="top"> <p><code>accessEventQueue<br>
+        </code>(see below for details)</p></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+</table>
+<p> </p>
+<p></p>
+<p></p>
+<blockquote> 
+  <p><strong><a name="properties"></a>Properties:</strong> An untrusted application 
+    has read and write access only to those properties considered secure by the 
+    JNLP Client. At a minimum the JNLP Client will allow read and write access 
+    to properties begining with &quot;jnlp&quot;.<br>
+  </p>
+  <p><strong>Event Queue Access:</strong> A JNLP Client must ensure that an application 
+    only has access to its own event queue. For example, if a JNLP Client restricts 
+    access to the clipboard in the ClipboardService by displaying a security advisor 
+    dialog, then the JNLP Client must ensure that this dialog is on an event queue 
+    that the launched application does not have access to. This ensures that the 
+    application cannot programmatically circumvent the security measures implemented 
+    by a JNLP Client.</p>
+  <p>Permission to the event queue can be granted by a JNLP Client by overwriting 
+    the checkAwtEventQueueAccess on the SecurityManager object, instead of explicitly 
+    adding the java.awt.AWTPermission(&quot;accessEventQueue&quot;) permission.</p>
+  <p><strong>Extensions:</strong> The JNLP file can request extensions and JREs 
+    from any host. An application cannot make a socket connection back to any 
+    of the hosts where JREs or extensions are downloaded from (unless it happens 
+    to be the same host as for the JAR files). Extensions requested from hosts other 
+    than the one that the JAR files were downloaded from must be signed and trusted 
+    as per section <a href="#signed">5.4</a>.</p>
+</blockquote>
+<p>This environment is a superset of the Applet sandbox. Since only one application 
+  is run per JVM for an application launched by a JNLP Client, the JNLP sandbox 
+  does not have to restrict access to System.exit.</p>
+<p>The sandbox environment described above is the default set of permissions granted 
+  to an untrusted application or applet. The JNLP Client may allow the user or 
+  system administrator to configure alternative permission sets for untrusted 
+  applications and applets. </p>
+<p>
+The sandbox environment described above is also the default initial set of 
+permissions granted to an untrusted application or applet. The JNLP Client may 
+allow the user to grant additional permissions interactivly.  For example, the 
+JNLP Client may intercept requests for printer access, socket connections, or 
+clipboard access in the Security Manager, and display dialogs asking the user 
+to grant such additional permissions.
+</p>
+<h2><a name="trusted"></a>5.6 Trusted Environments</h2>
+<p> This specification specifies two trusted environments, the all-permissions 
+  environment and an environment that meets the security specifications of the 
+  J2EE Application Client environment. Both of these environments provide unrestricted 
+  access to the network and local disk. Thus, an application can intentionally 
+  or unintentionally harm the local system. An application with unrestricted access 
+  may only be launched if it is trusted.</p>
+<p>The <code>security</code> element in the JNLP file is used to request the trusted 
+  environments:</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td width="40%"><strong><font size="+2">All Permissions</font></strong></td>
+    <td><strong><font size="+2">J2EE Application Client Permissions</font></strong></td>
+  </tr>
+  <tr> 
+    <td width="40%" align="left" valign="top"><code>&lt;security&gt;<br>
+      &nbsp; &lt;all-permissions/&gt;<br>
+      &lt;/security&gt;</code><code><br>
+      </code></td>
+    <td align="left" valign="top"><p><code>&lt;security&gt;<br>
+        &nbsp;&nbsp;&nbsp;&lt;j2ee-application-client-permissions/&gt;<br>
+        &lt;/security&gt;</code></p>
+      </td>
+  </tr>
+</table>
+<p>The following requirements must be satisfied before a JNLP Client can grant 
+  an application these access rights:</p>
+<ol>
+  <li>The application is signed.</li>
+  <li>The user and/or the JNLP Client trusts the certificate that is used to sign 
+    the application.</li>
+</ol>
+<p>How a JNLP Client decides to trust a certificate is dependent on the particular 
+  implementation. Typically, a JNLP Client would prompt the user to make a decision 
+  on whether to launch the application or not. The decision can be based on the 
+  information stored in the certificate. The decision can be cached, so the accept 
+  action is only required the first time the application is launched.</p>
+<p>The application must be run with a SecurityManager installed. The following 
+  table lists the exact set of permissions that must be granted to the application's 
+  resources:</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Security Permissions</font></strong></td>
+    <td><strong><font size="+2">Target</font></strong></td>
+    <td><strong><font size="+2">Action</font></strong></td>
+  </tr>
+  <tr align="center" valign="middle"> 
+    <td><font size="+1"><strong>All Permisssions Environment</strong></font><code><br>
+      </code></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code><br>
+        java.security.AllPermissions<br>
+        </code></p></td>
+    <td align="left" valign="top"> <p>&nbsp;</p></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr align="center" valign="middle"> 
+    <td><code><br>
+      </code> <strong><font size="+1">J2EE Application Client Environment</font></strong><code><br>
+      </code></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.awt.AWTPermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>accessClipboard<br>
+      </code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.awt.AWTPermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>accessEventQueue</code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.awt.AWTPermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>showWindowWithoutWarningBanner</code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.lang.RuntimePermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>exitVM</code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.lang.RuntimePermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>loadLibrary<br>
+      </code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.lang.RuntimePermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>queuePrintJob</code></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.net.SocketPermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>*</code></td>
+    <td align="left" valign="top"><code>connect</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.net.SocketPermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>localhost:1024-</code></td>
+    <td align="left" valign="top"><code>accept, listen</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.io.FilePermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>*</code></td>
+    <td align="left" valign="top"><code>read, write</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java.util.PropertyPermission<br>
+      </code></td>
+    <td align="left" valign="top"><code>*</code></td>
+    <td align="left" valign="top"><code>read</code></td>
+  </tr>
+</table>
+<p>An application running with all-permissions can create its own classloader 
+  to, e.g., install code downloaded from the network. Note that when using custom 
+  classloader, the application might circumvent the caching mechanisms provided 
+  by the JNLP Client and thereby degrade the performance of the application.</p>
+<p>The two permission sets described above are the default set of permissions 
+  granted to a trusted application or applet requesting all-permissions or j2ee-application-client-permissions. 
+  The JNLP Client may allow the user or system administrator to configure alternative 
+  permission sets for trusted applications and applets.</p>
+<h2><a name="execution"></a>5.7 Execution Environment for Component Extensions</h2>
+<p>All the JAR files specified in the <code>resources</code> elements for a component 
+  extension become part of the application's resources. JAR files for an extension 
+  must execute with the set of permissions specified in the extension descriptor, 
+  which is not necessarily the same set as the application.</p>
+<p>By default, the component extension resources are executed in the untrusted 
+  execution environment. However, by using the <code>security</code> element, 
+  either of the trusted environments can be requested. Just as for an application, 
+  the resources must be signed and the user must trust the extension before it 
+  can be run in a trusted environment. An extension that contains native code 
+  will always need to request trusted access to the system.</p>
+<p></p>
+</body>
+</html>

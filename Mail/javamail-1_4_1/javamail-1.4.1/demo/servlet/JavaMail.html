@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<!--
+    Copyright 1998-2007 Sun Microsystems, Inc.  All Rights Reserved.
+   
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+   
+      - Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+   
+      - Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+   
+      - Neither the name of Sun Microsystems nor the names of its
+        contributors may be used to endorse or promote products derived
+        from this software without specific prior written permission.
+   
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+    IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+    PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+	<TITLE>JavaMail</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#CCCCFF">
+
+<FORM ACTION="/servlet/JavaMailServlet" METHOD="POST"
+	ENCTYPE="application/x-www-form-urlencoded">
+<P ALIGN="CENTER"><B><FONT SIZE="5" FACE="Arial, Helvetica">
+Welcome to JavaMail
+</FONT></B></P>
+
+<P ALIGN="CENTER"><B><FONT SIZE="5" FACE="Arial, Helvetica">
+HTML Email Reader Demo
+</FONT></B></P>
+<CENTER>
+<P>
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD WIDTH="40%">
+			<P ALIGN="RIGHT"><FONT FACE="Arial, Helvetica">
+			IMAP Hostname:</FONT>
+		</TD>
+		<TD WIDTH="60%"><INPUT TYPE="TEXT" NAME="hostname" SIZE="25">
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="40%">
+			<P ALIGN="RIGHT"><FONT FACE="Arial, Helvetica">
+			Username:</FONT>
+		</TD>
+		<TD WIDTH="60%"><INPUT TYPE="TEXT" NAME="username" SIZE="25">
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="40%">
+			<P ALIGN="RIGHT"><FONT FACE="Arial, Helvetica">
+			Password:</FONT>
+		</TD>
+		<TD WIDTH="60%"><INPUT TYPE="PASSWORD" NAME="password"
+			SIZE="25"></TD>
+	</TR>
+</TABLE>
+<INPUT TYPE="SUBMIT" VALUE="Login">
+<INPUT TYPE="RESET" NAME="Reset" VALUE="Reset"></P>
+</CENTER>
+<P>
+<HR ALIGN="CENTER">
+</P>
+<P><B><I><FONT FACE="Arial, Helvetica">Overview:</FONT></I></B></P>
+
+<FONT SIZE="2" FACE="Arial, Helvetica">
+<b>THIS IS A DEMO!!!</b> Please see the JavaMailServlet.README.txt 
+file for information on how to
+compile and run the servlet.<br> <br>
+This is a servlet that demonstrates the use of JavaMail APIs
+in a 3-tier application. It allows the user to login to an 
+IMAP store, list all the messages in the INBOX folder, view
+selected messages, compose and send a message, and logout.
+</FONT>
+
+<P><B><I><FONT FACE="Arial, Helvetica">Features:</FONT></I></B></P>
+
+<UL>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	HTML access to your IMAP mailbox</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	Proxy-able anywhere HTTP can be proxied</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">FAST!</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">Easy to use</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	Uses web browser's content handling capabilities</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	Ultra small: 1 servlet (2 class files) and 1 html file (this one)</FONT>
+</UL>
+
+<P><B><I><FONT FACE="Arial, Helvetica">Limitations:</FONT></I></B></P>
+
+<UL>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	Only INBOX support (no user folders)</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	Can't delete, copy, move, print, save, forward, reply to, search in
+	messages --<BR>
+	but it could be done</FONT>
+	<LI><FONT SIZE="2" FACE="Arial, Helvetica">
+	Doesn't check for new messages (have to log out and log back it)</FONT>
+</UL>
+
+<P>
+<HR ALIGN="CENTER">
+</P>
+
+<P><FONT FACE="Arial, Helvetica">Feedback to </FONT>
+<A HREF="mailto:javamail@Sun.COM">
+<FONT FACE="Arial, Helvetica">javamail@Sun.COM</FONT></A>
+</FORM>
+
+</BODY>
+
+</HTML>

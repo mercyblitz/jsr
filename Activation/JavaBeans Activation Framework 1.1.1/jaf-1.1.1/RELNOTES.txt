@@ -1,0 +1,78 @@
+	 JavaBeans(tm)Activation Framework 1.1.1 Release Notes
+
+Welcome to the JavaBeans(tm) Activation Framework! A great deal of time
+and effort was put into making this package functional and
+usable.  We are however, realistic in anticipating that there exist
+scenarios and applications where this implementation could be improved
+upon.  We welcome your feedback in this area to the email address
+listed below.
+
+System Requirements:
+--------------------
+
+The JavaBeans(tm) Activation Framework (JAF) was developed and tested
+against Sun's JDK 1.4.2 on the Solaris SPARC platform.  JAF is
+written in Java (with no native code). It will run on any JDK(tm) 1.4
+(or newer) compatible virtual machine so don't hesitate to try it and
+please report failures.
+
+Note that JAF is also included in Java SE 6 and later releases.
+
+Installation:
+-------------
+
+There is effectively *no* installation of the JAF. The classes that
+make up the JAF are contained in the included Java(tm) Archive (JAR) file,
+"activation.jar". This file can be placed anywhere accessible to the
+Java virtual machine running on your system. The only requirement is
+that the activation.jar be included in your system's class path so
+Java can find the JAF classes.
+
+Related Web Sites:
+------------------
+
+There are a number of web sites you might find useful if you haven't
+already run across them:
+
+http://java.sun.com  -- This is Sun's Java Software External Web Site.
+
+http://java.sun.com/beans -- This is the JavaBeans web site which is
+                             full of the latest beans information. The
+                             JAF spec is available in the 'Glasgow' area.
+
+http://java.sun.com/products/javamail -- The JavaMail(tm) API provides a set
+                             of abstract classes that model a mail system.
+                             It's implementation is dependent on the JAF.
+
+
+Bugs fixed in the 1.1.1 Release:
+--------------------------------
+
+6456395	DataHandler.writeTo should have built-in support for byte arrays
+	and Strings
+6538484	JAF fails in Turkish locale
+
+
+Bugs fixed in the 1.1 Release:
+------------------------------
+
+<no id>	use context class loader to load data content handlers
+<no id>	guard against possible NPE when parsing mailcap file
+<no id>	really make sure input stream gets closed in DataHandler.writeTo
+4134676	need way to find all known MIME types
+4786035	API doc: some bugs in javax/activation/MimeType.cmnt
+4848096	MailcapCommandMap should store *ALL* mailcap entries
+5090200	CommandMap needs file name to choose proper command on Windows
+6245613	fix ActivationDataFlavor normalize methods to match DataFlavor
+6252930	MailcapCommandMap needs support for "fallback" entries in mailcap file
+6357487	DataHandler.getBean should load class using application's class loader
+
+
+How to contact us:
+------------------
+
+We have created an email alias that will send all your questions and
+comments to the JAF 'team'. We cannot guarantee that we will respond
+to all of your email, but we do promise to read them. 
+
+activation-comments@sun.com

@@ -1,0 +1,495 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JNLP File</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>3 JNLP File</h1>
+<hr>
+<p><br>
+  The core of the JNLP technology is the JNLP file. The JNLP file describes how 
+  to download and launch a particular application. </p>
+<p>The description of the JNLP file is split into functional categories. Thus, 
+  each section typically does not describe all sub-elements or attributes of a 
+  given element. To view the complete set of attributes for an element, the set 
+  of sub-elements, and a brief description of each, see <a href="c.html">Appendix 
+  C</a>, which contains the formal syntax of the JNLP file in the form of an annotated 
+  XML DTD. </p>
+<h2><a name="overview"></a>3.1 Overview</h2>
+<p align="center"><img src="images/jnlp-file-overview.gif" width="754" height="566"></p>
+<p align="center"><em>Figure 2: Overview of a JNLP file with the most common elements 
+  shown.</em></p>
+<p></p>
+<p>Figure 2 shows the outline of a JNLP file. It has five main sections:</p>
+<ul>
+  <li>The <code>jnlp</code> element is the root element. It has a set of attributes 
+    that are used to specify information that is specific to the JNLP file itself.</li>
+  <li>The <code>information</code> element describes meta-information about the 
+    application. That information can, for example, be shown to the user during 
+    download. This is explained later in this section.</li>
+  <li>The <code>security</code> element is used to request a trusted application 
+    environment. This is described in detail in section <a href="launch.html#application">5.3</a>.</li>
+  <li>The <code>resources</code> element specifies all the resources that are 
+    part of the application, such as Java class files, native libraries, and system 
+    properties. Section <a href="app-resources.html">4</a> describes this in detail.</li>
+  <li>The final part of a JNLP file is one of the following four elements: <code>application-desc</code>, 
+    <code>applet-desc</code>, <code>component-desc</code>, and <code>installer-desc</code>. 
+    Only one of the four can be specified in each JNLP file. A JNLP file with 
+    either an application-desc or applet-desc is called an application descriptor, 
+    whereas a JNLP file with an component-desc or an <code>installer-desc</code> 
+    element is called an extension descriptor. These elements are described later 
+    in this section.</li>
+</ul>
+<p>The following JNLP file fragment shows the outline with the actual syntax for 
+  a JNLP file:</p>
+<blockquote> 
+  <p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+    &lt;jnlp spec=&quot;1.0+&quot; codebase=&quot;http://www.mysite.com/application/&quot; 
+    ...&gt;<br>
+    &nbsp;&nbsp;&lt;information&gt; ... &lt;/information&gt;<br>
+    &nbsp;&nbsp;&lt;security&gt; ... &lt;/security&gt;<br>
+    &nbsp;&nbsp;&lt;resources&gt; ... &lt;/resources&gt;<br>
+    &nbsp;&nbsp;&lt;application-desc&gt; ... &lt;/application-desc&gt;<br>
+    &lt;/jnlp&gt;</code></p>
+</blockquote>
+<p>The <code>jnlp</code> element contains the spec attribute that specifies the 
+  versions of the specification that this JNLP file requires. The value of the 
+  attribute is specified as a version string. If none of the versions of the specification 
+  that the JNLP Client implements matches the version string, then the launch 
+  should be aborted. If the attribute is not explicitly defined, it must be assumed 
+  to be &quot;1.0+&quot;, i.e., the JNLP file works with a JNLP Client that supports 
+  the 1.0 specification and higher; i.e., it works with all JNLP Clients. See 
+  <a href="a.html">Appendix A</a>.</p>
+<h2><a name="mime"></a>3.2 MIME Type and Default File Extension</h2>
+<p>The default MIME type and extension that should be associated with a JNLP file 
+  are shown in the following table:</p>
+<blockquote>
+  <p>Default MIME Type: <code>application/x-java-jnlp-file</code><br>
+    Default Extension: <code>.jnlp</code></p>
+</blockquote>
+<h2><a name="parsing"></a>3.3 Parsing a JNLP Description</h2>
+<p>It is expected that future versions of this specification will introduce new 
+  elements and attributes that would be backwards-compatible with the current 
+  DTD. Thus, a JNLP Client should not reject a JNLP file that has extra attributes 
+  or elements. This means that the JNLP Client's XML parser must not validate 
+  the JNLP XML file against any fixed version of the JNLP DTD. However, like any 
+  XML parser, if the JNLP XML file contains a DOCTYPE declaration that specifies 
+  which DTD it uses, the parser may choose to validate the JNLP file against that 
+  specified DTD. If the JNLP file does not contain a DOCTYPE declaration, the 
+  parser may not validate the file against any DTD.</p>
+<h2><a name="references"></a>3.4 References to external resources</h2>
+<p>All references to external resources in a JNLP file are specified as URLs using 
+  the href attribute. For example:</p>
+<blockquote>
+  <p><code>&lt;icon href=&quot;http://www.mysite.com/images/icon.gif&quot;&gt; 
+    </code></p>
+  <p><code>&lt;jar href=&quot;classes/MyApp.jar&quot;&gt; </code></p>
+  <p><code>&lt;jnlp href=&quot;http://www.mysite.com/App.jnlp&quot;&gt;</code></p>
+</blockquote>
+<p></p>
+<p><br>
+  An <code>href</code> element can either contain a relative URL or an absolute 
+  URL as shown above. A relative URL is relative to the URL given in the codebase 
+  attribute of the jnlp root element. For example:</p>
+<blockquote>
+  <p><code>&lt;jnlp codebase=&quot;http://www.mysite.com/application/&quot; ... 
+    &gt;</code></p>
+</blockquote>
+<p>A relative URL cannot contain parent directory notations, such as &quot;..&quot;. 
+  It must denote a file that is stored in a subdirectory of the codebase. URLs 
+  in a JNLP file should always be properly encoded (also known as &quot;escaped&quot; 
+  form in RFC 2396 Section 2.4.2), e.g., a space should be represented as <code>%20</code> 
+  in a HTTP URL. A JNLP Client must use the URL exactly as specified in the JNLP 
+  file when making a request to the Web server (see also section <a href="download.html#http">6.1</a>).</p>
+<p>All resources can also be specified using a URL and version string pair. Thus, 
+  all elements that support the href attribute also support the version attribute, 
+  which specifies the version of the given resource that is required. For example,</p>
+<blockquote> 
+  <p><code>&lt;jar href=&quot;classes/MyApp.jar&quot; version=&quot;1.2&quot;&gt;</code> 
+  </p>
+</blockquote>
+<p>The version attribute can not only specify an exact version, as shown above, 
+  but can also specify a list of versions, called a version string.&nbsp; A version 
+  string is an ordered list of version-ranges<SPAN LANG="en-US"> separated </SPAN>by 
+  spaces.&nbsp; A version range is either a version-id, a version-id followed 
+  by a star (*), a version-id followed by a plus sign (+) , or&nbsp; two version-ranges 
+  combined using an<SPAN LANG="en-US"> ampersand </SPAN>(&amp;).&nbsp; The star 
+  means prefix match, the plus sign means this version or greater, and the ampersand 
+  means the logical anding of the two version-ranges.&nbsp; For example: </p>
+<p>&lt;jar href=&quot;classes/MyApp.jar&quot; version = &quot;1.4.0_04 1.4*&amp;1.4.1_02+&quot; 
+  /&gt; </p>
+<p>The meaning of the above is: the JAR file at the given URL that either has 
+  the version-id 1.4.0_04, or has a version-id with 1.4 as a prefix and that is 
+  not less than 1.4.1_02.&nbsp; The exact syntax and definition of version-ids 
+  and version strings is given in<SPAN LANG="en-US"> <a href="a.html">Appendix 
+  </a></SPAN><a href="a.html">A</a>. </p>
+<p>Section <a href="download.html">6</a> describes how resources are downloaded 
+  and how the version information is associated with the resources.</p>
+<h2><a name="descriptor"></a>3.5 Descriptor Information</h2>
+<p>The <code>information</code> element contains information intended to be consumed 
+  by the JNLP Client to integrate the application into the desktop, provide user 
+  feedback, etc. For example:</p>
+<blockquote> 
+  <p><code>&lt;information&gt;<br>
+    &nbsp;&nbsp;&lt;title&gt;Cool App 1.0&lt;/title&gt;<br>
+    &nbsp;&nbsp;&lt;vendor&gt;My Corporation&lt;/vendor&gt;<br>
+    &nbsp;&nbsp;&lt;description&gt;Helps you keep cool&lt;/description&gt;<br>
+    &nbsp;&nbsp;&lt;description kind=&quot;tooltip&quot;&gt;CoolApp&lt;/description&gt;<br>
+    &nbsp;&nbsp;&lt;homepage href=&quot;doc/index.html&quot;/&gt;<br>
+    &nbsp;&nbsp;&lt;icon href=&quot;icon.gif&quot;/&gt;<br>
+    &nbsp;&nbsp;&lt;offline-allowed/&gt;<br>
+    &nbsp;&nbsp;&lt;shortcut online=&quot;false&quot;&gt; <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;desktop/&gt; <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;menu submenu=&quot;My Corporation Apps&quot;/&gt; 
+    <br>
+    &nbsp;&nbsp;&lt;/shortcut&gt; </code><code><br>
+    &lt;/information&gt;<br>
+    &lt;information locale=&quot;da_DK&quot;&gt;<br>
+    &nbsp;&nbsp;&lt;description&gt;Lidt for koldt?&lt;/description&gt;<br>
+    &nbsp;&nbsp;&lt;description kind=&quot;tooltip&quot;&gt;K&oslash;ligt&lt;/description&gt;<br>
+    &lt;/information&gt</code></p>
+  </blockquote>
+<p><strong>os attribute:</strong> Specifies the operating system for which the 
+  <code>information</code> element should be considered. If the value is a prefix 
+  of the <code>os.name</code> system property, then the <code>information</code> 
+  element can be used. If the attribute is not specified, it matches all operating 
+  systems. </p>
+<p><strong>arch attribute:</strong> Specifies the architecure for which the <code>information</code> 
+  element should be considered. If the value is a prefix of the <code>os.arch</code> 
+  system property, then the <code>information</code> element can be used. If the 
+  attribute is not specified, it matches all architecures. </p>
+<p><strong>platform attribute:</strong> Specifies the platform for which the <code>information</code> 
+  element should be considered. If the value is a prefix of the <code>os.platform</code> 
+  system property, then the <code>information</code> element can be used. If the 
+  attribute is not specified, it matches all platforms. </p>
+<p><strong>locale attribute:</strong> The locales for which the <code>information</code> 
+  element should be used. Several locales can be specified, 
+  separated with spaces. Each locale is specified by a language identifier, possibly 
+  country identifier, and possibly a variant<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#5','','scrollbars=yes,resizable=yes,width=500,height=700')">5</a></SUP>. 
+  The syntax is as follows:</p>
+<blockquote>
+  <p><code>locale ::= language [ &quot;_&quot; country [ &quot;_&quot; variant 
+    ] ]</code></p>
+</blockquote>
+<p>An <code>information</code> element matches the current locale if i) the locale 
+  attribute is not specified or is empty, or ii) if one of the locales specified 
+  in the locale attribute matches the current locale. The rules for matching the 
+  current locale are as follows:</p>
+<ul>
+  <li>If language, country, and variant are specified, then they must all match 
+    the current locale.</li>
+  <li>If only language and country are specified, then they must match the language 
+    and country of the current locale.</li>
+  <li>If only language is specified, then it must match the language of the current 
+    locale.</li>
+</ul>
+<p>The match is case-insensitive. </p>
+<p>The JNLP Client must search through the <code>information</code> elements in 
+  the order specified in the JNLP file. For each <code>information</code> element, 
+  it checks if the value specified in the locale attribute matches the current 
+  locale<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#6','','scrollbars=yes,resizable=yes,width=500,height=700')">6</a></SUP>. 
+  If a match is found, the values specified in that <code>information</code> element 
+  will be used, possibly overriding values found in previous <code>information</code> 
+  elements. </p>
+<p>In the above example, the descriptions have been localized for the Danish locale, 
+  so these description values will be used whenever the current locale is matched 
+  by <code>da_DK</code>. Since the <code>information</code> element for Danish 
+  includes values only for the descriptions, the values for all other elements 
+  (<code>title</code>, <code>vendor</code>,etc.) are taken from the <code>information</code> 
+  element without a <code>locale</code> attribute. For all other locales besides 
+  Danish, all values are taken from the <code>information</code> element with 
+  no locale attribute. Thus, the locale-independent information needs only to 
+  be specified once, in the <code>information</code> element without the locale 
+  attribute.</p>
+<p><strong><code>title</code> element:</strong> The name of the application.</p>
+<p><strong><code>vendor</code> element:</strong> The name of the vendor of the 
+  application.</p>
+<p><strong><code>homepage</code> element:</strong> Contains a single attribute, 
+  <code>href</code>, which is a URL locating the home page for the application. 
+  It can be used by the JNLP Client to point the user to a Web page where they 
+  can find more information about the application.</p>
+<p><strong><code>description</code> element:</strong> A short statement about 
+  the application. Description elements are optional. The kind attribute defines 
+  how the description should be used, it can have one of the following values:</p>
+<ul>
+  <li><em>one-line:</em> If a reference to the application is going to appear 
+    in one row in a list or a table, this description will be used.</li>
+  <li><em>short:</em> If a reference to the application is going to be displayed 
+    in a situation where there is room for a paragraph, this description is used.</li>
+  <li><em>tooltip:</em> A description of the application intended to be used as 
+    a tooltip.</li>
+</ul>
+<p>Only one <code>description</code> element of each kind can be specified. A 
+  <code>description</code> element without a kind is used as a default value. 
+  Thus, if a JNLP Client wants a description of kind short, and it is not specified 
+  in the JNLP file, then the text from the description without an attribute is 
+  used.</p>
+<p>All descriptions contain plain text. No formatting, such as HTML tags 
+  is supported.</p>
+<p><strong><code>icon</code> element:</strong> The icon can be used by a JNLP 
+  Client to identify the application to the user. </p>
+<p>The optional <code>width</code> and <code>height</code> attributes can be used 
+  to indicate the resolution of the images. Both are measured in pixels. </p>
+<p>The optional <code>depth</code> attribute can be used to describe the color 
+  depth of the image.</p>
+<p>The optional <code>kind</code> attribute can be used to indicate the use of 
+  the icon, such as default, selected, disabled, rollover, splash, and shortcut.</p>
+<p>The optional <code>size</code> attribute can be used to specify the download 
+  size of the icon in bytes. </p>
+<p>The image file can be either GIF or JPEG format, or other (possibly platform 
+  dependant) formats. The JNLP Client may assume that a typical JNLP file will 
+  have at least an icon in GIF or JPEG format of 32x32 pixels in 256 colors of 
+  the default kind. Its location is specified as described in section <a href="#references">3.4</a>, 
+  and it is downloaded using the protocols described in Section 6.</p>
+<p><strong><code>offline-allowed</code> element:</strong> The optional <code>offline-allowed</code> 
+  element indicates if the application can work while the client system is disconnected 
+  from the network. The default is that an application only works if the client 
+  system is online. </p>
+<p>This can be use by a JNLP Client to provide a better user experience. For example, 
+  the offline allowed/disallowed information can be communicated to the user, 
+  it can be used to prevent launching an application that is known not to work 
+  when the system is offline, or it can be completely ignored by the JNLP Client. 
+  An application cannot assume that it will never be launched offline, even if 
+  this element is not specified. </p>
+<p><strong><code>shortcut</code> element:</strong> The optional <code>shortcut</code> 
+  element can be used to indicate an application's preferences for desktop integration. 
+  The <code>shortcut</code> element and its sub-elements provide hints that the 
+  JNLP Client may or may not use. The <code>shortcut</code> element can contain 
+  the optional online attribute, and the two optional sub-elements desktop and 
+  menu. </p>
+<p><strong><code>online</code> attribute:</strong> The optional online attribute 
+  can be used in a <code>shortcut</code> element to describe the application's 
+  preference for creating a shortcut to run the application online or offline. 
+  If the value is &quot;true&quot; the application prefers to create a shortcut 
+  that will launch the application online. If the value is &quot;false&quot; the 
+  application prefers to create a shortcut that will launch the application offline. 
+</p>
+<p><strong><code>desktop</code> element:</strong> The optional <code>desktop</code> 
+  element can be used to indicate an application's preference for putting a shortcut 
+  on the users desktop. </p>
+<p><strong><code>menu</code> element:</strong> The optional <code>menu</code> 
+  element can be used to indicate an application's preference for putting a menu 
+  item in the users start menus. The <code>menu</code> element can have a sub-menu 
+  attribute. </p>
+<p><strong><code>submenu</code> attribute:</strong> The optional <code>submenu</code> 
+  attribute can be used to indicate an application's preference for where to place 
+  the menu item, and can contain any string value. </p>
+<p>The <code>shortcut</code> element provides hints to the JNLP Client which may 
+  or may not be used.</p>
+<p><strong><code>association</code> element:</strong> The optional <code>association</code> 
+  element is a hint to the JNLP client that it wishes to be registered with the 
+  operating system as the primary handler of certain extensions and a certain 
+  mime-type. The association element must have the <code>extensions</code> and 
+  <code>mime-type</code> attributes, and may contain the two optional sub elements 
+  <code>description<code>, and <code>icon<code>.</p>
+<p><strong><code>description</code> element:</strong> A short discription of the
+  association. </p>
+<p><strong><code>icon</code> element:</strong> The icon can be registered with the 
+  operating system as the default icon for items of this <code>mime-type<code></p>
+<p><strong><code>extensions</code> attribute:</strong> The <code>extensions</code> 
+  attribute contains a list of file extensions (separated by spaces) that the 
+  application requests it be registered to handle. </p>
+<p><strong><code>mime-type</code> attribute:</strong> The <code>mime-type</code> 
+  attribute contains a mime-type that the application requests it be registered 
+  to handle. </p>
+<p>An application making such a request should be prepared to have its <code>main</code> 
+  method invoked with the arguments <code>-open filename</code> and <code>-print 
+  filename</code> instead of any arguments listed with the <code>application-desc</code> 
+  element. </p>
+<p><strong><code>related-content</code> element:</strong> The optional <code>related-content</code> 
+  element describes an additional piece of related content, such as a readme file, 
+  help pages, or links to registration pages, as a hint to the JNLP Client. The 
+  application is asking that this content be included in its desktop integration 
+  . The <code>related-content</code> element has a manditory <code>href</code> 
+  attribute. It can contain any of the following three sub-elements: </p>
+<p><strong><code>title</code> element:</strong> The name of the related content. 
+</p>
+<p><strong><code>description</code> element:</strong> A short discription of the 
+  related content. </p>
+<p><strong><code>icon</code> element:</strong> The icon can be used by the JNLP 
+  Client to identify the related content to the user. </p>
+<p>Example of related-content elements: </p>
+<p><code>&lt;information&gt; <br>
+  &nbsp;&nbsp;... <br>
+  &nbsp;&nbsp;&lt;related-content href=&quot;readme.html&quot;&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;README&lt;/title&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;description&gt;The README file contains additional 
+  information about the product&lt;/description&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;icon href=&quot;readme.jpg&quot;/&gt; <br>
+  &nbsp;&nbsp;&lt;/related-content&gt; <br>
+  &nbsp;&nbsp;&lt;related-content href=&quot;register.html&quot;&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Program Registration&lt;/title&gt; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;description&gt;Register this product to receive 
+  support and valuable discounts of other <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;products&lt;/description&gt; <br>
+  &nbsp;&nbsp;&lt;/related-content&gt; <br>
+  &lt;/information&gt;</code> </p>
+<h2><a name="update"></a>3.6 Application Update</h2>
+<p><strong><code>update</code> element:</strong> The update element is used to indicate the preferences for how application updates should be handled by the JNLP Client. The <code>update</code> element can contain the following two optional attributes: </p>
+<p><strong><code>check</code> attribute:</strong> The check attribute indicates the preference for when the JNLP Client should check for updates, and can have one of the three values: <code>"always"</code>, <code>"timeout"</code>, and <code>"background"</code>.  </p>
+A value of <code>"always"</code> means to always check for updates before launching the application. </p>
+A value of <code>"timeout"</code> (default) means to check for updates until timeout before launching the application.  If the update check is not completed before the timeout, the application is launched, and the update check will continue in the background.</p>
+A value of <code>"background"</code> means to launch the application while checking for updates in the background.
+</p>
+
+<p><strong><code>policy</code> attribute:</strong> The <code>policy</code> attribute indicates the preference for how the JNLP Client should handle an application update when it is known an update is available before the application is launched, and can have one of the following three values: <code>"always"</code>, <code>"prompt-update"</code>, and <code>"prompt-run"</code>. </p>
+A value of <code>"always"</code> (default) means to always download updates without any prompt.</p>
+A value of <code>"prompt-update"</code> means to ask the user if he/she wants to download and run the updated version, or launch the cached version.</p>
+A value of <code>"prompt-run"</code> means to ask the user if he/she wants to download and run the updated version, or cancel and abort runing the application.</p>
+</p>
+
+<p> For example: </p>
+<blockquote>
+  <p><code>&lt;update check=&quot;always&quot; policy=&quot;prompt-update&quot;&gt;</p>
+</blockquote>
+</p>
+
+<h2><a name="application"></a>3.7 Application Descriptors</h2>
+<p>An application descriptor either describes an application or an Applet.</p>
+<h3>3.7.1 Application Descriptor for an Application</h3>
+<p>A JNLP file is an application descriptor if the <code>application-desc</code> 
+  element is specified.</p>
+<p>The <code>application-desc</code> element contains all information needed to 
+  launch an application, given the resources described by the <code>resources</code> 
+  element. For example:</p>
+<blockquote> 
+  <p><code>&lt;application-desc main-class=&quot;com.example.MyMain&quot;&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;argument&gt;Arg1&lt;/argument&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;argument&gt;Arg2&lt;/argument&gt;<br>
+    </code><code>&lt;/application-desc&gt;</code></p>
+  </blockquote>
+<p><strong><code>main-class</code> attribute:</strong> The name of the class containing 
+  the <code>public static void main(String[])</code> method of the application. 
+  This attribute can be omitted if the <code>main</code> class can be found from 
+  the <code>Main-Class</code> manifest entry in the main JAR file. See section 
+  <a href="launch.html#launching">5.2</a>.</p>
+<p><strong>argument element:</strong> Contains an ordered list of arguments for 
+  the application. </p>
+<p>Section <a href="launch.html#launching">5.2</a> describes how an application 
+  is launched.</p>
+<h3>3.7.2 Application Descriptor for an Applet</h3>
+<p>A JNLP file is an application descriptor for an Applet if the <code>applet-desc</code> 
+  element is specified.</p>
+<p>The <code>applet-desc</code> element contains all information needed to launch 
+  an Applet, given the resources described by the <code>resources</code> elements. 
+  For example:</p>
+<blockquote> 
+  <p><code>&lt;applet-desc<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;main-class=&quot;com.mysite.MyApplet&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;documentbase=&quot;index.html&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;name=&quot;MyApplet&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;width=&quot;500&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;height=&quot;300&quot;&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;param name=&quot;Param1&quot; value=&quot;Value1&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;param name=&quot;Param2&quot; value=&quot;Value2&quot;/&gt;<br>
+    </code><code>&lt;/applet-desc&gt;</code></p>
+  </blockquote>
+<p><strong><code>main-class</code> attribute:</strong> Name of the <code>main</code> 
+  Applet class. This is the name of the <code>main</code> Applet class (e.g., 
+  <code>com.mysite.MyApplet</code>) , as opposed to the HTML <code>&lt;applet&gt;</code> 
+  tag's code attribute as a filename (e.g., <code>MyApplet.class</code>).</p>
+<p><strong><code>documentbase</code> attribute:</strong> The document base for 
+  the Applet as a URL. This is available to the Applet through the <code>AppletContext</code>. 
+  The <code>documentbase</code> is provided explicitly since an Applet launched 
+  with a JNLP Client is not embedded in a Web page.</p>
+<p><strong><code>name</code> attribute:</strong> Name of the Applet. This is available 
+  to the Applet through the <code>AppletContext</code>. </p>
+<p><strong><code>width</code> attribute:</strong> Width of the Applet in pixels.</p>
+<p><strong><code>height</code> attribute:</strong> Height of the Applet in pixels.</p>
+<table width="80%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000" bgcolor="#FFFFCC">
+  <tr> 
+    <td><blockquote> 
+        <h2><strong><u>Note:</u></strong></h2>
+      </blockquote>
+      <p>The JNLP Client may set the actual size to be more or less than the specified 
+        size, to fit within the minimum and maximum dimensions for a Java Frame 
+        on each platform.</p></td>
+  </tr>
+</table>
+<p><strong><code>param</code> element:</strong> Contains a parameter to the Applet. 
+  The <code>name</code> attribute contains the name of the parameter, and the 
+  <code>value</code> attribute contains the value. The parameters can be retrieved 
+  with the <code>Applet.getParameter</code> method.</p>
+<p>The <code>codebase</code> for the Applet, available through the<code> java.applet</code>.<code>getCodebase</code> 
+  method, defaults to the value of the <code>codebase</code> attribute of the 
+  jnlp element. If no value is specified for that attribute, then the <code>codebase</code> 
+  is set to the URL of the JAR file containing the <code>main</code> Applet class.</p>
+<p></p>
+<p>Section <a href="launch.html#launching">5.2</a> describes how an Applet is 
+  launched.</p>
+<h2><a name="extension"></a>3.8 Extension Descriptors</h2>
+<p>An extension descriptor can either describe a component extension or an installer 
+  extension.</p>
+<h3>3.8.1 Component Extension</h3>
+<p>A JNLP file is a component extension if the <code>component-desc</code> element 
+  is specified. A component extension is typically used to factor out a set of 
+  resources that are shared between a large set applications. For example, this 
+  could be a toolkit for XML parsing. The following shows a sample JNLP fragment 
+  that specifies a component descriptor:</p>
+<blockquote> 
+  <p><code>&lt;jnlp&gt;<br>
+    &nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&lt;resources&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Resources defined by the component-desc --&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;jar href=&quot;http://www.mysite.com/my-component/A.jar&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&lt;/resources&gt;<br>
+    &nbsp;&nbsp;&lt;component-desc/&gt;<br>
+    &lt;/jnlp&gt;</code></p>
+</blockquote>
+<p></p>
+<p>No <code>java</code> elements can be specified as part of the resources. Section 
+  <a href="app-resources.html">4</a> describes how these resources become part 
+  of the application that uses the extension.</p>
+<p>An extension descriptor is downloaded using the extension download protocol 
+  described in section <a href="download.html#extension">6.4</a>. </p>
+<h3>3.8.2 Installer Extension</h3>
+<p>A JNLP file is an installer extension if the <code>installer-desc</code> element 
+  is specified. It describes an application that is executed only once, the first 
+  time the JNLP file is used on the local system. The following shows a sample 
+  JNLP fragment that specifies an installer descriptor:</p>
+<blockquote> 
+  <p><code>&lt;jnlp&gt;<br>
+    &nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&lt;resources&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Resources used for installer --&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;jar href=&quot;http://www.mysite.com/my-installer/installer.jar&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&lt;/resources&gt;<br>
+    &nbsp;&nbsp;&lt;installer-desc main-class=&quot;com.mysite.installer.Main&quot;/&gt;<br>
+    &lt;/jnlp&gt;</code></p>
+  
+</blockquote>
+<p><strong><code>main-class</code> attribute:</strong> The name of the class containing 
+  the <code>public static void main(String[])</code> method of an installer/uninstaller 
+  for this extension. This attribute can be omitted if the <code>main</code> class 
+  can be found from the <code>Main-Class</code> manifest entry in the main JAR 
+  file. This is described in detail in section <a href="launch.html#launching">5.2</a>.</p>
+<p>The installer extension is intended to install platform-specific native code 
+  that requires a more complicated setup than simply loading a native library 
+  into the JVM, such as installing a JRE or device driver. The installer executed 
+  by the JNLP Client must be a Java Technology-based application. Note that this 
+  does not limit the kind of code that can be installed or executed. For example, 
+  the installer could be a thin wrapper that executes a traditional native installer, 
+  executes a shell script, or unzips a ZIP file with native code onto the disk.</p>
+<p>The installer communicates with the JNLP Client using the <code>ExtensionInstallerService</code> 
+  (see section <a href="jnlp-api.html#extension">7.8</a> for details). Using this 
+  service, the installer informs the JNLP Client what native libraries should 
+  be loaded into the JVM when the extension is used, or, in the case of a JRE 
+  installer, inform the JNLP Client how the installed JRE can be launched.</p>
+<p>Installers should avoid having to reboot the client machine if at all possible. 
+  While some JNLP Clients may be able to continue with the installation/launch 
+  after a reboot, this ability is not required.</p>
+<p>&nbsp;</p>
+</body>
+</html>

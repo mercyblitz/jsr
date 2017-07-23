@@ -1,0 +1,4 @@
+javax.servlet
+javax.servlet.http
+javax.servlet.http.annotation
+javax.servlet.http.annotation.jaxrs

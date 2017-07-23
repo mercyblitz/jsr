@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Application Programming Interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>D Application Programming Interface</h1>
+<hr>
+<h1>&nbsp; </h1>
+<p>This is a listing of the interfaces, classes, and exceptions that compose the 
+  JNLP API. For detailed descriptions of these members and their methods, please 
+  see the JNLP API Reference, v1.0.</p>
+<h2>D.1 JNLP API Package Summary</h2>
+<p>The table below summarizes the classes and interfaces comprising the JNLP API.</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Package <code>javax.jnlp</code></font></strong></td>
+    <td><strong><font size="+2">Service Name</font></strong></td>
+    <td><font size="+2"><strong>Required?</strong></font></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>BasicService<br>
+        <br>
+        <br>
+        <br>
+        </code></p></td>
+    <td align="left" valign="top"> <p><code>javax.jnlp.BasicService</code></p></td>
+    <td align="left" valign="top">yes</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>DownloadService<br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.DownloadService</code></td>
+    <td align="left" valign="top">yes</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>FileOpenService<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.FileOpenService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>FileSaveService<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.FileSaveService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>ClipboardService<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.ClipboardService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>PrintService<br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.PrintService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>PersistenceService<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.PersistenceService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>ExtensionInstallerService<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.ExtensionInstallerService</code></td>
+    <td align="left" valign="top">yes</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>UnavailableServiceException<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>&lt;not a service&gt;</code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>DownloadServiceListener<br>
+      <br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>&lt;not a service&gt;</code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>FileContents<br>
+      &lt;not a service&gt;<br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>&lt;not a service&gt;</code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>JNLPRandomAccessFile<br>
+      &lt;not a service&gt;<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>&lt;not a service&gt;</code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>ServiceManager<br>
+      &lt;not a service&gt;<br>
+      <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>&lt;not a service&gt;</code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>ServiceManagerStub<br>
+      &lt;not a service&gt;</code><br> </td>
+    <td align="left" valign="top"><code>&lt;not a service&gt;</code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>SingleInstanceService <br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><code>javax.jnlp.SingleInstanceService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>SingleInstanceListener</code> </td>
+    <td align="left" valign="top"><code>&lt;not a service&gt; </code></td>
+    <td align="left" valign="top">n/a</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><code>ExtendedService</code> </td>
+    <td align="left" valign="top"><code>javax.jnlp.ExtendedService</code></td>
+    <td align="left" valign="top">no</td>
+  </tr>
+</table>
+<h2>D.2 ServiceManager</h2>
+<blockquote>
+  <p><code>public final class ServiceManager</code></p>
+  <p><code>static public Object lookup(String name) throws<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;UnavailableServiceException;<br>
+    static public String[] getServiceNames();<br>
+    static public void setServiceManagerStub(ServiceManagerStub stub);</code></p>
+</blockquote>
+<h2>D.3 ServiceManagerStub</h2>
+<blockquote>
+  <p><code>public interface ServiceManagerStub</code></p>
+  <p><code>public Object lookup(String name) throws<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;UnavailableServiceException;<br>
+    public String[] getServiceNames();</code></p>
+</blockquote>
+<h2>D.4 BasicService</h2>
+<blockquote>
+  <p><code>import java.net.URL;</code></p>
+  <p><code>public interface BasicService</code></p>
+  <p><code>public URL getCodeBase();<br>
+    public boolean isOffline();<br>
+    public boolean showDocument(URL url);<br>
+    public boolean isWebBrowserSupported();</code></p>
+</blockquote>
+<p></p>
+<h2><br>
+  D.5 DownloadService</h2>
+<blockquote>
+  <p><code>import java.net.URL;</code></p>
+  <p><code>public interface DownloadService</code></p>
+  <p><code>public boolean isResourceCached(URL ref, String version);<br>
+    public boolean isPartCached(String part);<br>
+    public boolean isPartCached(String[] parts);<br>
+    public boolean isExtensionPartCached(URL ref, String version, String <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; part);<br>
+    public boolean isExtensionPartCached(URL ref, String version, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; String[] parts);<br>
+    public void loadResource(URL ref, String version, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; DownloadServiceListener listener) throws IOException;<br>
+    public void loadPart(String part, DownloadServiceListener listener) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; throws IOException;<br>
+    public void loadPart(String[] parts, DownloadServiceListener listener) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; throws IOException;<br>
+    public void loadExtensionPart(URL ref, String version, String part, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; DownloadServiceListener listener) throws IOException;<br>
+    public void loadExtensionPart(URL ref, String version, String[] parts, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; DownloadServiceListener listener) throws IOException;<br>
+    public void removeResource(URL ref, String version) throws IOException;<br>
+    public void removePart(String part) throws IOException;<br>
+    public void removePart(String[] parts) throws IOException;<br>
+    public void removeExtensionPart(URl ref, String version, String part) |<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; throws IOException;<br>
+    public void removeExtensionPart(URl ref, String version, String parts) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; throw IOException;<br>
+    public DownloadServiceListener getDefaultProgressWindow();</code></p>
+</blockquote>
+<h2>D.6 FileOpenService</h2>
+<blockquote>
+  <p><code>import java.io.IOException;</code></p>
+  <p><code>public interface FileOpenService<br>
+    public FileContents openFileDialog(String pathHint, String[]<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; exts) throws IOException;<br>
+    public FileContents[] openMultiFileDialog(String pathHint,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; String[] exts) throws IOException;</code></p>
+</blockquote>
+<h2>D.7 FileSaveService</h2>
+<blockquote>
+  <p><code>import java.io.IOException;<br>
+    import java.io.InputStream;</code></p>
+  <p><code>public interface FileSaveService</code></p>
+  <p><code>public FileContents saveFileDialog(String pathHint, String[]<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;extensions, InputStream stream, String name) throws 
+    IOException;<br>
+    public FileContents saveAsFileDialog(String pathHint, String[]<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;extensions, FileContents contents) throws IOException;</code></p>
+</blockquote>
+<h2>D.8 ClipboardService</h2>
+<blockquote>
+  <p><code>import java.awt.datatransfer.Transferable;</code></p>
+  <p><code>public interface ClipboardService</code></p>
+  <p><code> public Transferable getContents();<br>
+    public void setContents(Transferable contents);</code></p>
+</blockquote>
+<h2>D.9 PrintService</h2>
+<blockquote>
+  <p><code>import java.awt.print.Pageable;<br>
+    import java.awt.print.Printable;<br>
+    import java.awt.print.PageFormat;</code></p>
+  <p><code>public interface PrintingService</code></p>
+  <p><code>public PageFormat getDefaultPage();<br>
+    public PageFormat showPageFormatDialog(PageFormat page);<br>
+    public boolean print(Pageable document);<br>
+    public boolean print(Printable painter);</code></p>
+</blockquote>
+<h2>D.10 PersistenceService</h2>
+<blockquote>
+  <p><code>import java.io.InputStream;<br>
+    import java.io.OutputStream;<br>
+    import java.io.RandomAccessFile;<br>
+    import java.io.IOException;<br>
+    import java.io.FileNotFoundException;<br>
+    import java.net.URL;<br>
+    import java.net.MalformedURLException</code></p>
+  <p><code>public interface PersistenceService</code></p>
+  <p><code>public static int final CACHED = 0;<br>
+    public static int final TEMPORARY = 1;<br>
+    public static int final DIRTY = 2;</code></p>
+  <p><code>public long create(URL url, long maxSize) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;throws MalformedURLException, IOException;<br>
+    public FileContents get(URL url) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;throws MalformedURLException, FileNotFoundException, 
+    IOException;<br>
+    public void delete(URL url)<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;throws MalformedURLException, IOException;<br>
+    public String[] getNames(URL url) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;throws MalformedURLException, IOException;<br>
+    public int getTag(URL url)<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;throws MalformedURLException, IOException;<br>
+    public void setTag(URL url, int tag) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;throws MalformedURLException, IOException;</code></p>
+  </blockquote>
+<h2>D.11 ExtensionInstallerService</h2>
+<blockquote>
+  <p><code>public interface ExtensionInstallerService</code></p>
+  <p><code>public String getInstallPath();<br>
+    public String getExtensionVersion();<br>
+    public URL getExtensionLocation();<br>
+    public void hideProgressBar();<br>
+    public void hideStatusWindow();<br>
+    public void setHeading(String heading);<br>
+    public void setStatus(String status);<br>
+    public void updateProgress(float value);<br>
+    public void installFailed();<br>
+    public void installSucceeded(boolean needsReboot);<br>
+    public void setJREInfo(String platformVersion, String jrePath);<br>
+    public void setNativeLibraryDirectory(String path);<br>
+    public String getInstalledJRE(URL location, String productVersion);</code></p>
+</blockquote>
+<h2>D.12 FileContents</h2>
+<blockquote>
+  <p><code>import java.io.IOException;</code></p>
+  <p><code>public interface FileContents</code></p>
+  <p><code>public String getName() throws IOException;<br>
+    public boolean canRead() throws IOException;<br>
+    public boolean canWrite() throws IOException;<br>
+    public long getLength() throws IOException;<br>
+    public long getMaxLength() throws IOException;<br>
+    public long setMaxLength(long maxlength) throws IOException;<br>
+    public InputStream getInputStream() throws IOException;<br>
+    public OutputStream getOutputStream(boolean overwrite) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; throws IOException;<br>
+    public JNLPRandomAccessFile getRandomAccessFile(String mode) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; throws IOException;</code></p>
+</blockquote>
+<h2>D.13 JNLPRandomAccessFile</h2>
+<blockquote>
+  <p><code>import java.io.IOException;</code></p>
+  <p><code>public interface JNLPRandomAccessFile<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#17','','scrollbars=yes,resizable=yes,width=500,height=700')">17</a></SUP> 
+    extends java.io.DataInput, java.io.DataOutput</code></p>
+  <p><code>public void close() throws IOException;<br>
+    public long length() throws IOException;<br>
+    public long getFilePointer() throws IOException;<br>
+    public int read() throws IOException;<br>
+    public int read(byte [] b, int off, int len) throws IOException;<br>
+    public int read(byte [] b) throws IOException;<br>
+    public void readFully(byte [] b) throws IOException;<br>
+    public void readFully(byte b[], int off, int len) throws IOException;<br>
+    public int skipBytes(int n) throws IOException;<br>
+    public boolean readBoolean() throws IOException;<br>
+    public byte readByte() throws IOException;<br>
+    public int readUnsignedByte() throws IOException;<br>
+    public short readShort() throws IOException;<br>
+    public int readUnsignedShort() throws IOException;<br>
+    public char readChar() throws IOException;<br>
+    public int readInt() throws IOException;<br>
+    public long readLong() throws IOException;<br>
+    public float readFloat() throws IOException;<br>
+    public double readDouble() throws IOException;<br>
+    public String readLine() throws IOException;<br>
+    public String readUTF() throws IOException;<br>
+    public void seek(long pos) throws IOException;<br>
+    public void setLength(long newLength) throws IOException;<br>
+    public void write(int b) throws IOException;<br>
+    public void write(byte b[]) throws IOException;<br>
+    public void write(byte b[], int off, int len) throws IOException;<br>
+    public void writeBoolean(boolean v) throws IOException;<br>
+    public void writeByte(int v) throws IOException;<br>
+    public void writeShort(int v) throws IOException;<br>
+    public void writeChar(int v) throws IOException;<br>
+    public void writeInt(int v) throws IOException;<br>
+    public void writeLong(long v) throws IOException;<br>
+    public void writeFloat(float v) throws IOException;<br>
+    public void writeDouble(double v) throws IOException;<br>
+    public void writeBytes(String s) throws IOException;<br>
+    public void writeChars(String s) throws IOException;<br>
+    public void writeUTF(String str) throws IOException;</code></p>
+</blockquote>
+<h2>D.14 UnavailableServiceException</h2>
+<blockquote>
+  <p><code>public class UnavailableServiceException extends Exception</code></p>
+  <p><code>UnavailableServiceException()<br>
+    UnavailableServiceException(String msg);</code></p>
+</blockquote>
+<h2>D.15 DownloadServiceListener</h2>
+<blockquote>
+  <p><code>public interface DownloadServiceListener</code></p>
+  <p><code>public void progress(java.net.URL url, java.lang.String version, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; long readSoFar, long total, int overallPercent);<br>
+    public void validating(java.net.URL url, java.lang.String version, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; long entry, long total, int overallPercent);<br>
+    public void upgradingArchive(java.net.URL url, java.lang.String version, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; int patchPercent, int overallPercent);<br>
+    public void downloadFailed(java.net.URL url, java.lang.String version);</code></p>
+</blockquote>
+<h2>D.16 SingleInstanceService </h2>
+<blockquote> 
+  <p><code>public interface SingleInstanceService <br>
+    public void addSingleInstanceListener(javax.jnlp.SingleInstanceListener listener); 
+    <br>
+    public void removeSingleInstanceListener(javax.jnlp.SingleInstanceListener 
+    listener);</code><br>
+  </p>
+</blockquote>
+<h2>D.17 SingleInstanceListener </h2>
+<blockquote> 
+  <p><code>interface javax.jnlp.SingleInstanceListener <br>
+    public void newActivation(String[] params);</code></p>
+</blockquote>
+<h2>D.18 ExtendedService </h2>
+<blockquote> 
+  <p><code>public interface ExtendedService <br>
+    public FileContents openFile(java.io.File file) throws IOException; <br>
+    public FileContents[] openFiles(java.io.File[] files) throws IOException; 
+    <br>
+    </code><br>
+  </p>
+</blockquote>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<html xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>dataTable
+          (jsf-ri-1.2MR1)
+        </title>
+<meta name="keywords" content="$title">
+<link rel="stylesheet" type="text/css" href="../stylesheet.css" title="Style">
+</head>
+<script>
+            function asd()
+            {
+            parent.document.title="dataTable (jsf-ri-1.2MR1)";
+            }
+          </script>
+<body bgcolor="white" onload="asd();">
+<a name="navbar_top"></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td COLSPAN="3" BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><a NAME="navbar_top_firstrow"></a>
+<table BORDER="0" CELLPADDING="0" CELLSPACING="3">
+<tr ALIGN="center" VALIGN="top">
+<td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="../overview-summary.html"><font CLASS="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="tld-summary.html"><font CLASS="NavBarFont1"><b>Library</b></font></a>&nbsp;</td><td BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<font CLASS="NavBarFont1Rev">&nbsp;Tag&nbsp;</font>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a HREF="../help-doc.html"><font CLASS="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+</tr>
+</table>
+</td><td ALIGN="right" VALIGN="top" ROWSPAN="3"><em></em></td>
+</tr>
+<tr>
+<td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2"></font></td><td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2">
+                &nbsp;<a HREF="../index.html" TARGET="_top"><b>FRAMES</b></a>&nbsp;
+                &nbsp;<a href="dataTable.html" target="_top"><b>NO FRAMES</b></a>&nbsp;
+                <script></script>
+<noscript>
+<a HREF="../alltags-noframe.html" TARGET=""><b>All Tags</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<hr>
+<h2>
+<font size="-1">h</font>
+<br>
+            Tag dataTable</h2>
+<hr><p>Renders an HTML "table" element compliant with the HTML 401 specification. Render the "caption" facet, if present, inside a "caption" element immediately below the "table" element. If the "captionClass" attribute is specified, render its value as the value of the "class" attribute on the "caption" element. If the "captionStyle" attribute is specified, render its value as the value of the "style" attribute on the "caption" element.</p> <p>Please consult the javadoc for <code>UIData</code> to supplement this specification. If the "styleClass" attribute is specified, render its value as the value of the "class" attribute on the "table" element. Any pass-through attributes are also rendered on the "table" element. </p> <p>Rendering the header</p> <ul> <p>If the <code>UIData</code> component has a "header" facet, or any of the child <code>UIColumn</code> components has a "header" facet, render a "thead" element. If the <code>UIData</code> component has a "header" facet, encode its contents inside of "tr" and "th" elements, respectively. Output the value of the "headerClass" attribute of the <code>UIData</code> component, if present, as the value of the "class" attribute on the "th". Output the number of child <code>UIColumn</code> components of the <code>UIData</code> component as the value of the "colspan" attribute on the "th". Output "colgroup" as the value of the "scope" attribute on the "th" element. </p> <p>If any of the child <code>UIColumn</code> components has a "header" facet render a "tr" element. For each <code>UIColumn</code> that actually has a "header" facet, render it inside of a "th" element. Columns that don't have a "header" facet cause an empty "th" element to be rendered. Output the value of the "headerClass" attribute of the <code>UIColumn</code> component, if present, as the value of the "class" attribute on the "th". If the "headerClass" attribute of the <code>UIColumn</code> component is not present, output the value of the "headerClass" attribute of the <code>UIData</code> component, if present, as the value of the "class" attribute on the "th". Output "col" as the value of the "scope" attribute on the "th" element. </p> <p>Close out the "thead" element.</p> </ul> <p>Rendering the footer</p> <ul> <p>Follow the same process as for the header, except replace "header" with "footer", "th" with "td", "thead" with "tfoot", and "headerClass" with "footerClass". Do not render any "scope" attribute for the footer.</p> </ul> <p>Rendering the table body</p> <ul> <p>Render a "tbody" element. Keep track of the result of the "rows" property on the <code>UIData</code> component. Keep track of the number of rows we have rendered so far. Iterate through the rows. Set the "rowIndex" property of the <code>UIData</code> component to be correct as we iterate through the rows. Stop rendering children and close out the "tbody" element if the "rowAvailable" property of the <code>UIData</code> returned false. Output a "tr" element. Output the value of the "rowClasses" per the attribute description below. For each <code>UIColumn</code> child, output a "td" element, attaching the value of the "columnClasses" attribute of the <code>UIData</code> component per the attribute description below. Recursively encode each child of each <code>UIColumn</code> child. Close out the "td" element. When done with the row, close out the "tr" element. When done with all the rows, close out the "tbody" element.</p> </ul> <p>When done rendering all the rows, set the "rowIndex" property of the <code>UIData</code> to -1, and close out the "table" element.</p><br>
+<p></p>
+<hr>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="2"><font size="+2"><b>Tag Information</b></font></td>
+</tr>
+<tr>
+<td>Tag Class</td><td>com.sun.faces.taglib.html_basic.DataTableTag</td>
+</tr>
+<tr>
+<td>TagExtraInfo Class</td><td>com.sun.faces.taglib.FacesTagExtraInfo</td>
+</tr>
+<tr>
+<td>Body Content</td><td>JSP</td>
+</tr>
+<tr>
+<td>Display Name</td><td><i>None</i></td>
+</tr>
+</table>
+<br>
+<p></p>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="5"><font size="+2"><b>Attributes</b></font></td>
+</tr>
+<tr>
+<td><b>Name</b></td><td><b>Required</b></td><td><b>Request-time</b></td><td><b>Type</b></td><td><b>Description</b></td>
+</tr>
+<tr valign="top">
+<td>first</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>int</code>)
+                    </td><td>Zero-relative row number of the first row to be displayed. If this property is set to zero, rendering will begin with the first row of the underlying data.</td>
+</tr>
+<tr valign="top">
+<td>id</td><td>false</td><td>true</td><td><code>java.lang.String</code></td><td>The component identifier for this component. This value must be unique within the closest parent component that is a naming container.</td>
+</tr>
+<tr valign="top">
+<td>rendered</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether or not this component should be rendered (during Render Response Phase), or processed on any subsequent form submit. The default value for this property is true.</td>
+</tr>
+<tr valign="top">
+<td>rows</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>int</code>)
+                    </td><td>The number of rows to display, starting with the one identified by the "first" property. If this value is set to zero, all available rows in the underlying data model will be displayed.</td>
+</tr>
+<tr valign="top">
+<td>value</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.Object</code>)
+                    </td><td>The current value of this component.</td>
+</tr>
+<tr valign="top">
+<td>var</td><td>false</td><td>false</td><td><code>java.lang.String</code></td><td>Name of a request-scope attribute under which the model data for the row selected by the current value of the "rowIndex" property (i.e. also the current value of the "rowData" property) will be exposed.</td>
+</tr>
+<tr valign="top">
+<td>bgcolor</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Name or code of the background color for this table.</td>
+</tr>
+<tr valign="top">
+<td>border</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>int</code>)
+                    </td><td>Width (in pixels) of the border to be drawn around this table.</td>
+</tr>
+<tr valign="top">
+<td>captionClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Space-separated list of CSS style class(es) that will be applied to any caption generated for this table.</td>
+</tr>
+<tr valign="top">
+<td>captionStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to be applied when this caption is rendered.</td>
+</tr>
+<tr valign="top">
+<td>cellpadding</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Definition of how much space the user agent should leave between the border of each cell and its contents.</td>
+</tr>
+<tr valign="top">
+<td>cellspacing</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Definition of how much space the user agent should leave between the left side of the table and the leftmost column, the top of the table and the top of the top side of the topmost row, and so on for the right and bottom of the table. It also specifies the amount of space to leave between cells.</td>
+</tr>
+<tr valign="top">
+<td>columnClasses</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Comma-delimited list of CSS style classes that will be applied to the columns of this table. A space separated list of classes may also be specified for any individual column. If the number of elements in this list is less than the number of columns specified in the "columns" attribute, no "class" attribute is output for each column greater than the number of elements in the list. If the number of elements in the list is greater than the number of columns specified in the "columns" attribute, the elements at the posisiton in the list after the value of the "columns" attribute are ignored.</td>
+</tr>
+<tr valign="top">
+<td>dir</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Direction indication for text that does not inherit directionality. Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+</tr>
+<tr valign="top">
+<td>footerClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Space-separated list of CSS style class(es) that will be applied to any footer generated for this table.</td>
+</tr>
+<tr valign="top">
+<td>frame</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Code specifying which sides of the frame surrounding this table will be visible. Valid values are: none (no sides, default value); above (top side only); below (bottom side only); hsides (top and bottom sides only); vsides (right and left sides only); lhs (left hand side only); rhs (right hand side only); box (all four sides); and border (all four sides).</td>
+</tr>
+<tr valign="top">
+<td>headerClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Space-separated list of CSS style class(es) that will be applied to any header generated for this table.</td>
+</tr>
+<tr valign="top">
+<td>lang</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Code describing the language used in the generated markup for this component.</td>
+</tr>
+<tr valign="top">
+<td>onclick</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is clicked over this element.</td>
+</tr>
+<tr valign="top">
+<td>ondblclick</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is double clicked over this element.</td>
+</tr>
+<tr valign="top">
+<td>onkeydown</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a key is pressed down over this element.</td>
+</tr>
+<tr valign="top">
+<td>onkeypress</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a key is pressed and released over this element.</td>
+</tr>
+<tr valign="top">
+<td>onkeyup</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a key is released over this element.</td>
+</tr>
+<tr valign="top">
+<td>onmousedown</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is pressed down over this element.</td>
+</tr>
+<tr valign="top">
+<td>onmousemove</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is moved within this element.</td>
+</tr>
+<tr valign="top">
+<td>onmouseout</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is moved away from this element.</td>
+</tr>
+<tr valign="top">
+<td>onmouseover</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is moved onto this element.</td>
+</tr>
+<tr valign="top">
+<td>onmouseup</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Javascript code executed when a pointer button is released over this element.</td>
+</tr>
+<tr valign="top">
+<td>rowClasses</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Comma-delimited list of CSS style classes that will be applied to the rows of this table. A space separated list of classes may also be specified for any individual row. Thes styles are applied, in turn, to each row in the table. For example, if the list has two elements, the first style class in the list is applied to the first row, the second to the second row, the first to the third row, the second to the fourth row, etc. In other words, we keep iterating through the list until we reach the end, and then we start at the beginning again.</td>
+</tr>
+<tr valign="top">
+<td>rules</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Code specifying which rules will appear between cells within this table. Valid values are: none (no rules, default value); groups (between row groups); rows (between rows only); cols (between columns only); and all (between all rows and columns).</td>
+</tr>
+<tr valign="top">
+<td>style</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to be applied when this component is rendered.</td>
+</tr>
+<tr valign="top">
+<td>styleClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Space-separated list of CSS style class(es) to be applied when this element is rendered. This value must be passed through as the "class" attribute on generated markup.</td>
+</tr>
+<tr valign="top">
+<td>summary</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Summary of this table's purpose and structure, for user agents rendering to non-visual media such as speech and Braille.</td>
+</tr>
+<tr valign="top">
+<td>title</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Advisory title information about markup elements generated for this component.</td>
+</tr>
+<tr valign="top">
+<td>width</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Width of the entire table, for visual user agents.</td>
+</tr>
+<tr valign="top">
+<td>binding</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>javax.faces.component.UIComponent</code>)
+                    </td><td>The ValueExpression linking this component to a property in a backing bean</td>
+</tr>
+</table>
+<br>
+<p></p>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="5"><font size="+2"><b>Variables</b></font></td>
+</tr>
+<td colspan="2"><i>No Variables Defined.</i></td>
+</table>
+<br>
+<p></p>
+<a name="navbar_bottom"></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td COLSPAN="3" BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><a NAME="navbar_bottom_firstrow"></a>
+<table BORDER="0" CELLPADDING="0" CELLSPACING="3">
+<tr ALIGN="center" VALIGN="top">
+<td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="../overview-summary.html"><font CLASS="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="tld-summary.html"><font CLASS="NavBarFont1"><b>Library</b></font></a>&nbsp;</td><td BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<font CLASS="NavBarFont1Rev">&nbsp;Tag&nbsp;</font>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a HREF="../help-doc.html"><font CLASS="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+</tr>
+</table>
+</td><td ALIGN="right" VALIGN="top" ROWSPAN="3"><em></em></td>
+</tr>
+<tr>
+<td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2"></font></td><td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2">
+                &nbsp;<a HREF="../index.html" TARGET="_top"><b>FRAMES</b></a>&nbsp;
+                &nbsp;<a href="dataTable.html" target="_top"><b>NO FRAMES</b></a>&nbsp;
+                <script></script>
+<noscript>
+<a HREF="../alltags-noframe.html" TARGET=""><b>All Tags</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<hr>
+<small><i>
+            Output Generated by 
+            <a href="http://taglibrarydoc.dev.java.net/" target="_blank">Tag Library Documentation Generator</a>.
+            Java, JSP, and JavaServer Pages are trademarks or 
+            registered trademarks of Sun Microsystems, Inc. in the US and other
+            countries.  Copyright 2002-4 Sun Microsystems, Inc.
+            4150 Network Circle
+            Santa Clara, CA 95054, U.S.A.
+            All Rights Reserved. 
+            </i></small>
+</body>
+</html>

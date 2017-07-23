@@ -1,0 +1,303 @@
+
+		JavaMail 1.3
+		============
+
+		(Updated April 1, 2002)
+
+Following is a description of the new APIs that are being
+introduced in JavaMail 1.3.  The numbers in parentheses
+are bug numbers; you can find more information about the
+bug reports at:
+
+    http://developer.java.sun.com/developer/bugParade/index.html
+
+Please send comments and feedback to javamail@sun.com.
+
+Many of these changes expand JavaMail's conformance with Internet
+standards, or make JavaMail more tolerant of messages that don't
+quite conform to the standards.  "Be liberal in what you receive
+and conservative in what you send."
+
+
+===================================================================
+
+1. Add setSender and getSender methods to MimeMessage (4405115)
+---------------------------------------------------------------
+
+These convenience methods support setting and reading the RFC 822
+Sender header.
+
+    /** 
+     * Returns the value of the RFC 822 "Sender" header field.
+     * If the "Sender" header field is absent, <code>null</code>
+     * is returned.<p>
+     *
+     * This implementation uses the <code>getHeader</code> method
+     * to obtain the requisite header field.
+     *
+     * @return		Address object
+     * @exception	MessagingException
+     * @see		#headers
+     * @since		JavaMail 1.3
+     */
+    public Address getSender() throws MessagingException
+
+    /**
+     * Set the RFC 822 "Sender" header field. Any existing values are 
+     * replaced with the given address. If address is <code>null</code>,
+     * this header is removed.
+     *
+     * @param address	the sender of this message
+     * @exception	IllegalWriteException if the underlying
+     *			implementation does not support modification
+     *			of existing values
+     * @exception	IllegalStateException if this message is
+     *			obtained from a READ_ONLY folder.
+     * @exception	MessagingException
+     * @since		JavaMail 1.3
+     */
+    public void setSender(Address address) throws MessagingException
+
+===================================================================
+
+2. Add setContentID method to MimeBodyPart (4377720)
+----------------------------------------------------
+
+This convenience method supports setting the Content-ID header.
+
+    /**
+     * Set the "Content-ID" header field of this body part.
+     * If the <code>cid</code> parameter is null, any existing 
+     * "Content-ID" is removed.
+     *
+     * @exception	IllegalWriteException if the underlying
+     *			implementation does not support modification
+     * @exception	IllegalStateException if this body part is
+     *			obtained from a READ_ONLY folder.
+     * @exception	MessagingException
+     * @since		JavaMail 1.3
+     */
+    public void setContentID(String cid) throws MessagingException
+
+===================================================================
+
+3. Add mail.mime.charset property (4377731)
+-------------------------------------------
+
+The "mail.mime.charset" System property (NOTE: *not* Session property)
+names the default charset to be used by JavaMail.  If not set, the
+standard J2SE "file.encoding" System property is used.  This allows
+applications to specify a default character set for sending messages
+that's different than the character set used for files stored on the
+system.  This is common on Japanese systems.
+
+===================================================================
+
+4. Add getDeletedMesageCount method to Folder (4388730)
+-------------------------------------------------------
+
+This convenience method would return a count of the number of deleted
+messages in a folder.
+
+    /**
+     * Get the number of deleted messages in this Folder. <p>
+     *
+     * This method can be invoked on a closed folder. However, note
+     * that for some folder implementations, getting the deleted message
+     * count can be an expensive operation involving actually opening 
+     * the folder. In such cases, a provider can choose not to support 
+     * this functionality in the closed state, in which case this method
+     * must return -1. <p>
+     *
+     * Clients invoking this method on a closed folder must be aware
+     * that this is a potentially expensive operation. Clients must
+     * also be prepared to handle a return value of -1 in this case. <p>
+     *
+     * This implementation returns -1 if this folder is closed. Else
+     * this implementation gets each Message in the folder using
+     * <code>getMessage(int)</code> and checks whether its
+     * <code>DELETED</code> flag is set. The total number of messages
+     * that have this flag set is returned.
+     *
+     * @return 		number of deleted messages. -1 may be returned
+     *			by certain implementations if this method is
+     *			invoked on a closed folder.
+     * @exception	FolderNotFoundException if this folder does 
+     *			not exist.
+     * @exception       MessagingException
+     * @since		JavaMail 1.3
+     */
+    public int getDeletedMessageCount() throws MessagingException
+
+===================================================================
+
+5. Support parsing "illegal" Internet addresses (4650940)
+---------------------------------------------------------
+
+The parse method on the InternetAddress class takes a flag that tells
+whether or not to strictly enforce the RFC822 syntax rules.  Currently,
+when the flag is false most rules are still checked while a few are not.
+To better support the range of "invalid" addresses seen in real messages,
+and in combination with the following two changes, the parseHeader
+method would enforce fewer syntax rules when the strict flag is false
+and would enforce more rules when the strict flag is true.  If the
+strict flag is false and the parse is successful in separating out an
+email address or addresses, the syntax of the addresses themselves
+would not be checked.  (Introducing a new method preserves
+compatibility with users of the existing parse method.)
+
+    /**
+     * Parse the given sequence of addresses into InternetAddress
+     * objects.  If <code>strict</code> is false, the full syntax rules for
+     * individual addresses are not enforced.  If <code>strict</code> is
+     * true, many (but not all) of the RFC822 syntax rules are enforced.
+     *
+     * Non-strict parsing is typically used when parsing a list of
+     * mail addresses entered by a human.  Strict parsing is typically
+     * used when parsing address headers in mail messages.
+     *
+     * @param	addresslist	comma separated address strings
+     * @param	strict		enforce RFC822 syntax
+     * @return			array of InternetAddress objects
+     * @exception	AddressException if the parse failed
+     * @since		JavaMail 1.3
+     */
+    public static InternetAddress[] parseHeader(String s, boolean strict)
+					    throws AddressException
+
+
+To allow applications to check the syntax of addresses that might've
+been parsed with the strict flag set to false, we add a validate
+method.
+
+    /**
+     * Validate that this address conforms to the syntax rules
+     * of RFC 822.  The current implementation checks many, not
+     * all, syntax rules.  Note that, even though the syntax of
+     * the address may be correct, there's no guarantee that a
+     * mailbox of that name exists.
+     *
+     * @exception	AddressException if the address
+     *			isn't valid.
+     * @since		JavaMail 1.3
+     */
+    public void validate() throws AddressException
+
+
+To control the strict flag when constructing a single InternetAddress
+object we add a new constructor.
+
+    /**
+     * Parse the given string and create an InternetAddress.
+     * If <code>strict</code> is false, the detailed syntax of the
+     * address isn't checked.
+     *
+     * @param	address		the address in RFC822 format
+     * @param	strict		enforce RFC822 syntax
+     * @exception		AddressException if the parse failed
+     * @since			JavaMail 1.3
+     */
+    public InternetAddress(String address, boolean strict)
+						throws AddressException
+
+===================================================================
+
+6. Add mail.mime.address.strict property (4650940)
+--------------------------------------------------
+
+The MimeMessage class will use the new parseHeader method introduced
+above to parse headers in messages.  The "mail.mime.address.strict"
+Session property will control the strict flag passed to the parseHeader
+method.  The default is true.
+
+===================================================================
+
+7. Add mail.mime.decodetext.strict property (4201203)
+-----------------------------------------------------
+
+RFC 2047 requires that encoded text start at the beginning of a
+whitespace separated word.  Some mailers, especially Japanese mailers,
+improperly encode text and included encoded text in the middle of words.
+The "mail.mime.decodetext.strict" System property (NOTE: *not* Session
+property) controls whether JavaMail will attempt to decode such
+incorrectly encoded text.  The default is true.
+
+===================================================================
+
+8. Add mail.mime.encodeeol.strict property (4650949)
+----------------------------------------------------
+
+When choosing an encoding for the data of a message, JavaMail assumes
+that any of CR, LF, or CRLF are valid line terminators in message
+parts that contain only printable ASCII characters, even if the part is
+not a MIME text type.  It's common, especially on UNIX systems, for
+data of MIME type application/octet-stream (for example) to really be
+textual data that should be transmitted with the encoding rules for
+MIME text.  In rare cases, such pure ASCII text may in fact be binary
+data in which the CR and LF characters must be preserved exactly.  The
+"mail.mime.encodeeol.strict" System property (NOTE: *not* Session
+property) controls whether JavaMail will consider a lone CR or LF in a
+body part that's not a MIME text type to indicate that the body part
+needs to be encoded.
+
+===================================================================
+
+9. Add isGroup and getGroup methods to InternetAddress (4650952)
+----------------------------------------------------------------
+
+To better support RFC822 group addresses, the following methods
+would be added.
+
+    /**
+     * Indicates whether this address is an RFC 822 group address.
+     * Note that a group address is different than the mailing
+     * list addresses supported by most mail servers.  Group addresses
+     * are rarely used; see RFC 822 for details.
+     *
+     * @return		true if this address represents a group
+     * @since		JavaMail 1.3
+     */
+    public boolean isGroup()
+
+    /**
+     * Return the members of a group address.  A group may have zero,
+     * one, or more members.  If this address is not a group, null
+     * is returned.  The <code>strict</code> parameter controls whether
+     * the group list is parsed using strict RFC 822 rules or not.
+     * The parsing is done using the <code>parseHeader</code> method.
+     *
+     * @return		array of InternetAddress objects, or null
+     * @exception	AddressException if the group list can't be parsed
+     * @since		JavaMail 1.3
+     */
+    public InternetAddress[] getGroup(boolean strict) throws AddressException
+
+
+===================================================================
+
+10. Support per-session debug output stream (4517686)
+-----------------------------------------------------
+
+To allow the debugging output for a session to be redirected, we add
+the following methods to Session.
+
+    /**
+     * Set the stream to be used for debugging output for this session.
+     * If <code>out</code> is null, <code>System.out</code> will be used.
+     * Note that debugging output that occurs before any session is created,
+     * as a result of setting the <code>mail.debug</code> system property,
+     * will always be sent to <code>System.out</code>.
+     *
+     * @param	out	the PrintStream to use for debugging output
+     * @since		JavaMail 1.3
+     */
+    public void setDebugOut(PrintStream out)
+
+    /**
+     * Returns the stream to be used for debugging output.  If no stream
+     * has been set, <code>System.out</code> is returned.
+     *
+     * @return		the PrintStream to use for debugging output
+     * @since		JavaMail 1.3
+     */
+    public PrintStream getDebugOut()

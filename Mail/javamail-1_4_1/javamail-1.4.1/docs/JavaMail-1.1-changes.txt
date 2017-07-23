@@ -1,0 +1,656 @@
+		
+		JavaMail 1.1
+		============
+
+Following is a description of the new APIs that are being
+introduced in JavaMail 1.1
+
+Please send comments and feedback to javamail@sun.com
+
+(1) MessageContext
+==================
+
+In some cases it is desirable for the object representing the content
+of a BodyPart to know something about the "context" in which it is
+operating, e.g., what other data is contained in the same Multipart
+object, who sent the message containing the data, etc.  This allows
+for more interesting content types that know more about the message
+containing them and the mail system in general.
+
+Some uses of multipart/related might require these capabilities.
+For instance, the handler for a text/html body part contained in a
+multipart/related object might need to know about the containing
+object in order to find the related image data needed to display the
+HTML document.
+
+There is one particular case in the current implementation where
+this need arises.  (This is a bug in the current release.)  When
+constructing a MimeMessage object for a nested message contained
+in another message, the DataContentHandler needs the Session
+object in order to construct the new MimeMessage object.
+
+To solve these problems we introduce a new class, a new interface,
+and a number of new methods.
+
+The MessageContext class provides the basic information about the
+"context" in which a content object is operating:
+
+/**
+ * The context in which a piece of Message content is contained.  A
+ * <code>MessageContext</code> object is returned by the
+ * <code>getMessageContext</code> method of the
+ * <code>MessageAware</code> interface.  <code>MessageAware</code> is
+ * typically implemented by <code>DataSources</code> to allow a
+ * <code>DataContentHandler</code> to pass on information about the
+ * context in which a data content object is operating.
+ *
+ * @see javax.mail.MessageAware
+ * @see javax.activation.DataSource
+ * @see javax.activation.DataContentHandler
+ */
+public class MessageContext {
+
+    /**
+     * Create a MessageContext object describing the context of the 
+     * given Part.
+     */
+    public MessageContext(Part part)
+
+    /**
+     * Return the Part that contains the content.
+     *
+     * @return	the containing Part, or null if not known
+     */
+    public Part getPart()
+
+    /**
+     * Return the Message that contains the content.
+     * Follows the parent chain up through containing Multipart
+     * objects until it comes to a Message object, or null.
+     *
+     * @return	the containing Message, or null if not known
+     */
+    public Message getMessage()
+
+    /**
+     * Return the Session we're operating in.
+     *
+     * @return	the Session, or null if not known
+     */
+    public Session getSession()
+}
+
+
+A MessageContext object can be obtained by a DataContentHandler from a
+DataSource that also implements the MessageAware interface:
+
+/**
+ * An interface optionally implemented by <code>DataSources</code> to
+ * supply information to a <code>DataContentHandler</code> about the
+ * message context in which the data content object is operating.
+ *
+ * @see javax.mail.MessageContext
+ * @see javax.activation.DataSource
+ * @see javax.activation.DataContentHandler
+ */
+public interface MessageAware {
+    /**
+     * Return the message context.
+     */
+    public MessageContext getMessageContext();
+}
+
+
+This new interface and class provides the basic information needed by
+the DataContentHandler to use in constructing more "interesting" objects
+representing a particular type of data.
+
+To allow navigation up the chain of components contained in a Message,
+we add the following methods.
+
+First, on BodyPart we add:
+
+    /**
+     * The <code>Multipart</code> object containing this 
+     * <code>BodyPart</code>, if known.
+     */
+    protected Multipart parent;
+
+    /**
+     * Return the containing <code>Multipart</code> object,
+     * or <code>null</code> if not known.
+     */
+    public Multipart getParent()
+
+
+On Multipart we add:
+
+    /**
+     * The <code>Part</code> containing this <code>Multipart</code>,
+     * if known.
+     */
+    protected Part parent;
+
+    /**
+     * Return the <code>Part</code> that contains this
+     * (cod<code>Multipart</c object, or <code>null</code> if not known.
+     */
+    public Part getParent()
+
+    /**
+     * Set the parent of this <code>Multipart</code> to be the specified
+     * <code>Part</code>.  Normally called by the <code>Message</code>
+     * or <code>BodyPart</code> <code>setContent(Multipart)</code>
+     * method. <p>
+     *
+     * <code>parent</code> may be <code>null</code> if the
+     * <code>Multipart</code> is being removed from its containing
+     * <code>Part</code>.
+     */
+    public void setParent(Part parent)
+
+
+To enable this new functionality we change the implementations of
+MimeBodyPart, MimeMessage, and MimeMultipart to maintain the "parent"
+links where possible.  We also change MimePartDataSource to implement
+the MessageAware interface.
+
+===================================================================
+
+(2) MessageID
+=============
+The MimeMessage class requires a getMessageID() method.
+
+The client can now fetch it as a header, but since this is a "standard"
+RFC822 header, we want to provide an easier access method. 
+
+An added benefit is that protocols like IMAP, which provide this info
+as part of the ENVELOPE structure, can implement this method much more
+efficiently.
+
+ /**
+  * Returns the value of the "Message-ID" header field. Returns
+  * null if this field is unavailable or its value is absent. <p>
+  *
+  * The default implementation provided here uses the
+  * <code>getHeader()</code> method to return the value of the
+  * "Message-ID" field.
+  *
+  * @return 	Message-ID
+  * @exception	MessagingException, if the retrieval of this field
+  *		causes any exception.
+  * @see	javax.mail.search.MessageIDTerm
+  */
+  public String getMessageID() throws MessagingException;
+
+===================================================================
+
+(3) UIDFolder
+=============
+
+The following methods in the UIDFolder interface have certain problems.
+
+We are proposing changes that will fix these problems. These are
+binary incompatible changes, but we think these changes are necessary for
+this interface to work in a useful manner. We are also not aware of
+anyone that has shipped a Store Provider that implements this interface,
+so we are hoping that the effect of this change is minimal (non-existent).
+
+(1) Message getMessageByUID(long uid)
+
+Description:
+	Get the Message corresponding to the given UID. If no such
+message exists, the java.util.NoSuchElementException is thrown.
+
+Problem:
+	A disconnected client can have a stash of UIDs from a
+previous session. Some of these UIDs may have been expunged from the
+server, but the disconnected client does not know this. It is quite
+reasonable (and expected) for a disconnected client to use this
+method when reconnecting - to check whether a UID is valid or not at
+the server.
+	Since failure is an expected result here, using a
+RunTimeException to indicate it, seems wrong and counter-intuitive for
+the client.
+
+Solution:
+	Our solution is to allow this method to return null to indicate
+that the requested UID is not valid anymore. Thus, this method will no
+longer throw the java.util.NoSuchElementException.
+
+(2)  Message[] getMessagesByUID(long start, long end)
+
+Description:
+	Get the Messages corresponding to the given UID range. If any
+UID is invalid, the java.util.NoSuchElementException is thrown.
+
+Problem:
+	Similar, but worse than (1). We think that disconnected clients
+(or clients that prefer to use UIDs) may issue 
+	getMessagesByUID(1, LASTUID) 
+to get all the Messages at the server, especially when the client does
+not know the exact UIDs for this folder. In this case, we certainly
+do not want this method to fail if some id in the given range is 
+not a valid UID; rather we want it to return all available Messages from
+the server.
+
+Solution:
+	Our solution is to remove the NoSuchElementException exception
+and allow this method to return Message objects in the given range.
+
+(3) Message[] getMessagesByUID(long[] uids)
+
+Description:
+	Get the Messages corresponding to the given UID range. If any
+UID is invalid, the java.util.NoSuchElementException is thrown.
+
+Problem:
+	Identical to (1).
+	A disconnected client can have a stash of UIDs from a
+previous session. Some of these UIDs may have been expunged from the
+server, but the disconnected client does not know this. It is quite
+reasonable (and expected) for a disconnected client to use this
+method when reconnecting - to check whether a set of UIDs are valid
+or not at the server.
+	Since failure can be an expected result, using a
+RunTimeException to indicate it, seems wrong and counter-intuitive for
+the client.
+
+Solution:
+	Our solution is to allow this method to return null entries
+to indicate that a requested UID is not valid anymore. Thus, the
+message array returned by this method can have null entries for the
+invalid UIDs; and this method will no longer throw the 
+java.util.NoSuchElementException.
+	Note that the size of the returned Message array is the same
+as the size of the request array of UIDs, and that each entry in the
+Message array corresponds to the same index entry in the UID array.
+===================================================================
+
+(4) InternetAddress
+===================
+
+The InternetAddress class needs the following protected field to
+properly support encoding of the "personal name".
+
+	protected String encodedPersonal; // the encoded personal name
+
+No other API changes are associated with this. 
+
+This is a binary compatible change to JavaMail 1.0. However, there is
+a potential problem for any existing InternetAddress subclasses, which
+can cause them to break. This typically will affect only providers,
+not clients.
+
+Details:
+-------
+
+The InternetAddress implementation will use this field to store the
+encoded personal name. 
+
+	The getPersonal() method will return the protected
+'personal' field; if this field is null, it will check the 'encodedPersonal'
+field and decode its value and return it.
+	The toString() method will use the protected 'encodedPersonal'
+field to create the RFC2047 compliant address string. If this field is
+null, it will check the 'personal' field, encode that if necessary and
+use it.
+
+This implies that, if an InternetAddress subclass changes either 
+the 'personal' or 'encodedPersonal' fields,  it should set the other
+to null to force its recomputation. Unfortunately, this also implies
+that existing subclasses of InternetAddress that directly set the
+'personal' field can break in certain situations.
+	We feel that the risk of this happening is minimal, since we
+don't expect that our users have subclassed InternetAddress. Also, this
+is necessary to properly support encoded personal names, so we feel that
+this has to be done.
+================================================================
+
+(5) MimeCharset
+================
+
+A utility method to convert java charsets into MIME charsets is
+needed.
+
+The JDK supports a variety of charsets. The JDK has names for these
+charsets, unfortunately they dont always match to their MIME or IANA
+equivalents. 
+
+It is necessary in some cases, (especially for providers) to map the
+JDK charset names into their MIME or IANA equivalents. This method does
+that.
+
+The API:
+-------
+
+This is a new static method to the javax.mail.internet.MimeUtility class
+
+	/**
+	 * Convert a java charset into its MIME charset name. <p>
+	 *
+	 * Note that a future version of JDK (post 1.2) might provide
+	 * this functionality, in which case, we might deprecate this
+	 * method then.
+	 *
+	 * @param   charset    the JDK charset
+	 * @return	the MIME/IANA equivalent. If a mapping
+	 *		is not possible, the passed in charset itself
+	 *		is returned.
+	 */			
+	public static String mimeCharset(String charset);
+
+====================================================================
+
+(6) getDefaultJavaCharset()
+============================
+
+This method returns the default charset for the platform's locale, as
+a Java charset. This is a new static method to the MimeUtility class.
+
+    /**
+     * Get the default charset for this locale. <p>
+     *
+     * @return  the default charset of the platform's locale,
+     *          as a Java charset. (NOT a MIME charset)
+     */
+    public static String getDefaultJavaCharset()
+
+====================================================================
+
+(7) Method to print out the nested Exceptions
+=============================================
+
+The MessagingException class currently allows nested exceptions. It
+would be nice to have one single method to dump out all the 
+nested exceptions' messages into System.out
+
+Proposal
+--------
+
+Override the getMessage() method from the superclass (Throwable), to
+append the messages from all nested Exceptions. This is similar to
+java.rmi.RemoteException.
+
+==================================================================
+
+(8) New SearchTerms
+====================
+
+The current address related search terms - AddressTerm, FromTerm and
+RecipientTerm are limited in that they operate on Address objects, not
+Strings. These terms use the equals() method to compare the addresses -
+which is not useful for the common case of substring comparisons.
+
+Hence we introduce three new SearchTerms:
+
+public AddressStringTerm extends StringTerm {
+    /**
+     * Constructor.
+     * @param pattern	the address pattern to be compared
+     */
+    protected AddressStringTerm(String pattern);
+
+    /**
+     * Check whether the address pattern specified in the 
+     * constructor is a substring of the string representation of 
+     * the given Address object.
+     *
+     * @param	address	the address to match against
+     */
+    protected boolean match(Address address);
+}
+
+public FromStringTerm extends AddressStringTerm {
+    /**
+     * Constructor.
+     * @param	address	the address to be compared.
+     */
+    public FromStringTerm(String string);
+
+    /**
+     * Check whether the address specified in the constructor is
+     * a substring of the "From" attribute of this message.
+     *
+     * @param	msg the address comparison is applied to this Message
+     */
+     public boolean match(Message msg);
+}
+
+public RecipientStringTerm extends AddressStringTerm {
+
+    /**
+     * Constructor.
+     *
+     * @param type      the recipient type
+     * @param address	the address to be compared.
+     */
+    public RecipientStringTerm(Message.RecipientType type, String address);
+
+    /**
+     * Return the type of recipient to match with.
+     */
+    public Message.RecipientType getRecipientType();
+
+    /**
+     * Check whether the address specified in the constructor is
+     * a substring of the given Recipient attribute of this message.
+     *
+     * @param	msg the address comparison is applied to this Message
+     */
+     public boolean match(Message msg);
+}
+
+==================================================================
+
+(9) InternetAddress.toString(Address[] addresses, int used)
+===========================================================
+
+As per RFC2047 (MIME), the length of a header field that contains
+encoded-words is limited to 76 characters.
+
+There are two methods in the InternetAddress class that generate
+RFC822 style address strings:
+
+ - The toString() method on InternetAddress, which generates
+ the string for one InternetAddress object
+ - The toString() static method, which generates a comma separated
+ string for the given array of InternetAddress objects.
+
+Both these methods currently do not honor the 76 character limit.
+Actually, the former does to an extent, since the encodedWord
+generator (i.e the MimeUtility.encodeWord() method) does break
+encoded words into multiples, if they stretch beyond 76 characters.
+
+Solution
+--------
+
+For the 1.1 release, we are planning to fix the the toString()
+static method as follows:
+
+Add a new static method 
+	static String toString(Address[] address, int used)
+
+This method takes an array of Address objects and an integer representing
+the number of "used" character positions for the first line of this
+field. The typical use of this method is when setting RFC822 headers,
+like the "From" header. 'used' can be set to sizeof("From: ") in
+this case.
+
+When generating the string, this method starts a new line if the
+addition of the next address.toString() causes the current line's 
+line-length to go over 76.
+
+Note that this algorithm does not work right if the length of a single
+InternetAddress is itself more than 76 characters. Also, it does not
+optimally break an address field, so that the maximum characters are
+accommodated in a single line.
+
+So, essentially, this is an initial attempt to solve this problem. We
+will add more APIs in the next version to further refine this.
+==================================================================
+
+(10) Folder.getMode()
+=====================
+
+It is currently not possible to tell whether a folder is open READ_ONLY
+or READ_WRITE without attempting to write it and catching the exception.
+
+We propose to add a protected field to Folder to store the open mode and
+a new method to Folder to return the open mode.  Because existing 
+subclasses will not use this new field, we can't guarantee that the 
+method will always return the correct value (although all Folder subclasses
+in the JavaMail package will be updated to return the correct value).
+
+    /**
+     * The open mode (<code>Folder.READ_ONLY</code>,
+     * <code>Folder.READ_WRITE</code>, or -1 if not known).
+     */
+    protected int mode = -1;
+
+    /**
+     * Return the open mode of this folder.  Returns
+     * <code>Folder.READ_ONLY</code>, <code>Folder.READ_WRITE</code>,
+     * or -1 if the open mode is not known (usually only because an older
+     * <code>Folder</code> provider has not been updated to use this new
+     * method).
+     *
+     * @exception	IllegalStateException if this folder is not opened
+     * @return	        the open mode of this folder
+     */
+    public int getMode() {
+	if (!isOpen())
+	    throw new IllegalStateException("Folder not open");
+	return mode;
+    }
+
+====================================================================
+
+(11) Folder.getURLName()
+========================
+
+The URLName support in the JavaMail 1.0 API's is incomplete and
+inadequately specified.  While you can get a Folder from a Session
+given a URLName for the folder, you can't find out the URLName
+for a given Folder object.  We propose adding the following method
+to Folder:
+
+    /**
+     * Return a URLName representing this folder.  The returned URLName
+     * does <em>not</em> include the password used to access the store.
+     *
+     * @return	the URLName representing this folder
+     * @see	URLName
+     */
+    public URLName getURLName() throws MessagingException
+
+Previously it was not specified whether the URLName returned from
+the Store.getURLName method would include the password field or
+not, but sometimes it did.  We propose to tighen the specification
+and fix the implementation so that the password field is not returned:
+
+    /**
+     * Return a URLName representing this store.  The returned URLName
+     * does <em>not</em> include the password field.  <p>
+     *
+     * Subclasses should only override this method if their
+     * URLName does not follow the standard format.
+     *
+     * @return	the URLName representing this store
+     * @see	URLName
+     */
+    public URLName getURLName()
+
+Similarly for Transport.
+
+Previously it was unspecified how the Store and Transport connect
+methods interacted with the url field.  In some cases it would be
+updated and in other cases it would not.  We propose to tighen the
+specification as follows:
+
+    /**
+     * Connect to the specified address. This method provides a simple
+     * authentication scheme that requires a username and password. <p>
+     *
+     * If the connection is successful, an "open" ConnectionEvent is
+     * delivered to any ConnectionListeners on this Store. <p>
+     *
+     * It is an error to connect to an already connected Store. <p>
+     *
+     * The implementation in the Store class will collect defaults
+     * for the host, user, and password from the session, prompting the
+     * user if necessary, and will then call the protocolConnect method,
+     * which the subclass must override.  The subclass should also
+     * implement the <code>getURLName</code> method, or use the 
+     * implementation in this class. <p>
+     *
+     * On a successful connection, the <code>setURLName</code> method is
+     * called with a URLName that includes the information used to make
+     * the connection, including the password. <p>
+     *
+     * If the password passed in is null and this is the first successful
+     * connection to this store, the user name and the password
+     * collected from the user will be saved as defaults for subsequent
+     * connection attempts to this same store.  If the password passed
+     * in is not null, it is not saved, on the assumption that the 
+     * application is managing passwords explicitly.
+     *
+     * @param host 	the host to connect to
+     * @param user	the user name
+     * @param password	this user's password
+     * @exception AuthenticationFailedException	for authentication failures
+     * @exception MessagingException		for other failures
+     * @exception IllegalStateException	if the store is already connected
+     * @see javax.mail.event.ConnectionEvent
+     */
+    public void connect(String host, String user, String password)
+			throws MessagingException
+
+And add this method to Store and Transport:
+
+    /**
+     * Set the URLName representing this store.
+     * Normally used to update the <code>url</code> field
+     * after a store has successfully connected. <p>
+     *
+     * Subclasses should only override this method if their
+     * URLName does not follow the standard format. <p>
+     *
+     * The implementation in the Store class simply sets the
+     * <code>url</code> field.
+     *
+     * @see URLName
+     */
+    protected void setURLName(URLName url)
+
+And finally, to simplify the implementation of Store and Transport,
+and make the common design patterns between them more clear, we're
+considering introducing a new Service class as a superclass of
+Store and Transport, and moving all common methods (the various
+connnect methods, URLName methods, and some listener methods) to
+the superclass.  Note that this is a binary compatible change.
+
+=====================================================================
+
+12) New Service class
+======================
+
+To emphasize the commonality in behavior between the Store and
+Transport classes, and to simplify maintenance of these classes, we
+propose moving many of the common methods to a new superclass called
+javax.mail.Service.  Store and Transport would then extend Service.
+These existing methods currently have identical implementations in the
+Store and Transport classes so moving them to a common superclass will
+not change the behavior of either Store or Transport.
+
+The Service class will contain all the methods and fields having to do
+with connecting, connection listeners, and naming via URLNames.  The
+Store class retains the methods for getting Folders and managing Store
+and Folder listeners.  The Transport class retains the methods for
+sending messages and managing Transport listeners.
+
+Note that this is a binary compatible change both for existing users of
+the Store and Transport classes, as well as for existing subclasses of
+these classes.
+
+======================================================================

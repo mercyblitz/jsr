@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="75"
+   name=""
+   committed-date="2007-08-30T18:07:41.977251Z"
+   url="https://jsr311.dev.java.net/svn/jsr311/trunk/www/javadoc/javax/ws/rs/core/class-use"
+   last-author="mhadley"
+   kind="dir"
+   repos="https://jsr311.dev.java.net/svn/jsr311"
+   revision="78"/>
+<entry
+   committed-rev="85"
+   name="PathSegment.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="8dc724cc1970d5a4b53be5aa7c0115aa"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="PreconditionEvaluator.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="9f7efa12097b7660da5b749ef3b669c9"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="MediaType.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="1dc048415250aabbd7b39c2505c9a8de"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="Response.Builder.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="479bd53f8edaadefe1b0db4ae1cf7c90"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="NewCookie.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="434f11c379cd91d20938e9eef3a969cb"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="HttpContext.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="069bc846bcca40cc8f0e319dbfd7ac56"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="UriBuilderException.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="fc7554d305fee5c4c9f1163bdabf012a"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="MultivaluedMap.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="5e815e4529ac90c40ca8c68e9f583f1b"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="Response.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="bd1f5419bf228b15f8f991dbb35c6980"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="ApiMessages.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="dc7a87655ee5608bbf36742ed7daf3fb"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="CacheControl.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="afcf08d9579a2de895b879da3c015b86"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="UriBuilder.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="1671cb6c61afd91ca1fc0bf21f1e5317"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="EntityTag.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="6a2d83b38c1d14aa4967f6bd05537ff5"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="Cookie.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="b76a279c4c55597e913dad4f2beeeb3e"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="HttpHeaders.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="74902c25126f960e108d0c06fa22e69a"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="UriInfo.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="4b7ca7a9c848b5e605a0bcdf7fd192a4"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+</wc-entries>

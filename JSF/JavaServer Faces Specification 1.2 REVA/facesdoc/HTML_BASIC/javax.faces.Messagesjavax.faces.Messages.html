@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN""http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<title>
+<font size="-1">component-family:</font> javax.faces.Messages <font size="-1">renderer-type:</font> javax.faces.Messages
+</title>
+<link REL ="stylesheet" TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+</head>
+<script>
+function asd()
+{
+  parent.document.title=<font size="-1">component-family:</font> javax.faces.Messages <font size="-1">renderer-type:</font> javax.faces.Messages
+}
+</SCRIPT>
+<body BGCOLOR="white" onload="asd();">
+
+<H2><font size="-1">HTML_BASIC render-kit</font>
+<br />
+<font size="-1">component-family:</font> javax.faces.Messages <font size="-1">renderer-type:</font> javax.faces.Messages
+</H2>
+<HR />
+<P>
+     <p>The same as for the Message renderer, but output all the
+     messages.  If the value of the "layout" attribute is "table",
+     render nested "table", "tr", and "td" elements, in that order.
+     If the value of the "layout" attribute is "list", or the "layout" 
+     attribute is not specified, render nested "ul", "li" elements,
+     in that order.  Output the value of the "style" attribute as the 
+     value of the "style" attribute, output the value of the "styleClass" 
+     attribute as the value of the "class" attribute, and output the dir
+     and lang attributes.  Output these values on the "table" element or 
+     the "ul" element.   The component is a <code>UIMessages</code>, and 
+     there is no "for" attribute.  Therefore, use either <code>null</code> 
+     to obtain the messages from the <code>FacesContext</code> or the 
+     empty string if the components "globalOnly" property is <code>true</code>.  
+     If the layout was "table" close out the table elements, otherwise, 
+     close out the list elements.</p></P>
+<P>This renderer is responsible for rendering its children.</P><HR />
+<a NAME="attributes"><!-- --></a>
+
+<h3>Note:</h3>
+
+<p>Attributes with a <code>pass-through</code> value of
+<code>true</code> are not interpreted by the renderer and are passed
+straight through to the rendered markup, without checking for validity.  Attributes with a
+<code>pass-through</code> value of <code>false</code> are interpreted
+by the renderer, and may or may not be checked for validity by the renderer.</p>
+
+<table BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td COLSPAN="5"><font SIZE="+2">
+<b>Attributes</b></font></td>
+</tr>
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<th><b>attribute-name</b></th>
+<th><b>pass-through</b></th>
+<th><b>attribute-class</b></th>
+<th><b>description</b></th>
+<th><b>default-value</b></th>
+</tr>
+	    
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;dir
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Direction indication for text that does not inherit directionality.
+          Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;errorClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style class to apply to any message
+          with a severity class of "ERROR".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;errorStyle
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to apply to any message
+          with a severity class of "ERROR".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;fatalClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style class to apply to any message
+          with a severity class of "FATAL".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;fatalStyle
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to apply to any message
+          with a severity class of "FATAL".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;infoClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style class to apply to any message
+          with a severity class of "INFO".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;infoStyle
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to apply to any message
+          with a severity class of "INFO".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;lang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Code describing the language used in the generated markup
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;layout
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The type of layout markup to use when rendering
+          error messages.  Valid values are "table" (an HTML
+          table) and "list" (an HTML list).  If not specified,
+          the default value is "list".</td>
+<td>"list"<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;style
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to be applied when this component is rendered.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;styleClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Space-separated list of CSS style class(es) to be applied when
+          this element is rendered.  This value must be passed through
+          as the "class" attribute on generated markup.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;title
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Advisory title information about markup elements generated
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;tooltip
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>boolean</code></td>
+<td>
+          Flag indicating whether the detail portion of the
+          message should be displayed as a tooltip.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;warnClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style class to apply to any message
+          with a severity class of "WARN".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;warnStyle
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to apply to any message
+          with a severity class of "WARN".</td>
+<td>undefined<td>
+</tr>
+</table>
+<hr>
+Copyright (c) 2003-2004 Sun Microsystems, Inc. All Rights Reserved.
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Downloading and Caching of Resources</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>6 Downloading and Caching of Resources</h1>
+<hr>
+<p><br>
+  The JNLP Client can download four different kind of resources from the Web: 
+  JAR files, images, extensions, and JNLP files. This section describes how they 
+  are downloaded, and how they can be cached on the client system. </p>
+<p>JNLP defines three different download protocols, all based on HTTP GET requests:</p>
+<ul>
+  <li>A basic download protocol which does not require special Web server support. 
+    This can be used for JAR files, images, and JNLP files. </li>
+  <li>A version-based download protocol that allows greater control over which 
+    resources are downloaded and which supports incremental updating of JAR files. 
+    This can be used for JAR files and images.</li>
+  <li>An extension download protocol which is an addition to the above protocols 
+    to include platform-specific information. This is used for JNLP files containing 
+    extension descriptors.</li>
+</ul>
+<p>Resources are named uniquely in a JNLP file using the <code>href</code> and 
+  <code>version</code> attributes. The following table summarizes the different 
+  elements that refer to external resources and which download protocols they 
+  support.</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Element</font></strong></td>
+    <td><font size="+2"><code><strong>href</strong></code><strong> attribute</strong></font></td>
+    <td><strong><font size="+2">version attribute</font></strong></td>
+    <td><strong><font size="+2">Supported Protocols</font></strong></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>jnlp<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top">Optional</td>
+    <td align="left" valign="top">n/a</td>
+    <td align="left" valign="top">Basic</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>icon<br>
+        <br>
+        </code></p></td>
+    <td align="left" valign="top"> <p>Required</p></td>
+    <td align="left" valign="top">Optional</td>
+    <td align="left" valign="top">Basic, Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>jar<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top">Required</td>
+    <td align="left" valign="top">Optional</td>
+    <td align="left" valign="top">Basic, Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>nativelib<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top">Required</td>
+    <td align="left" valign="top">Optional</td>
+    <td align="left" valign="top">Basic, Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>extension<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top">Required</td>
+    <td align="left" valign="top">Optional</td>
+    <td align="left" valign="top">Basic, Extension</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>java<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top">Optional</td>
+    <td align="left" valign="top">Required</td>
+    <td align="left" valign="top">Extension</td>
+  </tr>
+</table>
+<h2><a name="http"></a>6.1 HTTP Format</h2>
+<p>The HTTP protocol is used to transfer all information between the Web server 
+  and the JNLP Client. The following describes the common request and response 
+  format used by all download protocols.</p>
+<h3>6.1.1 Request</h3>
+<p>Each request consists of an HTTP GET request to the URL for the given resource, 
+  and potentially a set of arguments, passed to the Web server in the query string 
+  of the URL. The syntax for a request is:</p>
+<blockquote>
+  <p><code>request ::= href [ &quot;?&quot; arguments ]</code></p>
+  <p><code>arguments ::= key &quot;=&quot; value ( &quot;&amp;&quot; key &quot;=&quot; 
+    value ) * </code></p>
+</blockquote>
+<p>The <code>href</code> in the request is the exact URL for the given resource 
+  as specified in the JNLP file. The JNLP Client must not encode nor decode this 
+  part of the request. The <code>key</code> and <code>value</code> elements are 
+  encoded using the default encoding for parameters passed in URLs. To convert 
+  a <code>key</code>/<code>value</code>, each character is examined in turn: </p>
+<ul>
+  <li>The ASCII characters '<code>a</code>' through '<code>z</code>', '<code>A</code>' 
+    through '<code>Z</code>', '<code>0</code>' through '<code>9</code>', '<code>.</code>' 
+    , '<code>*</code>', '<code>-</code>', and '<code>_</code>' can remain the 
+    same. </li>
+  <li>The space character '<code> </code>' is converted into a plus sign '<code>+</code>'. 
+  </li>
+  <li>All other characters are converted into the 3-character string &quot;<code>%xy</code>&quot;, 
+    where <code>xy</code> is the two-digit hexadecimal representation of the lower 
+    8-bits of the character. </li>
+</ul>
+<p>The <code>java.net.URLEncoder</code> in the Java 2 SE platform implements this 
+  conversion.</p>
+<h3><a name="response"></a>6.1.2 Response</h3>
+<p>If the HTTP response status code is different than <code>200 OK</code>, then 
+  the request failed and the JNLP Client must handle this as an error.</p>
+<p>If the HTTP request succeeded, JNLP Client must examine the MIME type of the 
+  HTTP response to figure out the kind of resource/response returned. </p>
+<p>The following table gives an overview of the possible return MIME types and 
+  for which download protocols and elements they are used. The description of 
+  the individual protocols elaborates on this.</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Return MIME type</font></strong></td>
+    <td><font size="+2"><strong>Elements</strong></font></td>
+    <td><strong><font size="+2">Download Protocol</font></strong></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>image/jpeg<br>
+      </code></td>
+    <td align="left" valign="top"><code>icon</code></td>
+    <td align="left" valign="top">Basic, Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>image/gif</code></p></td>
+    <td align="left" valign="top"> <p><code>icon</code></p></td>
+    <td align="left" valign="top">Basic, Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>application/x-java-archiv<br>
+      </code></td>
+    <td align="left" valign="top"><code>jar, nativelib</code></td>
+    <td align="left" valign="top">Basic, Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>application/x-java-archive-dif<br>
+      </code></td>
+    <td align="left" valign="top"><code>jar, nativelib</code></td>
+    <td align="left" valign="top">Version-based</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>application/x-java-jnlp-file<br>
+      </code></td>
+    <td align="left" valign="top"><code>jnlp, extension, java </code></td>
+    <td align="left" valign="top">Basic, Extension</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>application/x-java-jnlp-error<br>
+      </code></td>
+    <td align="left" valign="top"><code>All </code></td>
+    <td align="left" valign="top">All</td>
+  </tr>
+</table>
+<p>If the <code>application/x-java-jnlp-error</code> MIME type is returned, the 
+  request failed. The response must be a single line that contains the numeric 
+  status code, followed by a space, followed by a textual explanation. The following 
+  status codes are defined:</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Error Code</font></strong></td>
+    <td><font size="+2"><strong>Download Protocol</strong></font></td>
+    <td><strong><font size="+2">Description</font></strong></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>10<br>
+      </code></td>
+    <td align="left" valign="top">All</td>
+    <td align="left" valign="top"> Could not locate resource</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>11</code></p></td>
+    <td align="left" valign="top"> <p>All</p></td>
+    <td align="left" valign="top"> Could not locate requested version </td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>20<br>
+      </code></td>
+    <td align="left" valign="top">Extension</td>
+    <td align="left" valign="top"> Unsupported operating system</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>21<br>
+      </code></td>
+    <td align="left" valign="top">Extension</td>
+    <td align="left" valign="top"> Unsupported architecture</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>22<br>
+      </code></td>
+    <td align="left" valign="top">Extension</td>
+    <td align="left" valign="top"> Unsupported locale</td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>23<br>
+      </code></td>
+    <td align="left" valign="top">Extension</td>
+    <td align="left" valign="top"> Unsupported JRE version</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top"><code>99</code></td>
+    <td align="left" valign="top">All</td>
+    <td align="left" valign="top"> Unknown error</td>
+  </tr>
+</table>
+<p>The description returned from the Web server does not necessarily need to match 
+  the above descriptions.</p>
+<p>The <code>10 Could not locate resource</code> is included for completeness. 
+  Typically, a Web server will use the <code>404 Not Found</code> HTTP status 
+  code to convey this information. </p>
+<p>An unmodified Web server can be used with the basic protocol. It will never 
+  return the 10 Could not locate resource error code. It will instead return the 
+  404 HTTP status code.</p>
+<h2><a name="basic"></a>6.2 Basic Download Protocol</h2>
+<p>The basic download protocol is used to download resources without any version 
+  information, i.e., where the version attribute is not specified. A resource 
+  is downloaded with an HTTP GET request to the Web server. For example, given 
+  the following jar element:</p>
+<blockquote>
+  <p><code>&lt;jar href=&quot;http://www.mysite.com/c.jar&quot;/&gt;</code> </p>
+</blockquote>
+<p>then the JNLP Client must issue the following HTTP GET request:</p>
+<blockquote>
+  <p><code>http://www.mysite.com/c.jar</code></p>
+</blockquote>
+<p>to retrieve the JAR file. </p>
+<p>The JNLP Client must examine the HTTP response status code and MIME type to 
+  determine if the result was successful. The valid responses are described in 
+  section <a href="#response">6.1.2</a>.</p>
+<h2><a name="version"></a>6.3 Version-based Download Protocol</h2>
+<p>For the version-based download protocol, all resources are uniquely identified 
+  by a URL/<code>version-id</code> pair. Thus, a JNLP Client can at any given 
+  time request a specific version of a resource located at a specific URL.</p>
+<p>The JNLP Client issues an HTTP GET request that includes the specific version 
+  of the resource that it needs. The request includes the field <code>version-id</code>, 
+  which specifies the requested version. For example, given the following jar 
+  element:</p>
+<blockquote>
+  <p><code>&lt;jar href=&quot;http://www.mysite.com/b.jar&quot; version=&quot;2.3+&quot;/&gt;</code></p>
+</blockquote>
+<p>then the JNLP Client must issue the following HTTP GET request<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#14','','scrollbars=yes,resizable=yes,width=500,height=700')">14</a></SUP>:</p>
+<blockquote>
+  <p><code>http://www.mysite.com/c.jar?version-id=2.3%2B</code></p>
+</blockquote>
+<p>The JNLP Client must examine the HTTP response status code and MIME type to 
+  determine if the result was successful. The valid responses are described in 
+  section <a href="#response">6.1.2</a>. For the above jar element, the <code>application/x-java-archive-diff</code> 
+  MIME type cannot be returned. It can only be returned for incremental requests.</p>
+<p>The version string used in the request is not necessarily exact, e.g., <code>2.3+</code>. 
+  The Web server must specify the exact <code>version-id</code> of the resource 
+  that is returned in the response by setting the HTTP header field: <code>x-java-jnlp-version-id</code>. 
+  The exact version returned must be one that matches the requested version string.</p>
+<h3>6.3.1 Incremental Updates for JAR files</h3>
+<p>JNLP allows incremental updates to be applied to JAR files. Typically, downloading 
+  an incremental update will be much faster than downloading the new version. 
+  Incremental updates are distributed in the form of <code>JARDiff</code> files, 
+  which are described in <a href="b.html">Appendix B</a>. </p>
+<p>If the JNLP Client has a previous version of a given JAR file already cached, 
+  e.g., version 2.2, then this fact can be specified in the request. The Web server 
+  can then potentially provide an incremental update that can be applied to the 
+  existing file, instead of returning the contents of the new file.</p>
+<p>An incremental update is enabled by providing information about the version 
+  that is already cached by the JNLP Client in the HTTP request. The field <code>current-version-id</code> 
+  is used to specify the existing local version. For example:</p>
+<blockquote>
+  <p><code>http://www.mysite.com/c.jar?version-id=2.3%2B&amp;current-version-id=2.2</code></p>
+</blockquote>
+<p>The <code>current-version-id</code> must always be exact. If several versions 
+  of a given resource are in the cache, then the highest <code>version-id</code> 
+  that is lower than the requested version should be used. The Web server is not 
+  required to return an incremental update, but could just return the requested 
+  JAR file.</p>
+<p>The returned contents of the response are the same as for the request without 
+  the <code>current-version-id</code> field, except that a <code>JARDiff</code> 
+  file might be returned. In that case, the response MIME type must be <code>application/x-java-archive-diff</code>.</p>
+<h2><a name="extension"></a>6.4 Extension Download Protocol</h2>
+<p>An extension can either be named with a URL or a URL/<code>version-id</code> 
+  pair. If only a URL is specified, the basic download protocol is used to download 
+  the extension descriptor (i.e., the JNLP file). If both a URL and a version 
+  string are specified, the version-based download protocol plus a set of additional 
+  fields are used. The extra fields allow the Web server to return different extension 
+  descriptors for different platforms. The extension download protocol is also 
+  used to download a JRE.</p>
+<p>The additional fields in the request are:</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td><strong><font size="+2">Key</font></strong></td>
+    <td><font size="+2"><strong>Required?</strong></font></td>
+    <td><strong><font size="+2">Description</font></strong></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>arch<br>
+      </code></td>
+    <td align="left" valign="top">yes</td>
+    <td align="left" valign="top">The Java system property <code>os.arch</code> 
+    </td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"> <p><code>os</code><br>
+      </p></td>
+    <td align="left" valign="top"> <p>yes</p></td>
+    <td align="left" valign="top">The Java system property <code>os.name</code></td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>locale<br>
+      </code></td>
+    <td align="left" valign="top">yes</td>
+    <td align="left" valign="top">Required locales. Several locales can be specified, 
+      separated with spaces.<br>
+      <code> </code> </td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>platform-version-id<br>
+      </code></td>
+    <td align="left" valign="top">See below</td>
+    <td align="left" valign="top">Platform version of requested JRE (only used 
+      for the java element) </td>
+  </tr>
+  <tr> 
+    <td align="left" valign="top"><code>known-platforms<br>
+      </code></td>
+    <td align="left" valign="top">yes</td>
+    <td align="left" valign="top">Platform versions of the JREs that are already 
+      locally available, i.e., that do not require an additional download of a 
+      JRE. This is a version string. </td>
+  </tr>
+</table>
+<p>The JNLP Client must examine the HTTP response status code and MIME type to 
+  determine if the result was successful. The valid responses are described in 
+  Section 6.1.2.</p>
+<p>The <code>known-platforms</code> field is a version string that contains the 
+  platform versions of the JREs that the JNLP Client can use to run an installer, 
+  e.g, &quot;1.2 1.3&quot;. This allows the Web server to make sure that a potential 
+  installer for the extension can be run on the client system. Product versions, 
+  such as &quot;1.2.2&quot;, are not appropriate for this field.</p>
+<p>In a request, either the <code>version-id</code> or the <code>platform-version-id</code> 
+  must be specified. Both cannot be specified at the same time. The <code>platform-version-id</code> 
+  is only applicable when an extension that describes a JRE is requested. An example 
+  of this is described below.</p>
+<p>The version string used in the request is not necessarily exact, e.g., &quot;2.3+&quot;. 
+  The Web server must specify the exact <code>version-id</code> (product version) 
+  of the extension/JRE that is returned in the response by setting the HTTP header 
+  field: <code>x-java-jnlp-version-id</code>. The exact version returned must 
+  be one that matches the requested version string.</p>
+<p>For example, given the following element:</p>
+<blockquote>
+  <p><code>&lt;extension href=&quot;http://www.mysite.com/servlet/ext/coolaudio.jnlp&quot; 
+    version=&quot;2.3.0 2.3.1&quot;/&gt;</code></p>
+  </blockquote>
+<p>the HTTP request would look like this (given that a Java 2 SE 1.2 JRE is available):</p>
+<blockquote>
+  <p><code>http://www.mysite.com/servlet/ext/coolaudio.jnlp?arch=x86&amp;os=Windows+95<br>
+    &amp;locale=en_US&amp;version-id=2.3.0+2.3.1&amp;known-platforms=1.2</code></p>
+</blockquote>
+<p>The above request is based on the version-based protocol. That request could 
+  also include the <code>current-version-id</code> element if an extension-descriptor 
+  was already downloaded.</p>
+<p>Given the following element:</p>
+<blockquote>
+  <p><code>&lt;extension href=&quot;http://www.mysite.com/ext/coolaudio.jnlp&quot;/&gt;</code></p>
+</blockquote>
+<p>the HTTP request would be using the basic download protocol and look like this: 
+</p>
+<blockquote>
+  <p><code>http://www.mysite.com/ext/coolaudio.jnlp</code></p>
+</blockquote>
+<p>A JRE can be downloaded using the extension protocol. The java element contains 
+  two attributes, <code>version</code> and <code>href</code>, which guide the 
+  installation process. For example:</p>
+<blockquote>
+  <p><code>&lt;java version=&quot;1.3&quot; href=&quot;http://www.jrevendor.com/servlet/jreinstaller&quot;/&gt;</code></p>
+</blockquote>
+<p>The <code>version</code> and <code>href</code> parameters serve the same purpose 
+  as in the <code>extension</code> element. Hence, the HTTP GET request will look 
+  like:</p>
+<blockquote> 
+  <p><code>http://www.jrevendor.com/servlet/jreinstaller?arch=x86&amp;os=Windows+95&amp;locale=<br>
+    &nbsp; en_US&amp;version-id=1.3&amp;known-platforms=1.2</code></p>
+</blockquote>
+<p>If an <code>href</code> attribute is not specified (which should be the most 
+  common case), then a platform version of the Java 2 platform is requested. If 
+  no JRE that implements that particular version is available on the client machine, 
+  the extension download protocol can be used to download an implementation that 
+  does. The <code>platform-version-id</code> argument will be used in the request, 
+  instead of the <code>version-id</code> argument. For example:</p>
+<blockquote>
+  <p><code>&lt;java version=&quot;1.3&quot;/&gt;</code></p>
+</blockquote>
+<p>The JNLP Client is responsible for knowing a URL from which it can download 
+  an extension that implements that particular version. For example, the HTTP 
+  GET request could look like:</p>
+<blockquote> 
+  <p><code>http://jsp.java.sun.com/servlet/javawsExtensionInstaller?arch=x86&amp;os=<br>
+    &nbsp; Windows+95&amp;locale=en_US&amp;platform-version-id=1.3&amp;known-platforms=1.2</code></p>
+</blockquote>
+<h2><a name="cache"></a>6.5 Cache Management</h2>
+<p> A JNLP Client may cache the downloaded resources locally and is encouraged 
+  to do so. Resources are cached differently depending on whether a <code>version-id</code> 
+  is associated with it or not. The following caching rules apply to <code>nativelib</code>, 
+  <code>jar</code>, <code>icon</code> resources, and extension descriptors. How 
+  an application descriptor is downloaded and cached is described in Section 6.6.</p>
+<h3>6.5.1 Caching a resource without a version </h3>
+<p>An entry downloaded using the basic download protocol must be located in the 
+  cache based on the URL. The time stamp obtained from the HTTP GET request in 
+  the <code>Last-Modified</code> header field of the reply should be stored along 
+  with the downloaded resource. The time stamp is used to determine if the copy 
+  on the server is newer.</p>
+<p>The JNLP Client cannot assume that the HTTP GET request will return the same 
+  JAR file for each request. The JNLP Client must periodically check the Web server 
+  to see if an updated version is available. This check is recommended to be performed 
+  before an application is launched, but the exact algorithm used by a JNLP Client 
+  depends on the particular implementation. For example, if a JNLP Client is offline, 
+  the check is not required to be performed.</p>
+<p>The above caching rules also apply to extension descriptors downloaded using 
+  the extension download protocol where the version attribute is not specified.</p>
+<h3>6.5.2 Caching a resource with a version</h3>
+<p>An entry downloaded with the version-based download protocol must be cached 
+  using the URL and the (exact) <code>version-id</code> from the HTTP response 
+  as a key. When a lookup is performed given a URL and a version string, any resource 
+  cached using the given URL and with a <code>version-id</code> that matches the 
+  version string can be returned.</p>
+<p>The JNLP Client can assume that the reply contents from an version-based request 
+  with an exact <code>version-id</code> is always the same. Thus, no time-stamp 
+  information needs to be stored. The resource is uniquely identified with the 
+  URL and <code>version-id</code>. If a given resource (URL/<code>version-id</code> 
+  pair) is already found in the cache, then the Web server does not need to be 
+  contacted to check for a newer version. Thus, using the version-based download 
+  protocol can provide better performance at startup, since potentially fewer 
+  connections need to be made back to the Web server.</p>
+<p>The above caching rules also apply to extension descriptors downloaded using 
+  the extension download protocol where the <code>version</code> attribute is 
+  specified.</p>
+<h3>6.5.3 Managing the Cache</h3>
+<p>The JNLP Client is responsible for managing the cache of downloaded resources. 
+  The JNLP Client must make sure that the following invariant is maintained:</p>
+<ul>
+  <li>Resources belonging to a particular application are never removed from the 
+    cache while the application is running.</li>
+</ul>
+<p>This rule makes sure that the application developer can make assumptions about 
+  resources being in the cache while the application is running. In particular, 
+  all resources that are eagerly downloaded are going to be available locally 
+  in the cache during the entire program execution.</p>
+<p>The exact policy and algorithms used to manage the cache are implementation-dependent. 
+  A reasonable policy might be to first clear out resources that are marked <em>lazy</em> 
+  before the ones marked <em>eager</em>.</p>
+<p>The JNLP Client can also manage extensions in any way it sees fit. They can 
+  be uninstalled at any given point or be kept around permanently. If the extension 
+  uninstaller is invoked, then another request for the extension will require 
+  it to be downloaded again and the extension installer to be rerun.</p>
+<h2><a name="downloading"></a>6.6 Downloading and Caching of Application Descriptors 
+</h2>
+<p>Application descriptors, i.e., JNLP files, are handled specially, since they 
+  are not necessarily downloaded by the JNLP Client itself. Often, they will be 
+  downloaded by a Web browser or by other means. </p>
+<p>The <code>href</code> attribute in jnlp element is used to specify the location 
+  of the JNLP file itself. For example:</p>
+<blockquote>
+  <p><code>&lt;jnlp href=&quot;http://www.mysite.com/app/App.jnlp&quot;&gt;</code></p>
+</blockquote>
+<p>If the href attribute is specified, then the JNLP file can be cached, and it 
+  also allows a JNLP Client to query the Web server for a newer version of the 
+  JNLP file, i.e., for the application. A JNLP Client can use this feature to, 
+  e.g., inform the user of updates to already-cached applications, or to automatically 
+  update applications during non-peak hours. In order to do this, a JNLP Client 
+  could keep track of the JNLP files it has downloaded, and then periodically 
+  query the Web server for new versions. </p>
+<p>A JNLP file must be downloaded with an HTTP GET request to the specified URL. 
+  The JNLP Client must use the <code>Last-Modified</code> header field returned 
+  by the Web Server to determine if a newer JNLP file is present on the Web server.</p>
+<p></p>
+</body>
+</html>

@@ -1,0 +1,9 @@
+com.sun.mail.dsn
+com.sun.mail.imap
+com.sun.mail.pop3
+com.sun.mail.smtp
+javax.mail
+javax.mail.event
+javax.mail.internet
+javax.mail.search
+javax.mail.util

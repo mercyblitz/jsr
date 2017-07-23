@@ -1,0 +1,386 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN""http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<title>
+<font size="-1">component-family:</font> javax.faces.Output <font size="-1">renderer-type:</font> javax.faces.Link
+</title>
+<link REL ="stylesheet" TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+</head>
+<script>
+function asd()
+{
+  parent.document.title=<font size="-1">component-family:</font> javax.faces.Output <font size="-1">renderer-type:</font> javax.faces.Link
+}
+</SCRIPT>
+<body BGCOLOR="white" onload="asd();">
+
+<H2><font size="-1">HTML_BASIC render-kit</font>
+<br />
+<font size="-1">component-family:</font> javax.faces.Output <font size="-1">renderer-type:</font> javax.faces.Link
+</H2>
+<HR />
+<P>Render an HTML "a" anchor element.  The value of the
+      component is rendered as the value of the "href" attribute.  Any
+      child UIParameter components are appended to the String to be
+      output as the value of the "href" attribute as query parameters
+      before rendering.  The entire "href" string must be passed through
+      a call to the <code>encodeResourceURL()</code> method of the
+      <code>ExternalContext</code>.  The name of the UIParameter goes on
+      the left hand side, and the value of the UIParameter on the right
+      hand side.  The name and the value must be URLEncoded.  Each
+      UIParameter instance is separeted by an ampersand, as dictated in
+      the URL spec.  If the "styleClass" attribute is specified, render
+      its value as the value of the "class" attribute.  If the "id" attribute
+      is specified, follow the same steps as mentioned in the 
+      "<a href="renderkit-summary.html">General
+      Notes on Encoding</a>" regarding the "id" attribute for UIInput components.
+      If the "disabled" attribute is specified, do not render the HTML "a"
+      anchor element or the "href" element.  Instead, render a "span" element. 
+      If the "styleClass" attribute is specified, render its value as the value 
+      of the "class" attribute on the "span".  Render any pass-through attributes
+      on the "span".</P>
+<P>This renderer is responsible for rendering its children.</P><HR />
+<a NAME="attributes"><!-- --></a>
+
+<h3>Note:</h3>
+
+<p>Attributes with a <code>pass-through</code> value of
+<code>true</code> are not interpreted by the renderer and are passed
+straight through to the rendered markup, without checking for validity.  Attributes with a
+<code>pass-through</code> value of <code>false</code> are interpreted
+by the renderer, and may or may not be checked for validity by the renderer.</p>
+
+<table BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td COLSPAN="5"><font SIZE="+2">
+<b>Attributes</b></font></td>
+</tr>
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<th><b>attribute-name</b></th>
+<th><b>pass-through</b></th>
+<th><b>attribute-class</b></th>
+<th><b>description</b></th>
+<th><b>default-value</b></th>
+</tr>
+	    
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;accesskey
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Access key that, when pressed, transfers focus
+          to this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;charset
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The character encoding of the resource designated
+          by this hyperlink.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;coords
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The position and shape of the hot spot on the screen
+          (for use in client-side image maps).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;dir
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Direction indication for text that does not inherit directionality.
+          Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;disabled
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>boolean</code></td>
+<td>
+          Flag indicating that this element must never
+          receive focus or be included in a subsequent
+          submit.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;hreflang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The language code of the resource designated
+          by this hyperlink.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;lang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Code describing the language used in the generated markup
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onblur
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element loses focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;ondblclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          double clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onfocus
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element receives focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeydown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeypress
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed and released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeyup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousedown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousemove
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved within this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseout
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved away from this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseover
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved onto this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;rel
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The relationship from the current document
+          to the anchor specified by this hyperlink.
+          The value of this attribute is a space-separated
+          list of link types.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;rev
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          A reverse link from the anchor specified
+          by this hyperlink to the current document.
+          The value of this attribute is a space-separated
+          list of link types.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;shape
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The shape of the hot spot on the screen
+          (for use in client-side image maps).  Valid
+          values are:  default (entire region); rect
+          (rectangular region); circle (circular region);
+          and poly (polygonal region).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;style
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to be applied when this component is rendered.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;styleClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Space-separated list of CSS style class(es) to be applied when
+          this element is rendered.  This value must be passed through
+          as the "class" attribute on generated markup.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;tabindex
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Position of this element in the tabbing order
+          for the current document.  This value must be
+          an integer between 0 and 32767.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;target
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Name of a frame where the resource
+          retrieved via this hyperlink is to
+          be displayed.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;title
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Advisory title information about markup elements generated
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;type
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          The content type of the resource designated
+          by this hyperlink.</td>
+<td>undefined<td>
+</tr>
+</table>
+<hr>
+Copyright (c) 2003-2004 Sun Microsystems, Inc. All Rights Reserved.
+</body>
+</html>

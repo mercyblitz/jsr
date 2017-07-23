@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN""http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<title>
+<font size="-1">component-family:</font> javax.faces.Form <font size="-1">renderer-type:</font> javax.faces.Form
+</title>
+<link REL ="stylesheet" TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+</head>
+<script>
+function asd()
+{
+  parent.document.title=<font size="-1">component-family:</font> javax.faces.Form <font size="-1">renderer-type:</font> javax.faces.Form
+}
+</SCRIPT>
+<body BGCOLOR="white" onload="asd();">
+
+<H2><font size="-1">HTML_BASIC render-kit</font>
+<br />
+<font size="-1">component-family:</font> javax.faces.Form <font size="-1">renderer-type:</font> javax.faces.Form
+</H2>
+<HR />
+<P><p>Renders an HTML "form" element.</p>
+
+      <p>Decode Behavior</p>
+
+      <ul>
+
+      <p>Obtain the <code>Map</code> from the "requestParameterMap"
+      property of the <code>ExternalContext</code>.  If the map contains
+      an entry for the "clientId" of this <code>UIForm</code> component,
+      call <code>setSubmitted(true)</code> on the form, otherwise call
+      <code>setSubmitted(false)</code> on the form.</p>
+
+      </ul>
+
+
+
+      <p>Encode Behavior</p>
+
+      <ul>
+
+      <p>The value of the "method" attribute must be "post".  The value
+      of the "action" attribute must be the result of passing the view
+      identifier of the current view to the <code>getActionURL()</code>
+      method of the <code>ViewHandler</code> for this application, then
+      passing that String to the <code>encodeActionURL()</code> method
+      on the <code>ExternalContext</code>.  The value of the acceptcharset
+      attribute must be rendered as the value of "accept-charset".
+      If the "styleClass" attribute is specified, render its value as the 
+      value of the "class" attribute.  Call <code>ViewHandler.writeState()</code>
+      before the the close of the "form" element.  Render all the
+      necessary hidden fields for all commandLink instances in the page
+      just before the close of the "form" element.  Render a "name"
+      attribute with a value the same as the "id" attribute as described
+      in "<a href="renderkit-summary.html">General Notes on
+      Encoding</a>" regarding the "id" attribute for UIInput
+      components.</p>
+
+      </ul></P>
+<P>This renderer is responsible for rendering its children.</P><HR />
+<a NAME="attributes"><!-- --></a>
+
+<h3>Note:</h3>
+
+<p>Attributes with a <code>pass-through</code> value of
+<code>true</code> are not interpreted by the renderer and are passed
+straight through to the rendered markup, without checking for validity.  Attributes with a
+<code>pass-through</code> value of <code>false</code> are interpreted
+by the renderer, and may or may not be checked for validity by the renderer.</p>
+
+<table BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td COLSPAN="5"><font SIZE="+2">
+<b>Attributes</b></font></td>
+</tr>
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<th><b>attribute-name</b></th>
+<th><b>pass-through</b></th>
+<th><b>attribute-class</b></th>
+<th><b>description</b></th>
+<th><b>default-value</b></th>
+</tr>
+	    
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;accept
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+        List of content types that a server processing this form
+        will handle correctly</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;acceptcharset
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+        List of character encodings for input data
+        that are accepted by the server processing
+        this form.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;dir
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Direction indication for text that does not inherit directionality.
+          Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;enctype
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+        Content type used to submit the form to the server.  If not
+        specified, the default value is
+        "application/x-www-form-urlencoded".</td>
+<td>"application/x-www-form-urlencoded"<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;lang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Code describing the language used in the generated markup
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;ondblclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          double clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeydown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeypress
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed and released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeyup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousedown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousemove
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved within this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseout
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved away from this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseover
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved onto this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onreset
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+        Javascript code executed when this form is reset.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onsubmit
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+        Javascript code executed when this form is submitted.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;style
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to be applied when this component is rendered.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;styleClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Space-separated list of CSS style class(es) to be applied when
+          this element is rendered.  This value must be passed through
+          as the "class" attribute on generated markup.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;target
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+        Name of a frame where the response
+        retrieved after this form submit is to
+        be displayed.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;title
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Advisory title information about markup elements generated
+          for this component.</td>
+<td>undefined<td>
+</tr>
+</table>
+<hr>
+Copyright (c) 2003-2004 Sun Microsystems, Inc. All Rights Reserved.
+</body>
+</html>

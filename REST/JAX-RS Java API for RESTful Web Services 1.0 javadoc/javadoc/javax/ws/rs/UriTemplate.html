@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<TITLE>
+UriTemplate (JSR 311 API Draft)
+</TITLE>
+
+<META NAME="keywords" CONTENT="javax.ws.rs.UriTemplate class">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="UriTemplate (JSR 311 API Draft)";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UriTemplate.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../javax/ws/rs/UriParam.html" title="annotation in javax.ws.rs"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../javax/ws/rs/WebApplicationException.html" title="class in javax.ws.rs"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?javax/ws/rs/UriTemplate.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UriTemplate.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#annotation_type_required_element_summary">REQUIRED</A>&nbsp;|&nbsp;<A HREF="#annotation_type_optional_element_summary">OPTIONAL</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#annotation_type_element_detail">ELEMENT</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+javax.ws.rs</FONT>
+<BR>
+Annotation Type UriTemplate</H2>
+<HR>
+<DL>
+<DT><PRE><FONT SIZE="-1">@Target(value={TYPE,METHOD})
+@Retention(value=RUNTIME)
+</FONT>public @interface <B>UriTemplate</B></DL>
+</PRE>
+
+<P>
+Identifies the URI path that a resource class or class method
+ will serve requests for. Root
+ resource classes require an @UriTemplate annotation.
+ Classes may also be annotated with 
+ <code>@ConsumeMime</code> and <code>@ProduceMime</code> to filter the
+ requests they will receive.
+
+ The container must honour annotations from the javax.annotation package. In
+ particular, resource class instance lifecycle can be managed using the
+ javax.annotation.PostConstruct and java.annotation.PreDestroy annotations
+ and a class can obtain access to container context information using 
+ javax.annotation.Resource as specified in JSR 250.
+<P>
+
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../javax/ws/rs/ConsumeMime.html" title="annotation in javax.ws.rs"><CODE>ConsumeMime</CODE></A>, 
+<A HREF="../../../javax/ws/rs/ProduceMime.html" title="annotation in javax.ws.rs"><CODE>ProduceMime</CODE></A></DL>
+<HR>
+
+<P>
+<!-- =========== ANNOTATION TYPE REQUIRED MEMBER SUMMARY =========== -->
+
+<A NAME="annotation_type_required_element_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Required Element Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../javax/ws/rs/UriTemplate.html#value()">value</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defines a URI template for the resource.</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== ANNOTATION TYPE OPTIONAL MEMBER SUMMARY =========== -->
+
+<A NAME="annotation_type_optional_element_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Optional Element Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../javax/ws/rs/UriTemplate.html#encode()">encode</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controls whether the literal part of the supplied value (those characters
+ that are not part of a template variable) are URL encoded.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../javax/ws/rs/UriTemplate.html#limited()">limited</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controls whether a trailing template variable is limited to a single path
+ segment (<code>true</code>) or not (<code>false</code>).</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ ANNOTATION TYPE MEMBER DETAIL =========== -->
+
+<A NAME="annotation_type_element_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Element Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="value()"><!-- --></A><H3>
+value</H3>
+<PRE>
+public abstract java.lang.String <B>value</B></PRE>
+<DL>
+<DD>Defines a URI template for the resource. Requests to URIs that match
+ the template will be served by the annotated class or class method.
+ Embedded template variables are allowed and are of the form {name} where
+ name is the template variable name. Paths are relative to the base URI
+ of the container.
+ 
+ <p>E.g.: @UriTemplate("widgets/{id}")</p>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DL>
+<A NAME="encode()"><!-- --></A><H3>
+encode</H3>
+<PRE>
+public abstract boolean <B>encode</B></PRE>
+<DL>
+<DD>Controls whether the literal part of the supplied value (those characters
+ that are not part of a template variable) are URL encoded. If true, any
+ characters in the URI template that are not valid URI character will be
+ automatically encoded. If false then all characters must be valid URI
+ characters.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+<DL>
+<DT><B>Default:</B><DD>true</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="limited()"><!-- --></A><H3>
+limited</H3>
+<PRE>
+public abstract boolean <B>limited</B></PRE>
+<DL>
+<DD>Controls whether a trailing template variable is limited to a single path
+ segment (<code>true</code>) or not (<code>false</code>). E.g. 
+ <code>@UriTemplate("widgets/{id}")</code> would
+ match widgets/foo but not widgets/foo/bar whereas 
+ <code>@UriTemplate(value="widgets/{id}", limit=false)</code> would match 
+ both.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+<DL>
+<DT><B>Default:</B><DD>true</DD>
+</DL>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UriTemplate.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../javax/ws/rs/UriParam.html" title="annotation in javax.ws.rs"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../javax/ws/rs/WebApplicationException.html" title="class in javax.ws.rs"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../index.html?javax/ws/rs/UriTemplate.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UriTemplate.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#annotation_type_required_element_summary">REQUIRED</A>&nbsp;|&nbsp;<A HREF="#annotation_type_optional_element_summary">OPTIONAL</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#annotation_type_element_detail">ELEMENT</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

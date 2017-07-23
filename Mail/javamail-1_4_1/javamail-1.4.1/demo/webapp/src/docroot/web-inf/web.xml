@@ -1,0 +1,59 @@
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+
+<web-app>
+  <display-name>JspDemo</display-name>
+  <description>no description</description>
+  <servlet>
+    <servlet-name>FilterServlet</servlet-name>
+    <display-name>FilterServlet</display-name>
+    <description>no description</description>
+    <servlet-class>demo.FilterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AttachmentServlet</servlet-name>
+    <display-name>AttachmentServlet</display-name>
+    <description>no description</description>
+    <servlet-class>demo.AttachmentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/compose</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/errordetails</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/send</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/messageheaders</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FilterServlet</servlet-name>
+    <url-pattern>/messagecontent</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AttachmentServlet</servlet-name>
+    <url-pattern>/attachment</url-pattern>
+  </servlet-mapping>
+  <taglib>
+    <taglib-uri>http://java.sun.com/products/javamail/demo/webapp</taglib-uri>
+    <taglib-location>/WEB-INF/lib/jtl.jar</taglib-location>
+  </taglib>
+  <resource-ref>
+    <res-ref-name>MySession</res-ref-name>
+    <res-type>javax.mail.Session</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+</web-app>

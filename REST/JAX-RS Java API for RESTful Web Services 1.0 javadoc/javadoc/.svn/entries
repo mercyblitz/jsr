@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="75"
+   name=""
+   committed-date="2007-08-30T18:07:41.977251Z"
+   url="https://jsr311.dev.java.net/svn/jsr311/trunk/www/javadoc"
+   last-author="mhadley"
+   kind="dir"
+   uuid="2c6fbe26-1d2b-0410-9231-fd65dd601c35"
+   repos="https://jsr311.dev.java.net/svn/jsr311"
+   revision="78"/>
+<entry
+   committed-rev="75"
+   name="stylesheet.css"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-08-30T18:07:41.977251Z"
+   checksum="8cc88314fce0cc52e57f9ccb2cb8436e"
+   last-author="mhadley"
+   kind="file"/>
+<entry
+   committed-rev="85"
+   name="allclasses-frame.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="7656aa464568e282b607627dc8cd8617"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="constant-values.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="30c99c975e1f3329fcbe4ffc1928af9c"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="help-doc.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="1b1482dec31f7c44cbb3a2ab4472172e"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="serialized-form.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="c58c1779dc9dde71faad56480a92551c"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="overview-frame.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="23b74776d763b48cc7437ec6c606fe49"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="75"
+   name="package-list"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-08-30T18:07:41.977251Z"
+   checksum="b46f230629fa618a0e9105a1e79d8db9"
+   last-author="mhadley"
+   kind="file"/>
+<entry
+   committed-rev="85"
+   name="overview-summary.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="f919161760ccd38f5c2024fd6a5f92bb"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="overview-tree.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="a0801a2509b67c40bf743f1318545cd5"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   name="index-files"
+   kind="dir"/>
+<entry
+   name="javax"
+   kind="dir"/>
+<entry
+   name="resources"
+   kind="dir"/>
+<entry
+   committed-rev="85"
+   name="index.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="503f8f31b318492ea7b2f2fb7ca43cdc"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="deprecated-list.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="7a42ff9c5576cbe07f2b032659303e6a"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+<entry
+   committed-rev="85"
+   name="allclasses-noframe.html"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-09-07T19:38:38.599379Z"
+   checksum="fae3b30382f0ed516d9fd1c8f78cf7bb"
+   last-author="mhadley"
+   kind="file"
+   revision="85"/>
+</wc-entries>

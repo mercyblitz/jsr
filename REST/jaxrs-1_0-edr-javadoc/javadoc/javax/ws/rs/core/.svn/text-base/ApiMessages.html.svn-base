@@ -1,0 +1,517 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<TITLE>
+ApiMessages (JSR 311 API Draft)
+</TITLE>
+
+<META NAME="keywords" CONTENT="javax.ws.rs.core.ApiMessages class">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="ApiMessages (JSR 311 API Draft)";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ApiMessages.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../javax/ws/rs/core/CacheControl.html" title="class in javax.ws.rs.core"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/ApiMessages.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ApiMessages.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+javax.ws.rs.core</FONT>
+<BR>
+Class ApiMessages</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>javax.ws.rs.core.ApiMessages</B>
+</PRE>
+<HR>
+<DL>
+<DT><PRE>public final class <B>ApiMessages</B><DT>extends java.lang.Object</DL>
+</PRE>
+
+<P>
+Defines string formatting method for each constant in the resource file
+<P>
+
+<P>
+<HR>
+
+<P>
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#ApiMessages()">ApiMessages</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#CONTENT_CANNOT_BE_NULL()">CONTENT_CANNOT_BE_NULL</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content parameter cannot be null.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#ILLEGAL_CONFIG_SYNTAX()">ILLEGAL_CONFIG_SYNTAX</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Illegal configuration-file syntax.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#ILLEGAL_PROVIDER_CLASS_NAME(java.lang.Object)">ILLEGAL_PROVIDER_CLASS_NAME</A></B>(java.lang.Object&nbsp;arg0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Illegal provider-class name: {0}.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizableCONTENT_CANNOT_BE_NULL()">localizableCONTENT_CANNOT_BE_NULL</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizableILLEGAL_CONFIG_SYNTAX()">localizableILLEGAL_CONFIG_SYNTAX</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizableILLEGAL_PROVIDER_CLASS_NAME(java.lang.Object)">localizableILLEGAL_PROVIDER_CLASS_NAME</A></B>(java.lang.Object&nbsp;arg0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizableMEDIA_TYPE_CANNOT_BE_NULL()">localizableMEDIA_TYPE_CANNOT_BE_NULL</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizableMEDIA_TYPE_INVALID(java.lang.Object)">localizableMEDIA_TYPE_INVALID</A></B>(java.lang.Object&nbsp;arg0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizablePROVIDER_COULD_NOT_BE_CREATED(java.lang.Object, java.lang.Object)">localizablePROVIDER_COULD_NOT_BE_CREATED</A></B>(java.lang.Object&nbsp;arg0,
+                                         java.lang.Object&nbsp;arg1)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;com.sun.localization.Localizable</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#localizablePROVIDER_NOT_FOUND(java.lang.Object)">localizablePROVIDER_NOT_FOUND</A></B>(java.lang.Object&nbsp;arg0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#MEDIA_TYPE_CANNOT_BE_NULL()">MEDIA_TYPE_CANNOT_BE_NULL</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mediaType parameter cannot be null.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#MEDIA_TYPE_INVALID(java.lang.Object)">MEDIA_TYPE_INVALID</A></B>(java.lang.Object&nbsp;arg0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invalid media type: {0}</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#PROVIDER_COULD_NOT_BE_CREATED(java.lang.Object, java.lang.Object)">PROVIDER_COULD_NOT_BE_CREATED</A></B>(java.lang.Object&nbsp;arg0,
+                              java.lang.Object&nbsp;arg1)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provider {0} could not be instantiated: {1}</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/ApiMessages.html#PROVIDER_NOT_FOUND(java.lang.Object)">PROVIDER_NOT_FOUND</A></B>(java.lang.Object&nbsp;arg0)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provider {0} not found.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="ApiMessages()"><!-- --></A><H3>
+ApiMessages</H3>
+<PRE>
+public <B>ApiMessages</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="localizableMEDIA_TYPE_INVALID(java.lang.Object)"><!-- --></A><H3>
+localizableMEDIA_TYPE_INVALID</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizableMEDIA_TYPE_INVALID</B>(java.lang.Object&nbsp;arg0)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="MEDIA_TYPE_INVALID(java.lang.Object)"><!-- --></A><H3>
+MEDIA_TYPE_INVALID</H3>
+<PRE>
+public static java.lang.String <B>MEDIA_TYPE_INVALID</B>(java.lang.Object&nbsp;arg0)</PRE>
+<DL>
+<DD>Invalid media type: {0}
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="localizableCONTENT_CANNOT_BE_NULL()"><!-- --></A><H3>
+localizableCONTENT_CANNOT_BE_NULL</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizableCONTENT_CANNOT_BE_NULL</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="CONTENT_CANNOT_BE_NULL()"><!-- --></A><H3>
+CONTENT_CANNOT_BE_NULL</H3>
+<PRE>
+public static java.lang.String <B>CONTENT_CANNOT_BE_NULL</B>()</PRE>
+<DL>
+<DD>content parameter cannot be null.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="localizableILLEGAL_PROVIDER_CLASS_NAME(java.lang.Object)"><!-- --></A><H3>
+localizableILLEGAL_PROVIDER_CLASS_NAME</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizableILLEGAL_PROVIDER_CLASS_NAME</B>(java.lang.Object&nbsp;arg0)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ILLEGAL_PROVIDER_CLASS_NAME(java.lang.Object)"><!-- --></A><H3>
+ILLEGAL_PROVIDER_CLASS_NAME</H3>
+<PRE>
+public static java.lang.String <B>ILLEGAL_PROVIDER_CLASS_NAME</B>(java.lang.Object&nbsp;arg0)</PRE>
+<DL>
+<DD>Illegal provider-class name: {0}.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="localizableMEDIA_TYPE_CANNOT_BE_NULL()"><!-- --></A><H3>
+localizableMEDIA_TYPE_CANNOT_BE_NULL</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizableMEDIA_TYPE_CANNOT_BE_NULL</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="MEDIA_TYPE_CANNOT_BE_NULL()"><!-- --></A><H3>
+MEDIA_TYPE_CANNOT_BE_NULL</H3>
+<PRE>
+public static java.lang.String <B>MEDIA_TYPE_CANNOT_BE_NULL</B>()</PRE>
+<DL>
+<DD>mediaType parameter cannot be null.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="localizablePROVIDER_NOT_FOUND(java.lang.Object)"><!-- --></A><H3>
+localizablePROVIDER_NOT_FOUND</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizablePROVIDER_NOT_FOUND</B>(java.lang.Object&nbsp;arg0)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="PROVIDER_NOT_FOUND(java.lang.Object)"><!-- --></A><H3>
+PROVIDER_NOT_FOUND</H3>
+<PRE>
+public static java.lang.String <B>PROVIDER_NOT_FOUND</B>(java.lang.Object&nbsp;arg0)</PRE>
+<DL>
+<DD>Provider {0} not found.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="localizablePROVIDER_COULD_NOT_BE_CREATED(java.lang.Object, java.lang.Object)"><!-- --></A><H3>
+localizablePROVIDER_COULD_NOT_BE_CREATED</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizablePROVIDER_COULD_NOT_BE_CREATED</B>(java.lang.Object&nbsp;arg0,
+                                                                                        java.lang.Object&nbsp;arg1)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="PROVIDER_COULD_NOT_BE_CREATED(java.lang.Object, java.lang.Object)"><!-- --></A><H3>
+PROVIDER_COULD_NOT_BE_CREATED</H3>
+<PRE>
+public static java.lang.String <B>PROVIDER_COULD_NOT_BE_CREATED</B>(java.lang.Object&nbsp;arg0,
+                                                             java.lang.Object&nbsp;arg1)</PRE>
+<DL>
+<DD>Provider {0} could not be instantiated: {1}
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="localizableILLEGAL_CONFIG_SYNTAX()"><!-- --></A><H3>
+localizableILLEGAL_CONFIG_SYNTAX</H3>
+<PRE>
+public static com.sun.localization.Localizable <B>localizableILLEGAL_CONFIG_SYNTAX</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ILLEGAL_CONFIG_SYNTAX()"><!-- --></A><H3>
+ILLEGAL_CONFIG_SYNTAX</H3>
+<PRE>
+public static java.lang.String <B>ILLEGAL_CONFIG_SYNTAX</B>()</PRE>
+<DL>
+<DD>Illegal configuration-file syntax.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ApiMessages.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../javax/ws/rs/core/CacheControl.html" title="class in javax.ws.rs.core"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/ApiMessages.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ApiMessages.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

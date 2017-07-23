@@ -1,0 +1,221 @@
+			     NOTES
+			     =====
+
+		    JavaMail(TM) API 1.4.1 release
+		    ------------------------------
+
+Welcome to the 1.4.1 release of the JavaMail API implementation. 
+
+Please refer to CHANGES.txt for a list of the changes since the 
+previous release.
+
+Please see the FAQ at http://java.sun.com/products/javamail/FAQ.html
+
+Protocol Providers
+------------------
+
+The JavaMail API jar file "mail.jar" includes the full JavaMail API
+implementation and *all* the Sun protocol providers - IMAP, SMTP, and
+POP3.  The simplest way to use the JavaMail API is to just use the
+mail.jar file and ignore the other jar files in this package.
+
+In some cases it may be desirable to minimize the size of the JavaMail
+API code used by an application (e.g., when downloading with an applet).
+In this case you might want to include the "mailapi.jar" file, which
+includes *no* protocol providers, along with just the jar file for the
+protocol provider you need.  For example, an applet that only needs to
+send mail could use the "mailapi.jar" file and the "smtp.jar" file.
+
+An important note when using the separate protocol provider jar files:
+
+-  You can't mix and match the Sun protocol providers between different
+   releases of the JavaMail API.  The Sun protocol providers depend on
+   implementation-specific utility APIs within the mailapi.jar file.
+   (Third party protocol providers that don't depend on these APIs
+   should work fine.)
+
+
+NOTE: The Sun protocol provider documentation that was previously
+      included in this file is now available in javadoc format, see
+      docs/javadocs/index.html in the directory where you extracted
+      the JavaMail API zip file.  This documentation describes how to
+      use features of the Sun protocol providers to directly access
+      some features of the SMTP, IMAP, and POP3 protocols that are
+      not otherwise supported by the standard JavaMail API.
+
+
+SASL Support
+------------
+
+On systems that support the Java SASL API (javax.security.sasl, JSR-28),
+such as J2SE 5.0 and later, the IMAP provider can use the SASL API to
+find an appropriate authentication mechanism.  The SASL API also allows
+you to plug in support for custom authentication mechanisms.  See The
+Java SASL API Programming and Deployment Guide at
+http://java.sun.com/j2se/1.5.0/docs/guide/security/sasl/sasl-refguide.html
+for details on developing custom SASL mechanisms.  See the javadocs for
+the com.sun.mail.imap package for the properties required to enable and
+configure SASL support.
+
+
+DSN Support
+-----------
+
+This release of JavaMail includes EXPERIMENTAL support for creating
+and parsing Delivery Status Notifications, as defined by RFC 3462
+and RFC 3464.  To make use of this support you need to include dsn.jar
+in your CLASSPATH along with mail.jar.  See the javadocs for the
+com.sun.mail.dsn package for more details.
+
+The APIs unique to this package should be considered EXPERIMENTAL.
+They may be changed in the future in ways that are incompatible with
+applications using the current APIs.
+
+
+How to submit bug reports
+-------------------------
+
+If you've found a bug, or if you just need help figuring out how to use
+the JavaMail API, please try to include the following information in
+your message to us:
+
+    - a program or code snippet that shows the problem
+    - the platform you are using
+    - the mail server (vendor name, version number) you are using
+    - your environment variable settings
+    - a stack trace, if appropriate
+    - a protocol trace, after turning on session debugging, if appropriate
+
+Most of the problems reported to us fail to include enough of the above
+information to allow us to diagnose your problem.  It will save you and
+us time if you include this information in your first message to us.
+
+By far the most common problems we see are:
+
+Your problem:	Something doesn't work right when talking to my mail server.
+Our response:	Turn on session debugging and send us the protocol trace.
+		See the demo program documentation for how to turn on
+		session debugging for the demo programs.  In your own
+		program, call "session.setDebug(true);".
+
+Your problem:	javax.mail or javax.activation classes not found when compiling.
+Our response:	You didn't set CLASSPATH correctly to find mail.jar and
+		activation.jar.  See README.txt.
+
+Your problem:	NoSuchProviderException - No such provider for rfc822.
+Our response:	You unjar'ed mail.jar.  Don't.
+
+Your problem:	How do I create a message with an attachment?
+Our response:	Create a message with a MimeMultipart content.  See the
+		sendfile.html and msgmultisendsample.java demo programs.
+
+Please check the FAQ at http://java.sun.com/products/javamail/FAQ.html
+before submitting bug reports.
+
+Send your bug reports to:
+
+	javamail@sun.com
+
+
+
+
+A list of the known limitations, bugs, issues:
+----------------------------------------------
+
+1. This version of JavaMail will only work in applets when using
+   the Java(TM) Plug-in (http://java.sun.com/products/plugin).
+
+2. Internationalization.  Parameter encoding in MIME headers, as
+   specified by RFC2231, *has* been implemented.  Note that
+   this covers only certain special cases not covered by the MIME
+   specification.  MIME specifies encoding of text in the Subject
+   and address headers, and JavaMail fully supports such encoding.
+   Most mailers don't support RFC2231.
+
+   To enable RFC2231 support in parameter lists, set the System
+   properties mail.mime.encodeparameters and mail.mime.decodeparameters
+   to "true".
+
+3. We've received reports of IMAP authentication failures on the
+   Microsoft Exchange Server 5.5, enterprise edition. This is due to
+   a bug in the Microsoft server and the "Service Pack 1 for Exchange 
+   Server 5.5" apparently fixes this server bug. The service pack can
+   be downloaded from the Microsoft website.
+
+4. Due to a problem in the Microsoft Exchange IMAP server, insufficient
+   number of bytes may be retrieved when reading big messages. There
+   are two ways to workaround this Exchange bug:
+
+   (a) The Exchange IMAP server provides a configuration option called
+       "fast message retrieval" to the UI.  Simply go to the site, server
+       or recipient, click on the "IMAP4" tab, and one of the check boxes
+       is "enable fast message retrieval".  Turn it off and the octet 
+       counts will be exact.  This is fully described at
+       http://support.microsoft.com/default.aspx?scid=kb;EN-US;Q191504
+
+   (b) Set the "mail.imap.partialfetch" property to false. You'll have 
+       to set this property in the Properties object that you provide to 
+       your Session.
+
+5. Certain IMAP servers do not implement the IMAP Partial FETCH 
+   functionality properly. This problem typically manifests as corrupt
+   email attachments when downloading large messages from the IMAP 
+   server. To workaround this server bug, set the 
+	"mail.imap.partialfetch" 
+   property to false. You'll have to set this property in the Properties
+   object that you provide to your Session.
+
+Servers tested with:
+--------------------
+
+  The IMAP implementation works with IMAP4 and IMAP4rev1 servers.
+  The current release has been tested with:
+	Sun Java System Messaging Server version 6.3
+	UW IMAP4 server version 2003.339
+	Cyrus IMAP4 server version 1.6.19
+
+  Previous releases have been tested with:
+	Sun Java System Messaging Server version 5.2
+	Sun Internet Mail Server version 2.0, 3.2, and 4.0
+	Netscape Messaging Server version 3.01 and 4.1
+	Microsoft Exchange
+	Microsoft MCIS Mail Server
+	Lotus Notes
+	Software.com IMAP server
+	Qualcomm Worldmail
+
+  The current release of the SMTP implementation has been tested with:
+	Sendmail version 8.13.8
+	Sun Java System Messaging Server version 6.3
+
+  Previous releases have been tested with:
+	Sendmail version 8.6 and 8.9.1
+	Sun Java System Messaging Server version 5.2
+	Sun Internet Mail Server version 3.2 and 4.0
+	Netscape Messaging Server version 3.01 and 4.1
+	Microsoft Exchange
+	Microsoft MCIS Mail Server
+	Qualcomm Worldmail
+
+How to give feedback
+--------------------
+
+Please send your feedback to this email-address:
+
+	javamail@sun.com
+
+Check out our website at http://java.sun.com/products/javamail
+
+You can subscribe to our open discussion-list: 
+
+	javamail-interest@java.sun.com.
+
+Or you can subscribe to our low-volume mailing-list (where we announce
+product updates and other relevant information):
+
+	javamail-announce@java.sun.com. 
+
+Instructions on how to subscribe are on our website.
+
+
+------------------------------------------------------------------

@@ -1,0 +1,480 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Application Resources</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>4 Application Resources</h1>
+<hr>
+<p><br>
+  The <code>resources</code> element is used to specify all the resources, such 
+  as Java class files, native libraries, and system properties, that are part 
+  of an application. </p>
+<h2><a name="overview"></a>4.1 Overview</h2>
+<p>The <code>resources</code> element has 7 different possible subelements: jar, 
+  nativelib, java, j2se, property, package, and extension. These are all described in 
+  detail below.</p>
+<p>A resources definition can be restricted to a specific operating system, architecture, 
+  or locale using the os, arch, and locale attributes. For example:</p>
+<blockquote> 
+  <p><code>&lt;resources&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;java version=&quot;1.6&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;jar href=&quot;lib/myjar.jar&quot; version=&quot;1.2&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;extension<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;name=&quot;coolaudio&quot; version=&quot;1.0&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;href=&quot;http://www.mysite.com/ext/coolaudio&quot;&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;/extension&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;property name=&quot;key1&quot; value=&quot;value1&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;property name=&quot;key2&quot; value=&quot;value2&quot;/&gt;<br>
+    </code><code>&lt;/resources&gt;<br>
+    </code><code>&lt;resources os=&quot;SunOS&quot;&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;jar href=&quot;lib/motif-plaf.jar&quot;/&gt;<br>
+    </code><code>&lt;/resources&gt;</code></p>
+  
+</blockquote>
+<p><strong><code>os</code> attribute:</strong> Specifies the operating system 
+  for which the <code>resources</code> element should be considered. If the value 
+  is a prefix of the os.name system property, then the <code>resources</code> 
+  element can be used. If the attribute is not specified, it matches all operating 
+  systems.</p>
+<p><strong><code>arch</code> attribute:</strong> Specifies the architecture for 
+  which the <code>resources</code> element should be considered. If the value 
+  is a prefix of the os.arch system property, then the <code>resources</code> 
+  element can be used. If the attribute is not specified, it matches all architectures.</p>
+<p><strong><code>locale</code> attribute:</strong> Specifies that the <code>resources</code> 
+  element is locale-dependent. If specified, the <code>resources</code> element 
+  should only be used if the default locale for the JNLP Client matches one of 
+  the specified locales. If the attribute is not specified, then it matches all 
+  locales. The locale is specified and matched as described for the locale attribute 
+  of the information element (see Section 3.5).</p>
+<p>For the <code>os</code>, <code>arch</code>, and <code>locale</code> attributes 
+  several keys can be specified separated with spaces. A space that is part of 
+  a key must be preceded with a backslash (\). For example, <code>Windows\ 95 
+  Windows\ 98</code> specifies the two keys <code>Windows 95</code> and <code>Windows 
+  98</code>. </p>
+<h2><a name="setting"></a>4.2 Setting System Properties</h2>
+<p>The <code>property</code> element defines a system property that will be available 
+  through the <code>System.getProperty</code> and <code>System.getProperties</code> 
+  methods. Is has two required attributes: name and value. For example:</p>
+<blockquote>
+  <p><code>&lt;property name=&quot;key1&quot; value=&quot;value1&quot;/&gt;</code></p>
+</blockquote>
+<p>Properties must be processed in the order specified in the JNLP file. Thus, 
+  if two properties define different values for the same property, then the last 
+  value specified in the JNLP file is used. For example, given the following two 
+  declarations, in the given order:</p>
+<blockquote> 
+  <p><code>&lt;property name=&quot;key&quot; value=&quot;overwritten&quot;/&gt;<br>
+    &lt;property name=&quot;key&quot; value=&quot;used&quot;/&gt;</code></p>
+</blockquote>
+<p>For an untrusted application (see section <a href="launch.html#untrusted">5.5</a>) 
+  system properties set in the JNLP file may only be set by the JNLP Client if 
+  they are considered secure. At a minimum a JNLP Client will allow setting system 
+  properties whose name starts with &quot;jnlp&quot;.</p>
+<p>Properties set in the JNLP file may be set by the JNLP Client at any time before 
+  the application's code is executed; thus, it cannot be assumed that they will 
+  be set during the initialization of the virtual machine. </p>
+<p>Properties set in an extension JNLP file may be set any time before code from 
+  that extension is executed. <br>
+</p>
+<h2><a name="specifying"></a>4.3 Specifying Code Resources</h2>
+<p>A JNLP file may have two kinds of code resources:</p>
+<ul>
+  <li>A <code>jar</code> element specifies a JAR file that is part of the application's 
+    <code>classpath</code>. The JAR file will be loaded into the JVM using a <code>ClassLoader</code> 
+    object. The JAR file will typically contain Java classes that contain the 
+    code for the particular application, but can also contain other resources, 
+    such as icons and configuration files, that are available through the <code>getResource</code> 
+    mechanism.</li>
+  <li>A <code>nativelib</code> element specifies a JAR file that contains native 
+    libraries<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#7','','scrollbars=yes,resizable=yes,width=500,height=700')">7</a></SUP>. 
+    The JNLP Client must ensure that each file entry in the root directory of 
+    the JAR file (i.e., <code>/</code>) can be loaded into the running process 
+    by the <code>System.loadLibrary</code> method. It is up to the launched application 
+    to actually cause the loading of the library (i.e., by calling <code>System.loadLibrary</code>). 
+    Each entry must contain a platform-dependent shared library with the correct 
+    naming convention, e.g., <code>*.dll</code> on Windows, or <code>lib*.so</code> 
+    on Solaris.</li>
+</ul>
+<p>The following JNLP file fragment shows how <code>jar</code> and <code>nativelib</code> 
+  elements are used. Notice that native libraries would typically be included 
+  in a <code>resources</code> element that is intended for a particular operating 
+  system and architecture.</p>
+<blockquote> 
+  <p><code>&lt;resources&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;jar href=&quot;lib/app.jar&quot; version=&quot;3.2&quot; 
+    main=&quot;true&quot;/&gt;<br>
+    </code><code>&lt;/resources&gt;<br>
+    </code><code>&lt;resources os=&quot;Windows&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;nativelib href=&quot;lib/windows/corelibs.jar&quot;/&gt;<br>
+    </code><code>&lt;/resources&gt;<br>
+    </code><code>&lt;resources os=&quot;SunOS&quot; arch=&quot;SPARC&quot;&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;nativelib href=&quot;lib/solaris/corelibs.jar&quot;/&gt;<br>
+    </code><code>&lt;/resources&gt;</code></p>
+  
+</blockquote>
+<p>The <code>href</code> attribute is the HTTP URL of a JAR file that the application 
+  depends on. The optional version attribute describes the required version, as 
+  described in Section 3.4. Section 6 describes how JAR files are downloaded. 
+  An optional size attribute can be used to indicate the download size of the 
+  JAR file in bytes. </p>
+<p>The <code>jar</code> element has a <code>main</code> attribute (as shown above) 
+  that is used to indicate which JAR file contains the <code>main</code> class 
+  of the Application/Applet (or Installer for an extension). There must be at 
+  most one <code>jar</code> element in a JNLP file that is specified as <code>main</code>. 
+  If no <code>jar</code> element is specified as <code>main</code>, then the first 
+  <code>jar</code> element will be considered the <code>main</code> JAR file. 
+</p>
+<h3>4.3.1 Use of Manifest Files</h3>
+<p>A JNLP Client ignores all manifest entries in a JAR file specified with the 
+  <code>jar</code> element, except the following:</p>
+<ul>
+  <li>The manifest entries used to sign a JAR file are recognized and validated.</li>
+  <li>The <code>Main-Class</code> entry in the JAR file specified as <code>main</code> 
+    is used to determine the <code>main</code> class of an application (if it 
+    is not specified explicitly in the JNLP file). </li>
+  <li>The manifest entries used to seal a package are recognized, and the sealing 
+    of packages are verified according to the Extension Mechanism Architecture<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#8','','scrollbars=yes,resizable=yes,width=500,height=700')">8</a></SUP>. 
+    These are the name and sealed entries.</li>
+  <li>The following manifest entries described by the Optional Package Versioning 
+    documentation<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#9','','scrollbars=yes,resizable=yes,width=500,height=700')">9</a></SUP>: 
+    <code>Extension-Name</code>, <code>Specification-Vendor</code>, <code>Specification-Version</code>, 
+    <code>Implementation-Vendor-Id</code>, <code>Implementation-Vendor</code>, 
+    and <code>Implementation-Version</code> are recognized and will be available 
+    through the <code>java.lang.Package</code> class. They are otherwise not used 
+    by a JNLP Client.</li>
+</ul>
+<p>For a JAR file containing native libraries, i.e., specified with the <code>nativelib</code> 
+  element, all manifest entries are ignored except the entries used to sign the 
+  JAR file.</p>
+<h2><a name="parts"></a>4.4 Parts and Lazy Downloads</h2>
+<p>By default, the <code>jar</code> and <code>nativelib</code> resources must 
+  be downloaded eagerly, i.e., they are downloaded and available locally to the 
+  JVM running the application before the application is launched. The <code>jar</code> 
+  and <code>nativelib</code> elements also allow a resource to be specified as 
+  lazy. This means that the resource does not necessarily need to be downloaded 
+  onto the client system before the application is launched. However, a JNLP Client 
+  is always allowed to eagerly download all resources if it chooses. </p>
+<p>The download attribute is used to control whether a resource is downloaded 
+  eagerly or lazily. For example,</p>
+<blockquote>
+  <p><code>&lt;jar href=&quot;sound.jar&quot; download=&quot;lazy&quot;/&gt;<br>
+    &lt;nativelib href=&quot;native-sound.jar&quot; download=&quot;eager&quot;/&gt;</code></p>
+</blockquote>
+<p>The default value for the download attribute is eager.</p>
+<p>From a functional point of view (i.e., assuming an infinitely fast and reliable 
+  network connection), it makes no difference if a JAR file is specified as lazy 
+  or eager. The JNLP Client must dynamically download and link in lazily-downloaded 
+  JAR files during the execution of the application when they are needed.</p>
+<p>The Java Virtual Machine (JVM) will make requests to the application's classloader 
+  when it needs to resolve a class that is not currently loaded into the current 
+  JVM. The JNLP Client must make sure to intercept these requests (e.g., by installing 
+  its own classloader), and if there are JAR files specified in the JNLP file 
+  that are currently not loaded into the JVM, then the JNLP Client must download 
+  them and load them into the application's JVM.</p>
+<p>The<code> jar</code> and <code>nativelib</code> elements also contain a part 
+  attribute that can be used to group resources together so they will be downloaded 
+  at the same time. Whenever a <code>jar</code> or <code>nativelib</code> resource 
+  with a non-empty part attribute is being downloaded, then the JNLP Client must 
+  ensure that all other resources that have the same value in the part attribute 
+  are also downloaded.</p>
+<p>Resources must be downloaded for the following events:</p>
+<ol>
+  <li>All resources specified as non-lazy must be downloaded before the application 
+    is launched: This might trigger download of resources that have the same part 
+    name.</li>
+  <li>If the JVM triggers a resource to be downloaded through a classloader request, 
+    then the classloader must not return until the JAR file containing the requested 
+    class is downloaded and all resources (<code>jar</code> or <code>nativelib</code>) 
+    that have the same (non-empty) value in the part attribute have been downloaded.</li>
+  <li>JAR files and parts can also be requested to be downloaded explicitly by 
+    the application program using the JNLP API. This is described in Section 5.3.</li>
+</ol>
+<p>The part names are local to each JNLP file. The JNLP file for the application 
+  might define a part named sound-support, and an extension that is being used 
+  by the JNLP descriptor might also define a part named sound-support. These are 
+  considered two different part names. Thus, the scope of a part name is the JNLP 
+  file.</p>
+<p>Native libraries, specified with the <code>nativelib</code> element, can also 
+  be downloaded lazily and loaded into the JVM while the application is running. 
+  A JVM does not generate requests to the classloader when a native library is 
+  missing. Thus, the only way a native library can be triggered to be downloaded 
+  and loaded into the JVM process is by using the <code>part</code> attribute. 
+  For example, when the Java classes that implement the native wrappers for the 
+  native libraries are downloaded, that can also trigger the download of the native 
+  library. </p>
+<p>The following JNLP fragment shows an example of the use of the <code>jar</code> 
+  and <code>nativelib</code> element for lazy download of resources:</p>
+<blockquote> 
+  <p><code>&lt;resources&gt;<br>
+    &nbsp;&nbsp;&lt;jar href=&quot;sound.jar&quot;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;part=&quot;sound&quot; download=&quot;lazy&quot;/&gt;<br>
+    &lt;/resources&gt;<br>
+    &lt;resources os=&quot;Windows&quot;/&gt;<br>
+    &nbsp;&nbsp;&lt;nativelib href=&quot;sound-native-win.jar&quot; part=&quot;sound&quot; 
+    download=&quot;lazy&quot;/&gt;<br>
+    &lt;/resources&gt;<br>
+    &lt;resources os=&quot;SunOS&quot;/&gt;<br>
+    &nbsp;&nbsp;&lt;nativelib href=&quot;sound-native-solaris.jar&quot; part=&quot;sound&quot; 
+    download=&quot;lazy&quot;/&gt;<br>
+    &lt;/resources&gt;</code></p>
+</blockquote>
+<p>The <code>sound.jar</code> file does not need to be downloaded before the application 
+  is launched, because it is specified as a lazy download. The native code for 
+  the sound library is also specified as lazy and is also in the sound part. The 
+  download of the <code>sound.jar</code> file will trigger the download and loading 
+  of the platform-dependent native code, i.e., either <code>sound-native-win.jar</code> 
+  on Windows, or s<code>ound-native-solaris.jar</code> on Solaris.</p>
+<h2><a name="package"></a>4.5 Package Element</h2>
+<p>The package element can be used to indicate to the JNLP Client which packages 
+  are implemented in which JAR files. The <code>name</code> attribute specifies 
+  a package name, and the <code>part</code> attribute specifies which part must 
+  be downloaded in order to load that particular package into the JVM. The package 
+  element can take several forms:</p>
+<blockquote>
+  <p><code>&lt;package name=&quot;com.mysite.Main&quot; part=&quot;xyz&quot;/&gt;</code></p>
+</blockquote>
+<p>Specifies that the class <code>com.mysite.Main</code> can be found in the part 
+  named xyz.</p>
+<blockquote>
+  <p><code>&lt;package name=&quot;com.mysite.sound.*&quot; part=&quot;abc&quot;/&gt;</code></p>
+</blockquote>
+<p>Specifies that classes in the <code>com.mysite.sound</code> package can be 
+  found in the <code>part</code> named <code>abc</code>. The use of the &quot;<code>*</code>&quot; 
+  is similar to the import statement in the Java Programming Language. Thus, it 
+  is not a general-purpose wildcard. Finally, the <code>recursive</code> attribute 
+  can be used to specify sub-packages as well; e.g.,</p>
+<blockquote>
+  <p><code>&lt;package name=&quot;com.mysite.sound.*&quot; part=&quot;stu&quot; 
+    recursive=&quot;true&quot;/&gt;</code></p>
+</blockquote>
+<p>The above specifies that all packages that have <code>com.mysite.sound.</code> 
+  as a prefix can be found in the <code>part</code> named <code>stu</code>. The 
+  <code>recursive</code> attribute only has an effect when used with a package 
+  name, i.e., a name that ends with &quot;<code>.*</code>&quot;. </p>
+<p>The package element only makes sense to use with lazily-downloaded resources, 
+  since all other resources will already be available to the JVM. Thus, it will 
+  already know what packages are implemented in those JAR files. However, it can 
+  direct the JNLP Client to download the right lazy JAR resources, instead of 
+  having to download each individual resource one at a time to check.</p>
+<h2><a name="java"></a>4.6 Java Runtime Environment</h2>
+<p>The <code>java</code> element (or the <code>j2se</code> element) (sub-element of <code>resources</code>) specifies 
+  what Java Runtime Environment (JRE) versions an application is supported 
+  on, as well as standard parameters to the Java Virtual Machine. Several JREs 
+  can be specified, which indicates a prioritized list of the supported JREs, 
+  with the most preferred version first. For example,</p>
+<blockquote>
+  <p><code>&lt;java version=&quot;1.3&quot; initial-heap-size=&quot;64m&quot;/&gt;<br>
+    &lt;java version=&quot;1.2&quot;&gt;<br>
+    &nbsp;&nbsp;&lt;resources&gt; ... &lt;/resources&gt;<br>
+    &lt;/java&gt;</code></p>
+</blockquote>
+<p>The java element in the application descriptor defines the version of java 
+  used to run the application (or applet). Any java element in an extension descriptor 
+  is ignored.</p>
+<p>The j2se element can be used interchangably with the java element for backward compatibility.</p>
+<p><strong><code>version</code> attribute:</strong> Describes supported versions 
+  of the JRE. The exact syntax and interpretation of the version string is described 
+  in Section 4.6.1.</p>
+<p><strong><code>initial-heap-size</code> attribute:</strong> Indicates the initial 
+  size of the Java heap. The modifiers m and k can be used for megabytes and kilobytes, 
+  respectively. For example, &quot;<code>128m</code>&quot; will be the same as 
+  specifying &quot;<code>134217728</code>&quot; (128*1024*1024). The modifiers 
+  are not case-sensitive.</p>
+<p><strong><code>max-heap-size attribute</code>:</strong> Indicates the maximum 
+  size of the Java heap. The modifiers m and k can be used for megabytes and kilobytes, 
+  respectively. For example, &quot;<code>128m</code>&quot; will be the same as 
+  specifying &quot;<code>134217728</code>&quot; (128*1024*1024). The modifiers 
+  are not case-sensitive.</p>
+<p><strong><code>resources</code> element:</strong> A <code>java</code> element 
+  can contain nested <code>resources</code> elements. If the JRE specified in 
+  the enclosing <code>java</code> element is chosen by the JNLP Client, then the 
+  resources specified in the nested resources also becomes part of the application's 
+  resources, otherwise they are ignored. Any<code> java</code> element in this 
+  resource element is ignored.</p>
+<p><strong><code>java-vm-args</code>:</strong> Indicates an additional set of 
+  standard and non-standard virtual machine arguments that the application would 
+  prefer the JNLP Client to use when launching Java, such as: <code>-server</code>, 
+  <code>-client</code>, <code>-Xint</code>, <code>-Xincgc</code>, <code>-Xnoclassgc</code>, 
+  and <code>-Xssn</code>. The JNLP Client may honor this preference only if it 
+  considers each argument to be secure. </p>
+<h3>4.6.1 Java Runtime Environment Version Specification</h3>
+<p>A JRE can be specified in two ways in the JNLP file. It can be specified in 
+  a vendor-independent manner by referring to a particular platform version of 
+  the Java 2 platform, or it can be specified by using a product version of a 
+  particular JRE vendor's implementation. </p>
+<h4>Definition: Platform version</h4>
+<blockquote>
+  <p>It is the version of a particular revision of the Java 2 platform. A platform 
+    version describes a particular set of APIs (classes and interfaces), semantics, 
+    and syntax of the Java 2 platform. </p>
+  <p>The version id is of the form &quot;<code>x.y</code>&quot;. Occasionally, 
+    dot-dot releases can be released, like &quot;<code>x.y.z</code>&quot;. This 
+    would typically be in response to a security update. Current versions (as 
+    of this writing) are 1.2 and 1.3. </p>
+  <p>The platform version of a JRE can be determined by examining the <code>java.specification.version</code> 
+    system property.</p>
+</blockquote>
+<h4>Definition: Product version</h4>
+<blockquote>
+  <p>It is the version of a particular implementation of the Java 2 platform. 
+    The product version is vendor-specific. A product implements a specific platform 
+    version. The product version and platform versions are not necessarily related.</p>
+  <p>The product version can be found by examining the <code>java.version</code> 
+    system property<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#10','','scrollbars=yes,resizable=yes,width=500,height=700')">10</a></SUP>.</p>
+</blockquote>
+<p>If no <code>href</code> attribute is specified, the <code>version</code> string 
+  refers to a platform version of the Java 2 platform. For example,</p>
+<blockquote>
+  <p><code>&lt;java version=&quot;1.6&quot;&gt;</code></p>
+</blockquote>
+<p>The JNLP Client can select any JRE implementation that implements this particular 
+  revision (as given by the <code>java.specification.version</code> system property).</p>
+<p>If an <code>href</code> attribute is specified, a vendor-specific JRE is requested. 
+  A specific JRE implementation is uniquely named using a URL and a product version. 
+  For example<SUP><a href="javascript::" onClick="MM_openBrWindow('notes.html#11','','scrollbars=yes,resizable=yes,width=500,height=700')">11</a></SUP>:</p>
+<blockquote>
+  <p><code>&lt;java href=&quot;http://java.sun.com/products/autodl/javase&quot; version=&quot;1.5+&quot;/&gt;</code></p>
+</blockquote>
+<p>The product version of a JRE implementation can be extracted from the <code>java.version</code> 
+  system property. Each JRE vendor will be responsible for providing the unique 
+  URL that names their particular implementations. </p>
+<p>As a general rule, a product version should typically be specified using a 
+  prefix or a greater-than notation, i.e., be postfixed with either a plus (<code>+</code>) 
+  or an asterisk (<code>*</code>). This will obviously put less download strain 
+  on the client, since a greater set of JVM implementations can be used. However, 
+  more importantly, a specific product version might be obsolete due to, e.g., 
+  due to a security problem. If this happens, the user will be unable to run the particular 
+  application, if the JNLP file does not specify that a later version with the 
+  particular problem fixed can be used.</p>
+<p>Section 6.4 explains how the URL can also be used by the JNLP Client to download 
+  and install a JRE, if it is not already present on the local machine.</p>
+<h3><a name="selecting"></a>4.6.2 Selecting which JRE to Use</h3>
+<p>The JNLP Client can choose any of the JRE combinations that are specified in 
+  the JNLP file. Consider the following JNLP file fragment:</p>
+<blockquote> 
+  <p><code>&lt;resources os=&quot;Windows&quot; arch=&quot;x86&quot;&gt;<br>
+    &nbsp;&nbsp;&lt;java href=&quot;http://java.sun.com/...&quot; version=&quot;1.4.2_07&quot;&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;resources&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jar href=&quot;http://www.mysite.com/app122.jar&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;extension name=&quot;MyExt&quot; href=&quot;http:...&quot; 
+    version=&quot;3.4&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property name=&quot;CheckThis&quot; 
+    value=&quot;Wow&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/resources&gt;<br>
+    &nbsp;&nbsp;&lt;/java&gt;<br>
+    &lt;/resources&gt;<br>
+    &lt;resources&gt;<br>
+    &nbsp;&nbsp;&lt;java version=&quot;1.6&quot; initial-heap-size=&quot;64m&quot;/&gt;<br>
+    &lt;/resources&gt;</code></p>
+</blockquote>
+<p>The following two combinations would be legal to launch the application on:</p>
+<ul>
+  <li>Sun's JRE, version 1.4.2_07 given that you are running on the Windows 
+    operating system and the x86 architecture.</li>
+  <li>Any JRE compatible with the Java Platform, Standard Edition, version 6. No special extensions 
+    are needed and no operating system nor architecture constraints are specified.</li>
+</ul>
+<p>If any of the specified JRE/extensions combinations are already installed on 
+  the client machine, then the one listed earliest in the list should be used. 
+  If none are installed, the JNLP client may pick which one to download and install. 
+  In general, JRE/extensions combinations that appear earlier in the list should 
+  be preferred over ones that appear later; however, the JNLP Client may take 
+  other factors into account, such as minimizing download times. The download 
+  and installation procedure for JREs and extensions is described in Section 6.</p>
+<p>JRE-specific resources can be specified by including a nested <code>resources</code> 
+  element inside a <code>java</code> element. The nested <code>resources</code> 
+  elements are all ignored, except the one in the <code>java</code> element that 
+  is used to launch the application. Thus, in the above example, if the application 
+  is launched using Sun's 1.4.2_07 JRE, then the property <code>CheckThis</code> 
+  will be set to <code>Wow</code>, and the <code>app122.jar</code> JAR file will 
+  be part of the application's <code>resources</code>, as well as the <code>MyExt</code> 
+  <code>extension</code>.</p>
+<h2><a name="extension"></a>4.7 Extension Resources</h2>
+<p>Extension descriptors can be included as part of the resources for an application 
+  (or extension) by using the <code>extension</code> element. For example:</p>
+<blockquote> 
+  <p><code>&lt;resources&gt;<br>
+    &nbsp; ...<br>
+    &nbsp;&nbsp;&lt;extension name=&quot;Sound&quot; version=&quot;1.0&quot;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;href=&quot;http://www.myext.com/servlet/ext/sound-extension.jnlp&quot;&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;ext-download ext-part=&quot;MIDI&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;ext-download ext-part=&quot;MP3&quot;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;download=&quot;lazy&quot;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;part=&quot;MP3Player&quot;/&gt;<br>
+    &nbsp;&nbsp;&lt;/extension&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+    &lt;/resources&gt;</code></p>
+  </blockquote>
+<p>The <code>extension</code> element contains three attributes: <code>name</code>, 
+  <code>version</code>, and <code>href</code>. The <code>href</code> and the optional 
+  <code>version</code> attributes uniquely identify the extension. This <code>href</code> 
+  typically does not point to a file but to, e.g., a servlet that understands 
+  the extension download protocol. The extension itself is described by an extension 
+  descriptor, i.e., a JNLP File. How the extension descriptor is downloaded is 
+  described in Section 6. The name attribute can be used by the JNLP Client to 
+  inform the user about the particular extension that is required, while the extension 
+  descriptor (i.e., the JNLP file) is being downloaded. </p>
+<p>The inclusion of an <code>extension</code> element in a <code>resources</code> 
+  element has the following effect:</p>
+<ul>
+  <li>If it points to a component extension (i.e., a JNLP file with a <code>component-desc</code> 
+    element), then the resources described in the <code>resources</code> element 
+    in that JNLP file become part of the application's resources. The included 
+    resources will have the permissions specified in the component extension.</li>
+  <li>If the extension points to an extension installer (i.e., a JNLP file with 
+    an installer-desc element), then the installer application will be executed, 
+    if it has not already been executed on the local machine. This is described 
+    in detail in Section <a href="launch.html#launching">5.2</a>).</li>
+</ul>
+<p>For an extension element that points to component extension, it can also be 
+  specified when the different parts of the component extension should be downloaded. 
+  This is done using the <code>ext-download</code> sub-elements. In the above 
+  example, the extension part <code>MIDI</code> is specified to be downloaded 
+  eagerly, and the part in the extension descriptor named <code>MP3</code> must 
+  be downloaded at the same time as the part named <code>MP3Player</code> in the 
+  JNLP file containing the <code>extension</code> element. Note that a JNLP Client 
+  is always allowed to eagerly download all parts if it chooses. This is all described 
+  in more detail in Section 4.4. </p>
+<p>Given the example above, and if the extension descriptor for the Sound extension 
+  contains the following component extension:</p>
+<blockquote> 
+  <p><code>&lt;jnlp&gt;<br>
+    </code><code>&nbsp;&nbsp;...<br>
+    </code><code>&nbsp;&nbsp;&lt;resources&gt;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;jar href=&quot;http://www.myext.com/lib/midi.jar&quot; 
+    part=&quot;MIDI&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;download=&quot;lazy&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;&lt;jar href=&quot;http://www.myext.com/lib/mp3.jar&quot; 
+    part=&quot;MP3&quot;<br>
+    </code><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;download=&quot;lazy&quot;/&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;/resources&gt;<br>
+    </code><code>&nbsp;&nbsp;&lt;component-desc/&gt;<br>
+    </code><code>&lt;/jnlp&gt;</code></p>
+  </blockquote>
+<p>then the <code>extension</code> element in the previous example would be, in 
+  effect<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#12','','scrollbars=yes,resizable=yes,width=500,height=700')">12</a></SUP>, 
+  replaced with the following two JAR files specified in the extension descriptor:</p>
+<blockquote> 
+  <p><code>&lt;resources&gt;<br>
+    &nbsp;&nbsp;...<br>
+    &nbsp;&nbsp;&lt;jar href=&quot;http://www.myext.com/lib/midi.jar&quot; download=&quot;eager&quot;/&gt;<br>
+    &nbsp;&nbsp;&lt;jar href=&quot;http://www.myext.com/lib/mp3.jar&quot; download=&quot;lazy&quot; 
+    part=&quot;MP3Player&quot;/&gt;<br>
+    &nbsp;&nbsp;...<br>
+    &lt;/resources&gt;</code></p>
+</blockquote>
+<p></p>
+</body>
+</html>
+

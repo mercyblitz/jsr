@@ -1,0 +1,872 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<TITLE>
+Response.Builder (JSR 311 API Draft)
+</TITLE>
+
+<META NAME="keywords" CONTENT="javax.ws.rs.core.Response.Builder class">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="Response.Builder (JSR 311 API Draft)";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Response.Builder.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.html" title="interface in javax.ws.rs.core"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/Response.Builder.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Response.Builder.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+javax.ws.rs.core</FONT>
+<BR>
+Class Response.Builder</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>javax.ws.rs.core.Response.Builder</B>
+</PRE>
+<DL>
+<DT><B>Enclosing interface:</B><DD><A HREF="../../../../javax/ws/rs/core/Response.html" title="interface in javax.ws.rs.core">Response</A></DD>
+</DL>
+<HR>
+<DL>
+<DT><PRE><FONT SIZE="-1"><A HREF="../../../../javax/ws/rs/ext/Contract.html" title="annotation in javax.ws.rs.ext">@Contract</A>
+</FONT>public abstract static class <B>Response.Builder</B><DT>extends java.lang.Object</DL>
+</PRE>
+
+<P>
+A class used to build Response instances that contain metadata instead of or in addition
+ to an entity. Static methods are provided to obtain an initial instance,
+ instance methods provide the ability to set metadata. E.g. to create a response
+ that indicates the creation of a new resource:
+ <pre>@HttpMethod
+ Response addWidget(...) {
+   Widget w = ...
+   URI widgetId = ...
+   return Builder.created(w, widgetId).build();
+ }</pre>
+<P>
+
+<P>
+<HR>
+
+<P>
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#Response.Builder()">Response.Builder</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.html" title="interface in javax.ws.rs.core">Response</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#build()">build</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a Response instance from the current Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#cacheControl(javax.ws.rs.core.CacheControl)">cacheControl</A></B>(<A HREF="../../../../javax/ws/rs/core/CacheControl.html" title="class in javax.ws.rs.core">CacheControl</A>&nbsp;cacheControl)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the cache control data on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#contentLocation(java.net.URI)">contentLocation</A></B>(java.net.URI&nbsp;location)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the content location on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#cookie(javax.ws.rs.core.NewCookie)">cookie</A></B>(<A HREF="../../../../javax/ws/rs/core/NewCookie.html" title="class in javax.ws.rs.core">NewCookie</A>&nbsp;cookie)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set a new cookie on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#created(java.lang.Object, java.net.URI)">created</A></B>(java.lang.Object&nbsp;entity,
+        java.net.URI&nbsp;location)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder for a created resource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#created(java.net.URI)">created</A></B>(java.net.URI&nbsp;location)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder for a created resource.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#entity(java.lang.Object)">entity</A></B>(java.lang.Object&nbsp;entity)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the entity on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#header(java.lang.String, java.lang.Object)">header</A></B>(java.lang.String&nbsp;name,
+       java.lang.Object&nbsp;value)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the value of a specific header on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#language(java.lang.String)">language</A></B>(java.lang.String&nbsp;language)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the language on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#lastModified(java.util.Date)">lastModified</A></B>(java.util.Date&nbsp;lastModified)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the last modified date on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#location(java.net.URI)">location</A></B>(java.net.URI&nbsp;location)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the location on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#newInstance()">newInstance</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new builder instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#noContent()">noContent</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder for an empty response.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#notModified()">notModified</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder with a not-modified status.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#notModified(javax.ws.rs.core.EntityTag)">notModified</A></B>(<A HREF="../../../../javax/ws/rs/core/EntityTag.html" title="class in javax.ws.rs.core">EntityTag</A>&nbsp;tag)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder with a not-modified status.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#notModified(java.lang.String)">notModified</A></B>(java.lang.String&nbsp;tag)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder with a not-modified status.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#ok()">ok</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder with an OK status.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#ok(java.lang.Object)">ok</A></B>(java.lang.Object&nbsp;entity)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder with an OK status.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#representation(java.lang.Object)">representation</A></B>(java.lang.Object&nbsp;entity)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder that contains a representation.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#representation(java.lang.Object, javax.ws.rs.core.MediaType)">representation</A></B>(java.lang.Object&nbsp;entity,
+               <A HREF="../../../../javax/ws/rs/core/MediaType.html" title="class in javax.ws.rs.core">MediaType</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder that contains a representation.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#representation(java.lang.Object, java.lang.String)">representation</A></B>(java.lang.Object&nbsp;entity,
+               java.lang.String&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder that contains a representation.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#serverError()">serverError</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder with an server error status.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#status(int)">status</A></B>(int&nbsp;status)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the status on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#tag(javax.ws.rs.core.EntityTag)">tag</A></B>(<A HREF="../../../../javax/ws/rs/core/EntityTag.html" title="class in javax.ws.rs.core">EntityTag</A>&nbsp;tag)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the entity tag on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#tag(java.lang.String)">tag</A></B>(java.lang.String&nbsp;tag)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the entity tag on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#temporaryRedirect(java.net.URI)">temporaryRedirect</A></B>(java.net.URI&nbsp;location)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create a new Builder for a temporary redirection.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#type(javax.ws.rs.core.MediaType)">type</A></B>(<A HREF="../../../../javax/ws/rs/core/MediaType.html" title="class in javax.ws.rs.core">MediaType</A>&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the type on the Builder.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>abstract &nbsp;<A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../javax/ws/rs/core/Response.Builder.html#type(java.lang.String)">type</A></B>(java.lang.String&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the type on the Builder.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Response.Builder()"><!-- --></A><H3>
+Response.Builder</H3>
+<PRE>
+public <B>Response.Builder</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="newInstance()"><!-- --></A><H3>
+newInstance</H3>
+<PRE>
+protected static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>newInstance</B>()</PRE>
+<DL>
+<DD>Create a new builder instance.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="build()"><!-- --></A><H3>
+build</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.html" title="interface in javax.ws.rs.core">Response</A> <B>build</B>()</PRE>
+<DL>
+<DD>Create a Response instance from the current Builder. The builder
+ is reset to a blank state equivalent to calling the ok method.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a Response instance</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="representation(java.lang.Object)"><!-- --></A><H3>
+representation</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>representation</B>(java.lang.Object&nbsp;entity)</PRE>
+<DL>
+<DD>Create a new Builder that contains a representation.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>entity</CODE> - the representation entity data
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="representation(java.lang.Object, javax.ws.rs.core.MediaType)"><!-- --></A><H3>
+representation</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>representation</B>(java.lang.Object&nbsp;entity,
+                                              <A HREF="../../../../javax/ws/rs/core/MediaType.html" title="class in javax.ws.rs.core">MediaType</A>&nbsp;type)</PRE>
+<DL>
+<DD>Create a new Builder that contains a representation.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>entity</CODE> - the representation entity data<DD><CODE>type</CODE> - the media type of the entity
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="representation(java.lang.Object, java.lang.String)"><!-- --></A><H3>
+representation</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>representation</B>(java.lang.Object&nbsp;entity,
+                                              java.lang.String&nbsp;type)</PRE>
+<DL>
+<DD>Create a new Builder that contains a representation.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>entity</CODE> - the representation entity data<DD><CODE>type</CODE> - the media type of the entity
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ok()"><!-- --></A><H3>
+ok</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>ok</B>()</PRE>
+<DL>
+<DD>Create a new Builder with an OK status.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ok(java.lang.Object)"><!-- --></A><H3>
+ok</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>ok</B>(java.lang.Object&nbsp;entity)</PRE>
+<DL>
+<DD>Create a new Builder with an OK status.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>entity</CODE> - the representation entity data
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="serverError()"><!-- --></A><H3>
+serverError</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>serverError</B>()</PRE>
+<DL>
+<DD>Create a new Builder with an server error status.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="created(java.lang.Object, java.net.URI)"><!-- --></A><H3>
+created</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>created</B>(java.lang.Object&nbsp;entity,
+                                       java.net.URI&nbsp;location)</PRE>
+<DL>
+<DD>Create a new Builder for a created resource.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>entity</CODE> - the representation of the new resource<DD><CODE>location</CODE> - the URI of the new resource
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="created(java.net.URI)"><!-- --></A><H3>
+created</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>created</B>(java.net.URI&nbsp;location)</PRE>
+<DL>
+<DD>Create a new Builder for a created resource.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>location</CODE> - the URI of the new resource
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="noContent()"><!-- --></A><H3>
+noContent</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>noContent</B>()</PRE>
+<DL>
+<DD>Create a new Builder for an empty response.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="notModified()"><!-- --></A><H3>
+notModified</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>notModified</B>()</PRE>
+<DL>
+<DD>Create a new Builder with a not-modified status.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="notModified(javax.ws.rs.core.EntityTag)"><!-- --></A><H3>
+notModified</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>notModified</B>(<A HREF="../../../../javax/ws/rs/core/EntityTag.html" title="class in javax.ws.rs.core">EntityTag</A>&nbsp;tag)</PRE>
+<DL>
+<DD>Create a new Builder with a not-modified status.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>tag</CODE> - a tag for the unmodified entity
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="notModified(java.lang.String)"><!-- --></A><H3>
+notModified</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>notModified</B>(java.lang.String&nbsp;tag)</PRE>
+<DL>
+<DD>Create a new Builder with a not-modified status.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>tag</CODE> - a tag for the unmodified entity
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="temporaryRedirect(java.net.URI)"><!-- --></A><H3>
+temporaryRedirect</H3>
+<PRE>
+public static <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>temporaryRedirect</B>(java.net.URI&nbsp;location)</PRE>
+<DL>
+<DD>Create a new Builder for a temporary redirection.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>location</CODE> - the redirection URI
+<DT><B>Returns:</B><DD>a new Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="status(int)"><!-- --></A><H3>
+status</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>status</B>(int&nbsp;status)</PRE>
+<DL>
+<DD>Set the status on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>status</CODE> - the response status
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="entity(java.lang.Object)"><!-- --></A><H3>
+entity</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>entity</B>(java.lang.Object&nbsp;entity)</PRE>
+<DL>
+<DD>Set the entity on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>entity</CODE> - the response entity
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="type(javax.ws.rs.core.MediaType)"><!-- --></A><H3>
+type</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>type</B>(<A HREF="../../../../javax/ws/rs/core/MediaType.html" title="class in javax.ws.rs.core">MediaType</A>&nbsp;type)</PRE>
+<DL>
+<DD>Set the type on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>type</CODE> - the media type of the response entity
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="type(java.lang.String)"><!-- --></A><H3>
+type</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>type</B>(java.lang.String&nbsp;type)</PRE>
+<DL>
+<DD>Set the type on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>type</CODE> - the media type of the response entity
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="language(java.lang.String)"><!-- --></A><H3>
+language</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>language</B>(java.lang.String&nbsp;language)</PRE>
+<DL>
+<DD>Set the language on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>language</CODE> - the language of the response entity
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="location(java.net.URI)"><!-- --></A><H3>
+location</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>location</B>(java.net.URI&nbsp;location)</PRE>
+<DL>
+<DD>Set the location on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>location</CODE> - the location
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="contentLocation(java.net.URI)"><!-- --></A><H3>
+contentLocation</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>contentLocation</B>(java.net.URI&nbsp;location)</PRE>
+<DL>
+<DD>Set the content location on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>location</CODE> - the content location
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="tag(javax.ws.rs.core.EntityTag)"><!-- --></A><H3>
+tag</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>tag</B>(<A HREF="../../../../javax/ws/rs/core/EntityTag.html" title="class in javax.ws.rs.core">EntityTag</A>&nbsp;tag)</PRE>
+<DL>
+<DD>Set the entity tag on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>tag</CODE> - the entity tag
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="tag(java.lang.String)"><!-- --></A><H3>
+tag</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>tag</B>(java.lang.String&nbsp;tag)</PRE>
+<DL>
+<DD>Set the entity tag on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>tag</CODE> - the entity tag
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="lastModified(java.util.Date)"><!-- --></A><H3>
+lastModified</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>lastModified</B>(java.util.Date&nbsp;lastModified)</PRE>
+<DL>
+<DD>Set the last modified date on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>lastModified</CODE> - the last modified date
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="cacheControl(javax.ws.rs.core.CacheControl)"><!-- --></A><H3>
+cacheControl</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>cacheControl</B>(<A HREF="../../../../javax/ws/rs/core/CacheControl.html" title="class in javax.ws.rs.core">CacheControl</A>&nbsp;cacheControl)</PRE>
+<DL>
+<DD>Set the cache control data on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>cacheControl</CODE> - the cache control directives
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="header(java.lang.String, java.lang.Object)"><!-- --></A><H3>
+header</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>header</B>(java.lang.String&nbsp;name,
+                                        java.lang.Object&nbsp;value)</PRE>
+<DL>
+<DD>Set the value of a specific header on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - the name of the header<DD><CODE>value</CODE> - the value of the header, the header will be serialized
+ using a HeaderProvider for the class of the value
+<DT><B>Returns:</B><DD>the updated Builder<DT><B>See Also:</B><DD><A HREF="../../../../javax/ws/rs/ext/HeaderProvider.html" title="interface in javax.ws.rs.ext"><CODE>HeaderProvider</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="cookie(javax.ws.rs.core.NewCookie)"><!-- --></A><H3>
+cookie</H3>
+<PRE>
+public abstract <A HREF="../../../../javax/ws/rs/core/Response.Builder.html" title="class in javax.ws.rs.core">Response.Builder</A> <B>cookie</B>(<A HREF="../../../../javax/ws/rs/core/NewCookie.html" title="class in javax.ws.rs.core">NewCookie</A>&nbsp;cookie)</PRE>
+<DL>
+<DD>Set a new cookie on the Builder.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>cookie</CODE> - the new cookie that will accompany the response.
+<DT><B>Returns:</B><DD>the updated Builder</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Response.Builder.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../javax/ws/rs/core/Response.html" title="interface in javax.ws.rs.core"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../javax/ws/rs/core/UriBuilder.html" title="class in javax.ws.rs.core"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/Response.Builder.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Response.Builder.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

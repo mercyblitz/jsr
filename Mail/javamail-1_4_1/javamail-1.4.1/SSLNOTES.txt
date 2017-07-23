@@ -1,0 +1,271 @@
+		Notes for use of SSL with JavaMail
+		----------------------------------
+
+JavaMail now supports accessing mail servers over connections secured
+using SSL or TLS.  To simplify such access, three new protocols have
+been added.  In addition to the non-SSL JavaMail protocols "imap",
+"pop3", and "smtp", the protocols "imaps", "pop3s", and "smtps" can
+be used to connect to the corresponding services using an SSL
+connection.
+
+In addition, the "imap" and "smtp" protocols support use of the
+STARTTLS command (see RFC 2487 and RFC 3501) to switch the connection
+to be secured by TLS.
+
+Use of the STARTTLS command is preferred in cases where the server
+supports both methods described above.
+
+This SSL/TLS support in JavaMail works only when JavaMail is used on
+a version of J2SE that includes SSL support.  We have tested this
+support on J2SE 1.4 and J2SE 1.5, which include SSL support.  The
+SSL support is provided by the JSSE package, which is also available
+for earlier versions of J2SE.  We have not tested such configurations.
+
+-- STARTTLS support
+
+The STARTTLS support is available in the standard "imap" and "smtp"
+protocols, but must be enabled by setting the appropriate property,
+mail.imap.starttls.enable or mail.smtp.starttls.enable, to "true".
+When set, if the server supports the STARTTLS command, it will be
+used after making the connection and before sending any login
+information.
+
+
+-- Secure protocols
+
+When using the new protocol names, configuration properties must also use
+these protocol names.  For instance, set the property "mail.smtps.host"
+to specify the host name of the machine to connect to when using the
+SMTP protocol over SSL.  Similarly, to set the IMAP protocol timeout
+when using the IMAP over SSL protocol, set the property
+"mail.imaps.timeout".  See the package documentation for the different
+protocol packages for the list of available properties, which are
+always set using property names of the form mail.<protocol>.<property>.
+
+The Transport.send method will use the default transport protocol,
+which remains "smtp".  To change the default transport protocol 
+returned by the Session.getTransport() method to SMTP over SSL, set
+the property "mail.transport.protocol" to "smtps".  To change the
+transport used for internet addresses (as returned by the
+Session.getTransport(Address) method, and used by the Transport.send
+method), use
+
+	session.setProtocolForAddress("rfc822", "smtps");
+
+
+-- Trusted Certificates
+
+To establish an SSL/TLS connection, the JavaMail client must be able
+to verify that the security certificate presented by the server
+it is connecting to is "trusted" by the client.  Trusted certificates
+are maintained in a Java keystore file on the client.  The J2SE
+SDK "keytool" command is used to maintain the keystore file.
+
+There are two common approaches for verifying server certificates.
+The first approach is probably most common for servers accessible to
+partners outside a company.  The second approach is probably most
+common for servers used within a company.
+
+1. Server certificates may be signed be a well known public
+   Certificate Authority.  The default Java keystore file contains
+   the public keys of well known Certificate Authorities and can
+   verify the server's certificate by following the chain of
+   certificates signing the server's certificate back to one of
+   these well known CA certificates.
+
+   In this case the client doesn't need to manage certificates
+   explicitly but can just use the default keystore file.
+
+2. Server certificates may be "self-signed".  In this case there is
+   no chain of signatures to use in verifying the server's certificate.
+   Instead, the client will need the server's certificate in the
+   client's keystore file.  The server's certificate is imported into
+   the keystore file once, using the keytool command, and after that
+   is used to verify connections to the server.  A single keystore file
+   may contain certificates of many servers.
+
+   In this case the client will need to set the appropriate System
+   properties to point to the client's keystore file containing the
+   trusted certificate.  These properties can be set when invoking
+   the "java" command, or can be set programmatically.  For example,
+
+	java -Djavax.net.ssl.trustStore=$HOME/.keystore ...
+
+   See the JSSE Reference Guide for details:
+   http://java.sun.com/j2se/1.5.0/docs/guide/security/jsse/JSSERefGuide.html#CustomizingStores
+
+A future release of JavaMail may support the trust algorithm described
+in section 2.4 of RFC 2595.
+
+
+-- Debugging
+
+Debugging problems with certificates and keystores can be difficult.
+The JSSE Reference Guide contains information on debugging utilities
+that can help.  See:
+http://java.sun.com/j2se/1.5.0/docs/guide/security/jsse/JSSERefGuide.html#Debug
+
+There are some debugging options in the JDK that can help, depending
+on the sorts of problems you're having.  Setting the following system
+properties will produce additional debugging output:
+
+	java.security.debug=certpath
+	javax.net.debug=trustmanager 
+
+Set these on the command line when you run your program using, for example:
+
+	java -Djava.security.debug=certpath -Djavax.net.debug=trustmanager ...
+
+
+-- keytool Usage
+
+Given a certificate for the server as used in case #2 above, you can
+import this certificate into your Java keystore file using a command
+such as:
+
+	keytool -import -alias imap-server -file imap.cer
+
+The keytool command can also be used to generate a self-signed certificate
+that can be used by your mail server, if you're setting up your own server.
+Other utilities, such as those included with the OpenSSL package, can also
+be used to generate such certificates, and they can be imported into the
+Java keystore using keytool.
+
+For more information on using the keytool command, see the keytool
+reference pages at:
+http://java.sun.com/j2se/1.5.0/docs/tooldocs/index.html#security
+
+
+-- Configuring Your Own Trust Manager
+
+When using SSL/TLS, it's important to ensure that the server you connect
+to is actually the server you expected to connect to, to prevent "man in
+the middle" attacks on your communication.  The recommended technique is
+to configure the Java keystore using one of the methods described above.
+If, for some reason, that approach is not workable, it's also possible
+to configure the SSL/TLS implementation to use your own TrustManager
+class to evaluate whether to trust the server you've connected to.
+
+The following "dummy" classes illustrate the framework necessary to create
+your own TrustManager implementation.
+
+First, a replacement for the standard SSLSocketFactory is needed, to allow
+you to specify which TrustManager to use:
+
+==> DummySSLSocketFactory.java <==
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+
+import javax.net.SocketFactory;
+import javax.net.ssl.*;
+
+
+/**
+ * DummySSLSocketFactory
+ */
+public class DummySSLSocketFactory extends SSLSocketFactory {
+    private SSLSocketFactory factory;
+
+    public DummySSLSocketFactory() {
+	try {
+	    SSLContext sslcontext = SSLContext.getInstance("TLS");
+	    sslcontext.init(null,
+				 new TrustManager[] { new DummyTrustManager()},
+				 null);
+	    factory = (SSLSocketFactory)sslcontext.getSocketFactory();
+	} catch(Exception ex) {
+	    // ignore
+	}
+    }
+
+    public static SocketFactory getDefault() {
+	return new DummySSLSocketFactory();
+    }
+
+    public Socket createSocket() throws IOException {
+	return factory.createSocket();
+    }
+
+    public Socket createSocket(Socket socket, String s, int i, boolean flag)
+				throws IOException {
+	return factory.createSocket(socket, s, i, flag);
+    }
+
+    public Socket createSocket(InetAddress inaddr, int i,
+				InetAddress inaddr1, int j) throws IOException {
+	return factory.createSocket(inaddr, i, inaddr1, j);
+    }
+
+    public Socket createSocket(InetAddress inaddr, int i)
+				throws IOException {
+	return factory.createSocket(inaddr, i);
+    }
+
+    public Socket createSocket(String s, int i, InetAddress inaddr, int j)
+				throws IOException {
+	return factory.createSocket(s, i, inaddr, j);
+    }
+
+    public Socket createSocket(String s, int i) throws IOException {
+	return factory.createSocket(s, i);
+    }
+
+    public String[] getDefaultCipherSuites() {
+	return factory.getDefaultCipherSuites();
+    }
+
+    public String[] getSupportedCipherSuites() {
+	return factory.getSupportedCipherSuites();
+    }
+}
+
+
+Next you need the actual implementation of the TrustManager.  This dummy
+trust manager trusts anything.  THIS IS NOT SECURE!!!
+
+==> DummyTrustManager.java <==
+
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
+
+
+/**
+ * DummyTrustManager - NOT SECURE
+ */
+public class DummyTrustManager implements X509TrustManager {
+
+    public void checkClientTrusted(X509Certificate[] cert, String authType) {
+	// everything is trusted
+    }
+
+    public void checkServerTrusted(X509Certificate[] cert, String authType) {
+	// everything is trusted
+    }
+
+    public X509Certificate[] getAcceptedIssuers() {
+	return new X509Certificate[0];
+    }
+}
+
+Finally, you need to configure the system to use your SSLSocketFactory.
+In J2SE 1.5, this is fairly easy.  You need to add the following line
+to your program (note that you'll require permission to set security
+properties):
+
+    java.security.Security.setProperty("ssl.SocketFactory.provider",
+					"DummySSLSocketFactory");
+
+In J2SE 1.4, you're not allowed to override the default SSLSocketFactory.
+Instead, you have to tell JavaMail to use your socket factory instead of
+the default by setting the appropriate properties:
+
+    props.setProperty("mail.imaps.socketFactory.class",
+					"DummySSLSocketFactory");
+    props.setProperty("mail.imaps.socketFactory.fallback", "false");
+    Session session = Session.getInstance(props, null);
+
+Similar properties would need to be set to use other protocols.
+Note that this technique does not allow control over the SSLSocketFactory
+that's used with the STARTTLS command.

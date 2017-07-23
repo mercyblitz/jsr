@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Overview</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>1 Overview</h1>
+<hr>
+<p><br>
+  The Java Network Launching Protocol and API (JNLP) is a Web-centric provisioning<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#1','','scrollbars=yes,resizable=yes,width=500,height=700')">1</a></SUP> 
+  protocol and application environment for Web-deployed Java applications. An application implementing this specification is called a JNLP 
+  Client. </p>
+<p>The main concepts in this specification are:</p>
+<ul>
+  <li>A Web-centric application model with no installation phase, which provides 
+    transparent and incremental updates, as well as incremental downloading of 
+    an application. This is similar to the model for HTML pages and Applets, but 
+    with greater control and flexibility.</li>
+  <li>A provisioning protocol that describes how to package an application on 
+    a Web server, so it can be delivered across the Web to a set of JNLP Clients. 
+    The key component in this provisioning protocol is the JNLP file, which describes 
+    how to download and launch an application.</li>
+  <li>A standard execution environment for the application. The execution environment 
+    includes both a safe environment where access to the local disk and the network 
+    is restricted for untrusted applications, and an unrestricted environment 
+    for trusted applications. The restricted environment is similar to the well-known 
+    Applet sandbox, but extended with additional APIs.</li>
+</ul>
+<p>The main concepts are introduced in the following sections.</p>
+<h2><a name="web"></a>1.1 Web-centric Application Model</h2>
+<p>A JNLP Client is an application or service that can launch applications on 
+  a client system from resources hosted across the network. It is not a general 
+  installation protocol for software components. A high-level view of a JNLP Client 
+  is that it allows an application to be run from a codebase that is accessed 
+  over the Web, rather than from the local file system. It provides a facility 
+  similar to what would happen if URLs were allowed in the JRE's classpath, e.g., 
+  something that looks like this:</p>
+<blockquote>
+  <p><code>java -classpath http://www.mysite.com/app/MyApp.jar com.mysite.app.Main</code></p>
+</blockquote>
+<p>The above example illustrates the basic functionality of a JNLP Client. JNLP 
+  goes further than this, however. First, it provides the ability to specify which 
+  version of the Java Runtime Environment (JRE) that the application requires. In the above 
+  example, this amounts to choosing what java command to use. If the requested 
+  JRE version is not available, a JRE can be downloaded and installed automatically<a href="javascript:;" onClick="MM_openBrWindow('notes.html#2','','scrollbars=yes,resizable=yes,width=500,height=700')"><SUP>2</SUP></a>. 
+  Second, it provides the ability to specify native libraries as part of the application. 
+  Native libraries are downloaded in JAR files. Thus, both signing and compression 
+  of the libraries are supported. The native libraries are loaded into the running 
+  process using the System.loadLibrary method. </p>
+<p>All the resources that an JNLP Client needs to access in order to launch an 
+  application are referenced with URLs. Conceptually, all of the application's 
+  resources reside on the Web server. A JNLP Client is allowed and encouraged 
+  to cache resources that are downloaded from the Web. This will improve consecutive 
+  startup times, minimize network traffic, and enable offline operation.</p>
+<p>This application model provides the following benefits:</p>
+<ul>
+  <li><strong>No installation phase:</strong> A JNLP Client simply needs to download 
+    and cache the application's resources. The user does not need to be prompted 
+    about install directories and the like.</li>
+  <li><strong>Transparent update:</strong> A JNLP Client can check the currently 
+    cached resources against the versions hosted on the Web Server and transparently 
+    download newer versions.</li>
+  <li><strong>Incremental update:</strong> The JNLP Client only needs to download 
+    the resources that have been changed when an application is updated. If only 
+    a few of the application's resources have been modified, this can significantly 
+    reduce the amount of data that needs to be downloaded when upgrading to a 
+    new version of an application. Furthermore, incremental update of individual 
+    JAR files is also supported.</li>
+  <li><strong>Incremental download:</strong> A JNLP Client does not need to download 
+    an entire application before it is launched. For example, for a spreadsheet 
+    application the downloading of the graphing module could be postponed until 
+    first use. JNLP supports this model by allowing the developer to specify what 
+    resources are needed before an application is launched (eager), and what resources 
+    can be downloaded later (lazy). Furthermore, JNLP provides an API so the developer 
+    can check if a resource is local or not (i.e., whether it needs to be downloaded), 
+    and to request non-local resources to be downloaded.</li>
+  <li><strong>Offline support:</strong> A JNLP Client can launch an application 
+    offline if a sufficient set of resources is cached locally. However, most 
+    applications deployed using JNLP are expected to be Web-centric, i.e., they 
+    will typically connect back to a Web server or database to retrieve their 
+    state. Hence, many applications will only work online. The application developer 
+    specifies if offline operation is supported, and what resources are needed 
+    locally to launch the application offline.</li>
+</ul>
+<h2><a name="provisioning"></a>1.2 Provisioning</h2>
+<h3>1.2.1 JNLP File</h3>
+<p>The core of the JNLP technology is the JNLP file. The JNLP file is an XML document. 
+</p>
+<p>Most commonly, a JNLP file will describe an application. A JNLP file of this 
+  kind is called an application descriptor. It specifies the JAR files the application 
+  consists of, the JRE it requires, optional packages that it depends 
+  on, its name and other display information, its runtime parameters and system 
+  properties, etc. There is a one-to-one correspondence between an application 
+  descriptor and an application. </p>
+<p>A JNLP file does not contain any binary data itself. Instead it contains URLs 
+  that point to all binary data, such as icons (in JPEG or GIF format), and binary 
+  code resources, such as Java classes and native libraries (contained in JAR 
+  files). Figure 1 illustrates how an application is described with JNLP files. 
+  The root JNLP file (application descriptor) contains the basic information such 
+  as name and vendor, main class, and so forth. The JAR files that constitute 
+  the &quot;classpath&quot; for the application are all referred to with URLs.</p>
+<p>A JNLP file can also refer to other JNLP files, called extension descriptors. 
+  An extension descriptor typically describes a component that must be used in 
+  order to run the application. The resources described in the extension descriptor 
+  become part of the classpath for the application. This allows common functionality 
+  to be factored out and described once. An extension descriptor also provides 
+  the ability to run an installer that can install platform-dependent resources 
+  before the application is launched, e.g., to install device drivers.</p>
+<p align="center"><img src="images/jnlp-spec-1.0.1-fcs-TEST_sdw_m73d3a86f.gif" width="364" height="191"></p>
+<p align="center"><em>Figure 1: JNLP File and External Resources</em></p>
+<p>The JNLP file is, in some sense, similar to a traditional executable format. 
+  Traditionally, applications are delivered as binary platform-dependent files. 
+  For example, on Windows, an application is delivered as a MyApp.exe executable. 
+  The executable format is designed so the Windows operating system can load the 
+  application and execute it. It also contains information about external dependencies, 
+  such as MyApp.dll. This format is file-centric; all external references 
+  are references to files on the local file system. In contrast, a JNLP file does 
+  not contain any binary data itself, but instead contains URLs to where they 
+  can be obtained from. The JNLP file format is Web-centric; the references to 
+  external resources are URLs, instead of file names. </p>
+<h2>1.2.2 Downloading Resources</h2>
+<p>The JNLP Client can download 3 different kind of resources: JAR files, images, 
+  and JNLP files. All resources in a JNLP file are uniquely named using either 
+  a URL or a URL/version-id pair. A typical application deployed using JNLP will 
+  consist of a set of JAR files and a set of images<a href="javascript:;" onClick="MM_openBrWindow('notes.html#3','','scrollbars=yes,resizable=yes,width=500,height=700')"><SUP>3</SUP></a>. 
+  JAR files, images, and JNLP files can be downloaded using standard HTTP GET 
+  requests. For example:</p>
+<blockquote>
+  <p><code>http://www.mysite.com/app/MyApp.jar</code></p>
+</blockquote>
+<p>This basic download protocol works from a standard unmodified Web server. This 
+  leverages existing Web server technology, which is important to achieve wide-spread 
+  use of a new technology on the Internet. </p>
+<p>To provide more control and better utilization of bandwidth, a version-based 
+  download protocol is also supported. The version-based protocol is designed 
+  to:</p>
+<ul>
+  <li>Allow several versions of an application to co-exist on a server at a given 
+    time. In particular, this means that an application that is distributed as 
+    several JAR files can be safely upgraded. A JNLP Client that is downloading 
+    JAR files right when a Web server is being updated will never download JAR 
+    files that are a mix between two application versions.</li>
+  <li>Provide a unique URL for an application independent of its version. This 
+    allows a JNLP Client to automatically detect and flush old versions out of 
+    the cache.</li>
+  <li>Make it possible to incrementally update already-downloaded JAR files. This 
+    can substantially minimize the download requirements for upgrading to a new 
+    version.</li>
+  <li>Allow users to stick with a given version rather than always getting the 
+    latest version from the Web server. For example, a JNLP Client can download 
+    an updated version in the background, while the already-downloaded version 
+    is being used.</li>
+</ul>
+<p>The version-based protocol requires special support on the Web server. This 
+  support can be provided using servlets, CGI-scripts, or by similar means. </p>
+<p>The use of the version-based protocol is specified in the JNLP file on a per-resource 
+  basis. Depending on the facilities the Web server offers (and possibly other 
+  factors), the application developer can choose whether the version-based protocol 
+  should be used or not. </p>
+<h2><a name="application"></a>1.3 Application Environment</h2>
+<p>The application environment defines a common set of services and system settings 
+  that an application launched with a JNLP Client can depend on. The core of this 
+  environment is the JRE. In addition, this specification 
+  defines additional APIs and settings:</p>
+<ul>
+  <li>Configured HTTP proxies.</li>
+  <li>A secure execution environment that is similar to the well-known Applet 
+    sandbox.</li>
+  <li>An API to securely and dynamically lookup and access features on the client 
+    platform, such as instructing the default browser to display a URL.</li>
+</ul>
+<p>The application environment is defined as a set of required services that must 
+  be implemented by all implementations that conform to this specification, and 
+  a set of optional services that are not required to be implemented. Applications 
+  must check for the presence of optional services and handle their absence sensibly.</p>
+<h2><a name="example"></a>1.4 An Example</h2>
+<p>A helper application that implements the Java Network Launching protocol and 
+  API can be associated with a Web browser. The helper application gets configured 
+  with the proper HTTP proxy settings during installation, so they can be passed 
+  along to a launched application<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#4','','scrollbars=yes,resizable=yes,width=599,height=700')">4</a></SUP>. 
+  Thus, the user does not have to specify proxy settings for each application 
+  separately.</p>
+<p>When a user clicks on a link pointing to a JNLP file, the browser will download 
+  the file and invoke the helper application with the name of the downloaded file 
+  as an argument. The helper application (i.e., the JNLP Client) interprets the 
+  JNLP file, which will direct it to download and locally cache the JAR files 
+  and other resources for the particular application. When all required JAR files 
+  have been downloaded, the application is launched.</p>
+<p>A sample JNLP file, which is an XML document, is shown here:</p>
+<blockquote> 
+  <p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+    &nbsp;&nbsp;&lt;jnlp codebase=&quot;http://www.mysite.com/app&quot;&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;information&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Draw!&lt;/title&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;vendor&gt;My Web Company&lt;/vendor&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;icon href=&quot;draw-icon.jpg&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;offline-allowed/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/information&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;resources&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;java version=&quot;1.3+&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jar href=&quot;draw.jar&quot;/&gt;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&lt;/resources&gt;<br>
+    &nbsp;&nbsp;&lt;application-desc main-class=&quot;com.mysite.Draw&quot;/&gt;<br>
+    &lt;/jnlp&gt;</code></p>
+</blockquote>
+<p>The JNLP file describes how to launch the sample application, titled Draw!. 
+  In the JNLP file, it is specified that the Java platform, version 1.3 or higher 
+  is required to run this application, along with some general application information 
+  that can be displayed to the user during the download phase.</p>
+<h2><a name="comparing"></a>1.5 Comparing JNLP with Other Technologies </h2>
+<p>The JNLP technology is related to Java Applets. Java Applets are automatically 
+  downloaded, cached, and launched by a Web browser without requiring any user 
+  interaction, and Applets are executed in a secure sandbox environment by default. 
+  Applets are a core part of the Java Platform, Standard Edition. Many of the technologies that are 
+  used by JNLP are borrowed from the Applet technology, such as the downloading 
+  of code and the secure sandbox. </p>
+<p>Applications launched with JNLP do not run inside a browser window, but are 
+  instead separate applications that are run on separate Java Virtual Machines 
+  (JVMs). Thus, applications launched with JNLP are typically more like traditional 
+  desktop applications that are commonly distributed as shrink-wrapped software, 
+  e.g., on CDs.</p>
+<p>JNLP is not a general installer for applications. It is particularly targeted 
+  to Web-deployed Java Technology-based applications, i.e., applications that 
+  can be downloaded from the Web and which store most of their state on the Web.</p>
+<p>The JNLP protocol defines how Java Runtime Environments and optional packages 
+  can be installed automatically. This will typically require the JREs and optional 
+  packages to be bundled in a traditional installer.</p>
+<p></p>
+</body>
+</html>

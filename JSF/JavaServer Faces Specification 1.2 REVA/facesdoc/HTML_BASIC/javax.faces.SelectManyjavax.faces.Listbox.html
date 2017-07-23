@@ -1,0 +1,458 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN""http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<title>
+<font size="-1">component-family:</font> javax.faces.SelectMany <font size="-1">renderer-type:</font> javax.faces.Listbox
+</title>
+<link REL ="stylesheet" TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+</head>
+<script>
+function asd()
+{
+  parent.document.title=<font size="-1">component-family:</font> javax.faces.SelectMany <font size="-1">renderer-type:</font> javax.faces.Listbox
+}
+</SCRIPT>
+<body BGCOLOR="white" onload="asd();">
+
+<H2><font size="-1">HTML_BASIC render-kit</font>
+<br />
+<font size="-1">component-family:</font> javax.faces.SelectMany <font size="-1">renderer-type:</font> javax.faces.Listbox
+</H2>
+<HR />
+<P><p>Render an HTML option list.</p>
+
+      <p>Decode Behavior</p>
+
+      <p>This section documents the decode behavior for all renderers
+      that handle <code>UISelectMany</code> or <code>UISelectOne</code>
+      components.</p>
+
+      <ul>
+
+      <p><a name="decodeMany">Decode Behavior for
+      <code>UISelectMany</code> components</a></p>
+
+      <ul>
+
+        <p>Obtain the <code>Map</code> from the
+        "requestParameterValuesMap" property of the
+        <code>ExternalContext</code>.  If the <code>Map</code> contains
+        an entry for the "clientId" of the component, pass the value of
+        the entry, cast to a <code>String []</code>, to the
+        <code>setSubmittedValue()</code> method of the component, which
+        must be an <code>EditableValueHolder</code>.  If the
+        <code>Map</code> does not contain an entry, create an empty
+        <code>String</code> array and call
+        <code>setSubmittedValue()</code> with it.</p>
+
+      </ul>
+
+      <p><a name="decodeOne">Decode Behavior for
+      <code>UISelectOne</code> components</a></p>
+
+      <ul>
+
+      <p>Obtain the <code>Map</code> from the "requestParameterMap"
+      property of the <code>ExternalContext</code>.  If there is a
+      <code>Map</code> entry for the "clientId" property of the
+      component, pass it to the <code>setSubmittedValue()</code> method
+      of the component.</p>
+
+      </ul>
+
+      <p>Encode Behavior</p>
+
+      <ul>
+
+      <p>Render an HTML "select" element. Render the clientId of
+      the component as the value of the "name" attribute.  If the "styleClass"
+      attribute is specified, render its value as the value of the "class"
+      attribute on the "select" element.  If the component is a
+      <code>UISelectMany</code> instance, render "multiple" as the value of the
+      "multiple" attribute.  If the "size" attribute is specified, render its
+      value as the value of the "size" attribute.  Otherwise use the number of
+      items as the value of the "size" attribute.</p>
+
+      </ul>
+
+      <p><a name="option">Rendering the "option" elements</a></p>
+
+      <ul>
+
+      <p>The only valid children of this component are
+      <code>UISelectItem</code> or <code>UISelectItems</code> instances.
+      Iterate over the children of this component, and accrue a list of
+      <code>javax.faces.model.SelectItem</code> instances.  If the
+      current child is a <code>UISelectItem</code> create a
+      <code>SelectItem</code>instance from its <code>itemValue,
+      itemLabel</code> and <code>itemDescription</code> properties, add
+      it to the list.  If the current child is a
+      <code>UISelectItems</code> instance, call its
+      <code>getValue()</code> method.  If the result is a
+      <code>SelectItem</code> bean, add it to the list.  If the result
+      is an array of <code>SelectItem</code> beans, add each one t othe
+      list.  If the result is a <code>Collection</code> of
+      <code>SelectItem</code> beans, add each one to the list.  If the
+      result isa <code>Map</code>, create a <code>SelectItem</code> bean
+      for each entry in the <code>Map</code> using the key as the label,
+      the value as the value, and <code>null</code> as the description.
+      Iterate over the list of <code>SelectItem</code> beans.  If the
+      current element is a <code>SelectItemGroup</code>, render an
+      "optgroup" element with a "label" attribute, the value of which is
+      the "label" property from the current element, then call
+      <code>getSelectItems()</code> and render each element as below.
+      If the current element is not a <code>SelectItemGroup</code>,
+      render an "option" element.  Follow the conversion rules in the
+      spec to obtain a renderable <code>String</code> from the "value"
+      property of the current element, render that as the value of the
+      "value" atribute.  Now it is time to see if the current element is
+      the selected value.  call its
+      <code>getSubmittedValue()</code> method, casting the result to an
+      <code>Object []</code>, otherwise the component must be a
+      <code>UISelectOne</code> instance, call its
+      <code>getSubmittedValue()</code> method and create an <code>Object
+      []</code> around the result.  Determine the type of the resultant array
+      if the resultant array is non-null, otherwise the type is <code>String</code>.
+      Coerce the current item value to this type following the Expression
+      Language coercion rules.  If the resultant array is non-null,
+      we look in the array for a value that, when we pass the renderable
+      value to its <code>equals()</code> method, it returns
+      <code>true</code>, meaning the current element is selected.  If
+      the resultant array is <code>null</code>, if the component is a
+      <code>UISelectMany</code>, call its <code>getValue()</code>
+      method.  If the result is a <code>List</code> obtain the values in
+      the list as an array.  Otherwise, the component must be a
+      <code>UISelectOne</code> instance.  Call its
+      <code>getValue()</code> method, which must be an Object array.
+      Look for an element in the resultant array that, 1. when we pass
+      the renderable value to its <code>equals()</code> method, it
+      returns <code>true</code> , or 2. if the renderable value is null,
+      and there is a null element in the array, also conclude that the
+      current element is selected.  Otherwise the current element is not
+      selected.  Now, if the current value is selected, write out an
+      HTML boolean property "selected".  If the current
+      SelectItem.isDisabled() returns true, render "disabled" as the
+      value of the "disabled" attribute.</p>
+
+      </ul>
+
+      </ul></P>
+<P>This renderer is responsible for rendering its children.</P><HR />
+<a NAME="attributes"><!-- --></a>
+
+<h3>Note:</h3>
+
+<p>Attributes with a <code>pass-through</code> value of
+<code>true</code> are not interpreted by the renderer and are passed
+straight through to the rendered markup, without checking for validity.  Attributes with a
+<code>pass-through</code> value of <code>false</code> are interpreted
+by the renderer, and may or may not be checked for validity by the renderer.</p>
+
+<table BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<td COLSPAN="5"><font SIZE="+2">
+<b>Attributes</b></font></td>
+</tr>
+<tr BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<th><b>attribute-name</b></th>
+<th><b>pass-through</b></th>
+<th><b>attribute-class</b></th>
+<th><b>description</b></th>
+<th><b>default-value</b></th>
+</tr>
+	    
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;accesskey
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Access key that, when pressed, transfers focus
+          to this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;dir
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Direction indication for text that does not inherit directionality.
+          Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;disabled
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>boolean</code></td>
+<td>
+          Flag indicating that this element must never receive focus or
+          be included in a subsequent submit.  A value of false causes
+          no attribute to be rendered, while a value of true causes the
+          attribute to be rendered as disabled="disabled".            </td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;disabledClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+         CSS style class to apply to the rendered label
+         on disabled options.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;enabledClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+         CSS style class to apply to the rendered label
+         on enabled options.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;lang
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Code describing the language used in the generated markup
+          for this component.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onblur
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element loses focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onchange
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element loses focus
+          and its value has been modified since gaining focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;ondblclick
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          double clicked over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onfocus
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when this element receives focus.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeydown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeypress
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          pressed and released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onkeyup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a key is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousedown
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          pressed down over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmousemove
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved within this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseout
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved away from this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseover
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          moved onto this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onmouseup
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when a pointer button is
+          released over this element.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;onselect
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Javascript code executed when text within this
+          element is selected by the user.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;readonly
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>boolean</code></td>
+<td>
+          Flag indicating that this component will prohibit changes by
+          the user.  The element may receive focus unless it has also
+          been disabled.  A value of false causes
+          no attribute to be rendered, while a value of true causes the
+          attribute to be rendered as readonly="readonly".</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;size
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>int</code></td>
+<td>
+        Number of available options to be shown at all times.
+        If not specified, all available options are shown.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;style
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          CSS style(s) to be applied when this component is rendered.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;styleClass
+</td>
+<td ALIGN="right" VALIGN="top">false</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Space-separated list of CSS style class(es) to be applied when
+          this element is rendered.  This value must be passed through
+          as the "class" attribute on generated markup.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;tabindex
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Position of this element in the tabbing order
+          for the current document.  This value must be
+          an integer between 0 and 32767.</td>
+<td>undefined<td>
+</tr>
+<tr BGCOLOR="white" CLASS="TableRowColor">
+<td ALIGN="right" VALIGN="top" WIDTH="1%"><code>
+&nbsp;title
+</td>
+<td ALIGN="right" VALIGN="top">true</td>
+<td><code>java.lang.String</code></td>
+<td>
+          Advisory title information about markup elements generated
+          for this component.</td>
+<td>undefined<td>
+</tr>
+</table>
+<hr>
+Copyright (c) 2003-2004 Sun Microsystems, Inc. All Rights Reserved.
+</body>
+</html>

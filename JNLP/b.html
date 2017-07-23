@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JARDiff Format</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<hr>
+<h1>B JARDiff Format</h1>
+<hr>
+<p>&nbsp;</p><p>This format describes how to apply incremental updates to a JAR file. An incremental 
+  update can be applied to an already-downloaded JAR file to yield an updated 
+  version. Downloading an incremental update to an existing version can significantly 
+  reduce download time compared to downloading the new JAR file, if the existing 
+  and new JAR files have most parts in common. </p>
+<p>For example, given two JAR files: <code>from.jar</code> and <code>to.jar</code>, 
+  then a JARDiff can be computed that describes the changes that need to be applied 
+  to <code>from.jar</code> to yield <code>to.jar</code>. </p>
+<h2>B.1 MIME Type and Default File Extension</h2>
+<p>The default MIME type and extension that should be associated with a JARDiff 
+  file are shown in the following table.</p>
+<p><br>
+  <br>
+</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td width="40%"><strong><font size="+2">Default MIME Type</font></strong></td>
+    <td><strong><font size="+2">Default Extension</font></strong></td>
+  </tr>
+  <tr> 
+    <td width="40%" align="left" valign="top"><code>application/x-java-archive-diff<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top"><p><code>.jardiff</code></p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>B.2 Contents</h2>
+<p>The JARDiff file is itself a JAR file. </p>
+<p>In the following, it is assumed that the original JAR file is named <code>from.jar</code>, 
+  and the updated JAR file is named <code>to.jar</code>. A JARDiff between <code>from.jar</code> 
+  and <code>to.jar</code> contains the following:</p>
+<ul>
+  <li>The set of entries that exist in <code>to.jar</code> but do not exist in 
+    <code>from.jar</code>, except for entries that have just been renamed. </li>
+  <li>The set of entries that exist in <code>from.jar</code>, but are modified 
+    in <code>to.jar</code>.</li>
+  <li>An index file, <code>META-INF/INDEX.JD</code>, that describes the contents 
+    of the <code>to.jar</code> file, and how it relates to the <code>from.jar</code> 
+    file. The <code>INDEX.JD</code> filename should be generated in upper case, 
+    but should be recognized in any case. This file is always required.</li>
+</ul>
+<p>Thus, a JARDiff file contains complete copies of each new or changed file. 
+  It does not provide a way to incrementally update individual files within a 
+  JAR file. </p>
+<h2>B.3 The Index File</h2>
+<p>The index file describes what entries from <code>from.jar</code> to include 
+  in the target file. The file contains commands of the form:</p>
+<table width="90%" border="1" align="center" cellpadding="5" cellspacing="0" bordercolor="#000000">
+  <tr align="center" valign="middle" bgcolor="#CCCCCC"> 
+    <td width="40%"><strong><font size="+2">Command</font></strong></td>
+    <td><strong><font size="+2">Meaning</font></strong></td>
+  </tr>
+  <tr> 
+    <td width="40%" align="left" valign="top"><code>version &lt;id&gt;<br>
+      <br>
+      </code></td>
+    <td align="left" valign="top">Version of the JARDiff protocol.</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">remove &lt;entry&gt;<br>
+    </td>
+    <td align="left" valign="top">Do not include the <code>&lt;entry&gt;</code> 
+      from <code>from.jar</code> in <code>to.jar</code>.</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">move &lt;from&gt; &lt;to&gt;<br>
+    </td>
+    <td align="left" valign="top">Include the entry <code>&lt;from&gt;</code> 
+      from <code>from.jar</code> in <code>to.jar</code> as <code>&lt;to&gt;</code>.</td>
+  </tr>
+</table>
+<p>The backslash (<code>\</code>) is used as an escape character. A backslash 
+  is represented as two slashes (<code>\\</code>), and a space as &quot;<code>\ 
+  </code>&quot;, i.e., a slash followed by a space. The backslash is used only 
+  as an escape character; it does not define any special characters. For example, 
+  \t represents the character t, and \i represents the character i. </p>
+<p>The index file must be UTF-8 encoded.</p>
+<p>The commands are used as follows:</p>
+<ul>
+  <li>The version command must always be the first entry in a index file. The 
+    current version is 1.0. </li>
+  <li>The remove command means that the given file from from.jar should not be 
+    included in the target file.</li>
+  <li>The move command means that the given file from from.jar should be included 
+    in the target file as the given name.</li>
+</ul>
+<p>For each entry in the <code>to.jar</code> file there can either be a <code>remove</code> 
+  command in the index file, one or more <code>move</code> commands, or no entry 
+  at all. A <code>move</code> and <code>remove</code> command for the same file 
+  is invalid.</p>
+<p>A file that does not appear in any <code>move</code> or <code>remove</code> 
+  command, and which does not appear in the JARDiff file, is copied from <code>from.jar</code> 
+  to <code>to.jar</code> as-is. Also, a file that does not appear in any <code>move</code> 
+  or <code>remove</code> command, which does appear in the JARDiff file, is copied 
+  from the JARDiff file to <code>to.jar</code> as-is. These two rules reduce the 
+  size of the index file.</p>
+<h2>B.4 Applying a JARDiff </h2>
+<p>The following pseudo-code shows how to apply a JARDiff:</p>
+<blockquote>
+  <p><code>Let old-names = List of entries in old.jar</code></p>
+  <p><code>// Add new and/or updated entries. This also takes<br>
+    // care of implicit removes<br>
+    for each x in JARDiff file except META-INF/INDEX.JD<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; add the contents of x from JARDIFF to target JAR 
+    as x<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; remove x from old-names<br>
+    end<br>
+    // Iterate through index file<br>
+    for each cmd in META-INF/INDEX.JD do<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; if cmd is 'remove x' then<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; remove x from old-names<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; else if cmd is 'move x y' then<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add the content of x from 
+    old.jar to target JAR as y<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; remove x from old-names<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; end<br>
+    end<br>
+    // Do all implicit moves<br>
+    for each x in old-names<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; add the content of x from old.jar to target JAR as 
+    x<br>
+    end</code></p>
+</blockquote>
+<p>A JARDiff file that will cause the same filename to be added to the target 
+  file twice is invalid. Thus, the add command must fail if the same file is 
+  added twice, and an error should be signaled.</p>
+<h2>B.5 Signing and JARDiff files</h2>
+<p>JARDiff files themselves are not signed. Instead, they can contain the signing 
+  information for the target file, i.e., the manifest, signature instructions, 
+  and digital signature. Thus, the target JAR file is signed if it can be verified 
+  using the standard procedure for a signed JAR file. </p>
+<h2>B.6 Example</h2>
+<p>The following shows an example of a JARDiff file. </p>
+<p>Assume that the JAR file, app.jar, contains version 1.0 of an application:</p>
+<blockquote>
+  <p><code>com/mysite/app/Main.class<br>
+    com/mysite/app/Window1.class<br>
+    com/mysite/app/QuickHack.class<br>
+    com/mysite/app/stuff.properties</code></p>
+</blockquote>
+<p>Later on, version 1.1 of the application is released. The new <code>app.jar</code> 
+  contains the following entries:</p>
+<blockquote>
+  <p><code>com/mysite/app/Main.class<br>
+    com/mysite/app/Window1.class<br>
+    com/mysite/app/Window2.class<br>
+    com/mysite/app/app.properties</code></p>
+</blockquote>
+<p>An inspection of the differences between <code>app.jar</code> version 1.0 and 
+  version 1.1 yields the following differences:</p>
+<ul>
+  <li><code>Main.class</code> has been updated with support for a new application 
+    window.</li>
+  <li><code>stuff.properties</code> has been renamed to <code>app.properties</code>.</li>
+  <li><code>Window2.class</code> has been added in version 1.1.</li>
+  <li><code>QuickHack.class</code> does not exist in version 1.1</li>
+  <li><code>Window1.class</code> is unchanged.</li>
+</ul>
+<p>The difference between <code>app.jar</code> version 1.0 and 1.1 can be expressed 
+  by a JARDiff file containing the following entries (all from version 1.1):</p>
+<blockquote>
+  <p><code>META-INF/INDEX.JD<br>
+    com/mysite/app/Main.class<br>
+    com/mysite/app/Window2.class</code></p>
+</blockquote>
+<p>Thus, the JARDiff file contains all the new or modified files in version 1.1 
+  compared to 1.0. The <code>INDEX.JD</code> file will list the following requests:</p>
+<blockquote>
+  <p><code>version 1.0<br>
+    remove com/mysite/app/QuickHack.class<br>
+    move com/mysite/app/stuff.properties com/mysite/app/app.properties</code></p>
+</blockquote>
+<p></p>
+</body>
+</html>

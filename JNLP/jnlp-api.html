@@ -1,0 +1,425 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JNLP API</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<hr>
+<h1>7 JNLP API </h1>
+<hr>
+<br>
+A JNLP Client must provide a set of additional services to the launched application 
+through the javax.jnlp package. These services let an application interact with 
+the surrounding environment in a secure and platform-independent way. The JNLP 
+API is available to all applications whether or not a particular application is 
+trusted. <a href="d.html">Appendix D</a> contains a list of all methods and classes 
+with complete signatures. For a detailed description of the JNLP API, consult 
+the JNLP API Reference, v1.0. 
+<p>A service is structured as an object implementing a specific JNLP service interface. 
+  The following services are defined:</p>
+<ul>
+  <li><code>BasicService</code>, which provides a service similar to the <code>AppletContext</code>. 
+    This service must always be provided.</li>
+  <li><code>DownloadService</code>, which allows an application to interact with 
+    the JNLP Client to check if application resources are available locally, and 
+    to request them to be downloaded. This service must always be provided.</li>
+  <li><code>FileOpenService</code>, which allows applications running in the untrusted 
+    environment to import files from the local disk. This service is optional.</li>
+  <li><code>FileSaveService</code>, which allows applications running in the untrusted 
+    environment to export files to the local disk. This service is optional.</li>
+  <li><code>ClipboardService</code>, which allows applications running in the 
+    untrusted environment access to the clipboard. This service is optional.</li>
+  <li><code>PrintService</code>, which allows applications running in the untrusted 
+    environment access to printing. This service is optional.</li>
+  <li><code>PersistenceService</code>, which allows applications running in the 
+    untrusted environment access to store state locally on the client. This service 
+    is optional.</li>
+  <li><code>ExtensionInstallerService</code>, which provides an interface for 
+    extension installers to communicate with the JNLP Client. This service is 
+    required.</li>
+  <li><code>SingleInstanceService</code>, which provides a set of methods for 
+    applications to register themselves as singletons, and to register listener(s) 
+    for handling arguments passed in from different instances of the application. 
+    This service is optional.</li>
+  <li><code>ExtendedService</code>, which provide additional support to the existing 
+    APIs. This service is optional. </li>
+</ul>
+<p>A service object is found using the static <code>lookup</code> method on the 
+  <code>ServiceManager</code> class. This method will, given a <code>String</code> 
+  representing the service name, return an object implementing the given service. 
+  The <code>lookup</code> method must be idempotent, i.e., returning the same 
+  object for each request for the same service. If a service is not available, 
+  the <code>UnavailableServiceException</code> must be thrown. The <code>getServiceNames</code> 
+  methods returns the names of all supported services.</p>
+<p>The recommended name for a service is the fully qualified name of the interface, 
+  e.g., <code>javax.jnlp.BasicService</code>.</p>
+<h2><a name="basic"></a>7.1 The <code>BasicService</code> Service</h2>
+<p>The <code>javax.jnlp.BasicService</code> service provides a set of methods 
+  for querying and interacting with the environment similar to what the <code>AppletContext</code> 
+  provides for a Java Applet. </p>
+<p>The <code>getCodebase</code> method returns the codebase for the application. 
+  This will typically be the URL specified in the <code>codebase</code> attribute 
+  in the <code>jnlp</code> element. However, if the JNLP file does not specify 
+  this attribute, then the codebase is defined to be the URL of the JAR file containing 
+  the class with the <code>main</code> method. </p>
+<p>The <code>isOffline</code> method returns true if the application is running 
+  without access to the network. An application can use this method to adjust 
+  its behavior to work properly in an offline environment. The method provides 
+  a hint from the JNLP Client. The network might be unavailable, even though the 
+  JNLP Client indicated that it was, and vice-versa.</p>
+<p>The <code>showDocument</code> method displays the given URL in a Web browser. 
+  This may be the default browser on the platform, or it may be chosen by the 
+  JNLP Client some other way. This method returns false if the request failed, 
+  or the operation is not supported.</p>
+<p>Some platforms might not support a browser, or the JNLP Client might not be 
+  configured to use a browser. The <code>isWebBrowserSupported</code> method will 
+  return true if a Web browser is supported, otherwise false.</p>
+<h2><a name="download"></a>7.2 The <code>DownloadService</code> Service</h2>
+<p>The <code>javax.jnlp.DownloadService</code> service allows an application to 
+  control how its own resources are cached.</p>
+<p>The service allows an application to determine which of its resources are currently 
+  cached, to force resources to be cached, and to remove resources from the cache. 
+</p>
+<p>The following three query methods return true if a given resource, a given 
+  part, or a given part of a given extension is currently cached, respectively. 
+  In an untrusted environement, these methods must always return false for resources that are not from 
+the codebase of current application, and are not mentioned in the JNLP file(s) of the application.</p>
+<ul>
+  <li><code>isResourceCached</code></li>
+  <li><code>isPartCached</code></li>
+  <li><code>isExtensionPartCached</code></li>
+</ul>
+<p>The following three methods instruct the JNLP Client to download a given resource, 
+  a given part, or a given part of a given extension, respectively. The methods 
+  block until the download is completed or an error occurs. In an untrusted environment, these methods must 
+  always fail for resources that are not from the codebase of current 
+  application, and are not mentioned in the JNLP file(s) of the application.</p>
+<ul>
+  <li><code>loadResource</code></li>
+  <li><code>loadPart</code></li>
+  <li><code>loadExtensionPart</code></li>
+</ul>
+<p>The above methods take a <code>DownloadServiceListener</code> object as argument 
+  that can track the progress of the download. A default implementation of a listener 
+  can be obtained by the <code>getDefaultProgressWindow</code> method. </p>
+<p>The following three methods instruct the JNLP Client to remove a given resource, 
+  a given part, or a given part of a given extension from the cache, respectively. 
+  The remove request is a hint to the JNLP Client that the given resource is no 
+  longer needed. In an untrusted environment, these methods must do nothing if a resource is not from the
+  codebase of the current application, and is not mentioned in the JNLP 
+  file(s) of the application.</p>
+<ul>
+  <li><code>removeResource</code></li>
+  <li><code>removePart</code></li>
+  <li><code>removeExtensionPart</code></li>
+</ul>
+<h2><a name="file_open"></a>7.3 The <code>FileOpenService</code> Service</h2>
+<p>The <code>javax.jnlp.FileOpenService</code> service provides methods for importing 
+  files from the local disk, even for applications that are running in the untrusted 
+  execution environment.</p>
+<p>This interface is designed to provide the same level of disk access to potentially 
+  untrusted Web-deployed applications that a Web developer has when using HTML. 
+  HTML forms support the inclusion of files by displaying a file open dialog. 
+</p>
+<p>A file open dialog can be displayed to the user with the following two methods:</p>
+<ul>
+  <li><code>openFileDialog</code></li>
+  <li><code>openMultiFileDialog</code></li>
+</ul>
+<p>The methods allow selection of exactly one file or multiple files, respectively.</p>
+<p>The contents of a file are returned in a <code>FileContents</code> object. 
+  A <code>FileContents</code> encapsulates the name of the selected file and provides 
+  metered access to the contents. The contents can be accessed using input streams, 
+  output streams, or random access. The JNLP Client might enforce size limits 
+  on the amount of data that can be written. </p>
+<p>The <code>FileContents</code> only knows the name of the selected file excluding 
+  the path. Thus, the open dialog cannot be used to obtain information about the 
+  user's directory structure. </p>
+<p>The JNLP Client can render the open file dialog in any way it sees fit. In 
+  particular, it could show an additional security dialog or warning message to 
+  the user before showing the dialog.</p>
+<p>The methods will return <code>null</code> if the user chose to cancel the operation. 
+  An <code>IOException</code> will be thrown if the operation failed for some 
+  other reason than the user did not select a file.</p>
+<p>On JNLP Clients running on disk-less systems, or systems that do not wish to 
+  implement these features, the <code>ServiceManager</code> must throw an <code>UnavailableServiceException</code> 
+  when this service is looked up.</p>
+<h2><a name="file_save"></a>7.4 The <code>FileSaveService</code> Service</h2>
+<p>The <code>javax.jnlp.FileSaveService</code> service provides methods for exporting 
+  files to the local disk, even for applications that are running in the untrusted 
+  execution environment. </p>
+<p>This interface is designed to provide the same level of disk access to potentially 
+  untrusted Web-deployed Java applications, that a Web browser provides for contents 
+  that it is displaying. Most Web browsers provide a <strong>Save As...</strong> 
+  dialog as part of their user interface.</p>
+<p>A file save dialog can be displayed to the user by invoking the <code>saveFileDialog</code> 
+  or the <code>saveAsFileDialog</code> methods. </p>
+<p>The JNLP Client can render the save file dialog in any way it sees fit. In 
+  particular, it could show an additional security dialog or warning message to 
+  the user before an action is committed.</p>
+<p>The methods return a <code>FileContents</code> object representing the file 
+  that was saved, or return <code>null</code> if the user chose to cancel the 
+  operation. An <code>IOException</code> will be thrown if the operation failed 
+  for some other reason than the user decided not to save the file.</p>
+<p>On JNLP Clients running on disk-less systems, or systems that do not wish to 
+  implement this service, the <code>ServiceManager</code> must throw an <code>UnavailableServiceException</code> 
+  when this service is looked up.</p>
+<h2><a name="clipboard"></a>7.5 The <code>ClipboardService</code> Service</h2>
+<p>The <code>javax.jnlp.ClipboardService</code> service provides methods for accessing 
+  the shared, system-wide clipboard, even for applications that are running in 
+  the untrusted execution environment.</p>
+<p>A JNLP Client implementing this service should warn the user of the potential 
+  security risk of letting an untrusted application access potentially confidential 
+  information stored in the clipboard, or overwriting contents stored in the clipboard.</p>
+<p>The interface consists of two methods:</p>
+<ul>
+  <li><code>setContents</code></li>
+  <li><code>getContents</code></li>
+</ul>
+<p>The two methods are analogues to the methods on <code>java.awt.datatransfer.Clipboard</code>, 
+  except that the JNLP API does not support owner notification or retrieving the 
+  name of the contents.</p>
+<h2><a name="print"></a>7.6 The <code>PrintService</code> Service </h2>
+<p>The <code>javax.jnlp.PrintService</code> service provides methods for accessing 
+  to printing even for applications that are running in the untrusted execution 
+  environment. </p>
+<p>This service is designed to provide (somewhat) similar access to printing as 
+  an HTML-based application has through the browser. Using this service, an application 
+  can submit a print job to the JNLP Client. The JNLP Client can then show this 
+  request to the user, and if accepted queue the request to the printer.</p>
+<p>The service provides a <code>print</code> method that can either take a <code>Pageable</code> 
+  object or a <code>Printable</code> object. The method will return <code>true</code> 
+  if the printing succeeded, otherwise it will return <code>false</code>.</p>
+<p>The interface also provides a set of methods to get the current page format:</p>
+<ul>
+  <li><code>getDefaultPage</code></li>
+  <li><code>showPageFormatDialog</code></li>
+</ul>
+<h2><a name="persistence"></a>7.7 The <code>PersistenceService</code> Service</h2>
+<p>The <code>javax.jnlp.PersistenceService</code> service provides methods for 
+  storing data locally on the client system, even for applications that are running 
+  in the untrusted execution environment. </p>
+<p>The service is designed to be (somewhat) similar to that which the cookie mechanism 
+  provides to HTML-based applications. Cookies allow a small amount of data to 
+  be stored locally on the client system. That data can be securely managed by 
+  the browser and can only be retrieved by HTML pages which originate from the 
+  same URL as the page that stored the data.</p>
+<p>Each entry in the persistent data store is stored on the local system, indexed 
+  by a URL, i.e, using a URL as a key. This provides a similar hierarchical structure 
+  as a traditional file system. An application is only allowed to access data 
+  stored with a URL (i.e., key) that is based on its codebase. The URL must follow 
+  the directory structure of the codebase for a particular application. For example, 
+  given the codebase, <code>http://www.mysite.com/apps/App1/</code>, the application 
+  would be allowed to access data at the associated URLs:</p>
+<ul>
+  <li><code>http://www.mysite.com/apps/App1/</code></li>
+  <li><code>http://www.mysite.com/apps/</code></li>
+  <li><code>http://www.mysite.com/</code></li>
+</ul>
+<p>This scheme allows sharing of data between different applications from the 
+  same host. For example, if another application is located at <code>http://www.mysite.com/apps/App2/</code>, 
+  then they can share data between them in the <code>http://www.mysite.com/</code> 
+  and <code>http://www.mysite.com/apps/</code> directories. Any data that App1 
+  wants to keep private from <code>App2</code> can be stored at <code>http://www.mysite.com/apps/App1</code>.</p>
+<p>The following methods are used to create, access, and delete entries. These 
+  methods all take a URL as an argument. </p>
+<ul>
+  <li><code>create</code></li>
+  <li><code>get</code></li>
+  <li><code>delete</code></li>
+</ul>
+<p>The <code>get</code> method returns the contents of the entry as a <code>FileContents 
+  </code>object. The <code>FileContents</code> interface provides metered access 
+  to the underlying data, i.e., ensures that the application does not write more 
+  data to disk than it is allowed. The <code>create</code> method takes a long 
+  argument that specifies that maximum size of the given entry. If this maximum 
+  size limit is exceeded when performing a write operation, an <code>IOException</code> 
+  must be thrown. The application can use the <code>setMaxSize</code> method on 
+  a <code>FileContents</code> object to request additional space.</p>
+<p>A JNLP Client should keep track the amount of storage that a given application 
+  uses. The total amount of storage is the sum of the maximum sizes of all the 
+  entries that the application has access to. The default limit of the amount 
+  of total storage available to an application is JNLP Client specific, but should 
+  typically not be less than 128KB. </p>
+<p>The <code>delete</code> method removes an entry from the persistence cache.</p>
+<p>The <code>getNames</code> method returns the names of all entries in a given 
+  directory.</p>
+<p>Data stored using this mechanism is intended to be a local copy of data stored 
+  on a remote server. Using a local cache can improve performance, as well as 
+  make it possible to run applications offline. The individual entries can be 
+  tagged as being either </p>
+<ol>
+  <li><code>CACHED</code>, meaning that the server has an up-to-date copy;</li>
+  <li><code>DIRTY</code>, meaning that the server does not have an up-to-date 
+    copy; or </li>
+  <li><code>TEMPORARY</code>, meaning that this file can always be recreated. 
+  </li>
+</ol>
+<p>The following two methods support tags:</p>
+<ul>
+  <li><code>setTag</code></li>
+  <li><code>getTag</code></li>
+</ul>
+<p>The tag information can be used by a JNLP Client when cleaning out the persistent 
+  cache. Entries tagged as <code>TEMPORARY</code> should be removed first, followed 
+  by entries tagged as <code>CACHED</code>, and then entries tagged as <code>DIRTY</code>. 
+  The JNLP Client should always warn the user that unsaved data might be lost 
+  when removing an entry marked as <code>DIRTY</code>.</p>
+<h2><a name="extension"></a>7.8 The <code>ExtensionInstallerService</code> Service</h2>
+<p>The <code>javax.jnlp.ExtensionInstallerService</code> service provides methods 
+  for an extension installer to manipulate the progress screen during a download 
+  and install, as well as methods for informing the JNLP Client where to find 
+  the resources it installed. </p>
+<p>The <code>ExtensionInstallerService</code> is only available when the JNLP 
+  Client is running an extension installer. Otherwise, the <code>ServiceManager</code> 
+  should throw an <code>UnavailableServiceException</code> when this service is 
+  looked up. </p>
+<p>An extension installer is a Java Technology-based application that is responsible 
+  for installing platform-dependent code and settings for an extension.</p>
+<p>The extension installer provides three kinds of services to the installer:</p>
+<ul>
+  <li>The ability to manipulate a progress window provided by the JNLP Client. 
+    The calls can be ignored if the JNLP Client does not implement a progress 
+    window.</li>
+  <li>Query the JNLP Client about the preferred location for the installation 
+    and previous installations.</li>
+  <li>Update the JNLP Client with information about the native parts of an extension. 
+    This will either be a list of native libraries that need to be linked into 
+    an application that uses the extension, or if the extension installs a JRE, 
+    how the JRE is to be launched.</li>
+</ul>
+<p>The manipulation of the progress window is done using the following methods:</p>
+<ul>
+  <li><code>setStatus</code></li>
+  <li><code>setHeading</code></li>
+  <li><code>updateProgress</code></li>
+  <li><code>hideProgressBar</code></li>
+  <li><code>hideStatusWindow </code></li>
+</ul>
+<p>The inclusion of a progress window API should make it possible to write installers 
+  that look good on a wide variety of platforms. The JNLP Client will be responsible 
+  for the look and feel of the window. The progress window is assumed to already 
+  be showing when the extension installer is launched, e.g., it has just been 
+  used by the JNLP Client itself to show that the extension is being installed. 
+</p>
+<p>The <code>getInstallPath</code> provides a preferred location where the extension 
+  should be installed. A JNLP Client will typically create a directory under its 
+  own tree and return the location of that directory. The installer can then install 
+  all required files without creating a conflict with other installed extensions. 
+</p>
+<p>The <code>getExtensionVersion</code> and <code>getExtensionLocation</code> 
+  methods return the exact <code>version-id</code> and location of the extension 
+  that is being installed. This information would typically already be known by 
+  the installer, but is provided so that it is possible to write generic installers 
+  that work with multiple versions.</p>
+<p>The <code>setJREInfo</code> and s<code>etNativeLibraryInfo</code> methods are 
+  used to update the JNLP Client with information about the native code an installer 
+  might install. Only one of them can be called by a particular extension. The 
+  <code>setJREInfo</code> is used by an extension that installs a JRE. It must 
+  be called with the path to the executable that launches the JVM. The s<code>etNativeLibraryInfo</code> 
+  method is used to instruct the JNLP Client to include the given directory in 
+  the search path for native libraries when the <code>System.loadLibrary</code> 
+  method is used.</p>
+<p>The <code>installSucceeded</code> method must be called when the installer 
+  finished successfully. The <code>installFailed</code> method must be called 
+  if the installation failed. In case of a failed install, the installer is responsible 
+  for providing an error message to the user. After either of the methods are 
+  called, the installer should quit, and the JNLP Client should regain control 
+  and continue with its operation, e.g., continue launching the application that 
+  forced the extension to be downloaded and installed, or abort the launch if 
+  the the installation failed. An installer should not call <code>System.exit</code>.</p>
+<p>The following method can be used by an installer to figure out the location 
+  of already-installed JREs:</p>
+<blockquote>
+  <p><code>getInstalledJRE</code></p>
+</blockquote>
+<p>This allow an extension to potentially update a particular JRE by installing 
+  JAR files into, e.g., the <code>lib/ext</code> directory.</p>
+<p>The normal sequence of events for an extension installer is: </p>
+<p><strong>Step 1:</strong> Get the <code>ExtensionInstallerService</code> from 
+  the <code>ServiceManager</code>. The installer can then use the <code>getInstallPath</code> 
+  to find out the preferred installation directory.</p>
+<p><strong>Step 2:</strong> Update status, heading, and progress as the install 
+  progresses (<code>setStatus</code>, <code>setHeading</code>, <code>updateProgress</code>, 
+  and <code>hideProgressBar</code>). If the installer uses its own progress window, 
+  the JNLP Client supplied one can be disposed using the <code>hideStatusWindow</code> 
+  method.</p>
+<p><strong>Step 3:</strong> If successful, inform the JNLP Client about the installed 
+  contents, by invoking either <code>setJREInfo</code> or <code>setNativeLibraryInfo</code>, 
+  as appropriate for the installer.</p>
+<p><strong>Step 4:</strong> Inform the JNLP Client about the completion of the 
+  installer. If successful, invoke <code>installSucceeded</code>. If not successful 
+  invoke <code>installFailed</code>. This will cause the JNLP Client to regain 
+  control, and continue with the launch sequence. An installer that must reboot 
+  the client system indicates that in the call of <code>installSucceeded</code>.</p>
+<h2><a name="SingleInstanceService"></a>7.9 The <code>SingleInstanceService</code> 
+  Service </h2>
+<p>The <code>javax.jnlp.SingleInstanceService</code> provides a set of methods 
+  for applications to register themselves as singletons, and to register listener(s) 
+  for handling arguments passed in from different instances of the application. 
+  The application can register and unregister itself with the following two methods: 
+</p>
+<ul>
+  <li><code>addSingleInstanceListener(javax.jnlp.SingleInstanceListener listener)</code></li>
+  <li><code>removeSingleInstanceListener(javax.jnlp.SingleInstanceListener listener) 
+    </code></li>
+</ul>
+<p>The <code>addSingleInstanceListener</code> method adds the specified <code>SingleInstanceListener</code> 
+  to handle how the application should behave when another instance of the same 
+  application is invoked. If the <code>SingleInstanceListener</code> is null, 
+  no exception is thrown and no action is performed. Multiple listeners can be 
+  added for the application. If the same listener is added twice, no action is 
+  performed. </p>
+<p>The <code>removeSingleInstanceListener</code> method removes the specified 
+  <code>SingleInstanceListener</code>. This method performs no function, nor does 
+  it throw an exception, if the listener specified by the argument was not previously 
+  added to the application. If listener is null, no exception is thrown and no 
+  action is performed. It is recommended that if an application registers a <code>SingleInstanceListener</code>, 
+  it should call this method to remove the listener upon exit. </p>
+<p>The <code>javax.jnlp.SingleInstanceListener</code> is the interface for the 
+  <code>SingleInstanceListener</code>. The application requesting <code>SingleInstanceService</code> 
+  should implement this interface, providing an implementation of the following 
+  method: </p>
+<blockquote>
+  <p><code>newActivation(String[] params) </code></p>
+</blockquote>
+<p>Arguments from the instances of the application will be passed into the <code>newActivation</code> 
+  method, and an application developer can decide on how to handle the arguments 
+  passed by implementating this method.</p>
+<h2><a name="ExtendedService"></a>7.10 The <code>ExtendedService</code> Service 
+</h2>
+<p>The <code>javax.jnlp.ExtendedService</code> provides additional support to 
+  the current JNLP API. It allows applications to open specific file(s) in the 
+  client's file system.</p>
+<p>The application can request access to specific file(s) using the following 
+  two methods: </p>
+<ul>
+  <li><code>openFile(File file) </code></li>
+  <li><code>openFiles(File[] files)</code> </li>
+</ul>
+<p>A dialog should be presented to the user asking for permissions to access the 
+  specific file(s). The JNLP client can render the dialog in any way it sees fit. 
+</p>
+<p>The contents of the file(s) are returned in a <code>FileContents</code> object. 
+  A <code>FileContents</code> encapsulates the name of the selected file and provides 
+  metered access to the contents. The contents can be accessed using input streams, 
+  output streams, or random access. The JNLP client might enforce size limits 
+  on the amount of data that can be written. </p>
+<p>The methods will return <code>null</code> if the user chooses to cancel the 
+  operation or passes in <code>null</code> as an argument. An <code>IOException</code> 
+  will be thrown if the operation fails.</p>
+<hr>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><br>
+  <br>
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

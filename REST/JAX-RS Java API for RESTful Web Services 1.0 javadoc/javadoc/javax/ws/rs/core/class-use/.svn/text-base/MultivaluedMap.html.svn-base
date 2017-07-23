@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<TITLE>
+Uses of Interface javax.ws.rs.core.MultivaluedMap (JSR 311 API Draft)
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="Uses of Interface javax.ws.rs.core.MultivaluedMap (JSR 311 API Draft)";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?javax/ws/rs/core//class-useMultivaluedMap.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="MultivaluedMap.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<CENTER>
+<H2>
+<B>Uses of Interface<br>javax.ws.rs.core.MultivaluedMap</B></H2>
+</CENTER>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Packages that use <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#javax.ws.rs.core"><B>javax.ws.rs.core</B></A></TD>
+<TD>Low-level interfaces and annotations used to create RESTful service
+    resources.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#javax.ws.rs.ext"><B>javax.ws.rs.ext</B></A></TD>
+<TD>APIs that provide extensions to the types supported by the JAX-RS API.&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="javax.ws.rs.core"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A> in <A HREF="../../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A> that return <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;</CODE></FONT></TD>
+<TD><CODE><B>PathSegment.</B><B><A HREF="../../../../../javax/ws/rs/core/PathSegment.html#getMatrixParameters()">getMatrixParameters</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a map of the matrix parameters associated with the path segment</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;</CODE></FONT></TD>
+<TD><CODE><B>UriInfo.</B><B><A HREF="../../../../../javax/ws/rs/core/UriInfo.html#getQueryParameters()">getQueryParameters</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the URI query parameters of the current request.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;</CODE></FONT></TD>
+<TD><CODE><B>UriInfo.</B><B><A HREF="../../../../../javax/ws/rs/core/UriInfo.html#getQueryParameters(boolean)">getQueryParameters</A></B>(boolean&nbsp;decode)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the URI query parameters of the current request.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;</CODE></FONT></TD>
+<TD><CODE><B>HttpHeaders.</B><B><A HREF="../../../../../javax/ws/rs/core/HttpHeaders.html#getRequestHeaders()">getRequestHeaders</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the values of HTTP request headers.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;</CODE></FONT></TD>
+<TD><CODE><B>UriInfo.</B><B><A HREF="../../../../../javax/ws/rs/core/UriInfo.html#getTemplateParameters()">getTemplateParameters</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the values of any embedded URI template parameters.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;</CODE></FONT></TD>
+<TD><CODE><B>UriInfo.</B><B><A HREF="../../../../../javax/ws/rs/core/UriInfo.html#getTemplateParameters(boolean)">getTemplateParameters</A></B>(boolean&nbsp;decode)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the values of any embedded URI template parameters.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A> with parameters of type <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Response.</B><B><A HREF="../../../../../javax/ws/rs/core/Response.html#addMetadata(javax.ws.rs.core.MultivaluedMap)">addMetadata</A></B>(<A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.Object&gt;&nbsp;metadata)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write any metadata associated with the response to the supplied map.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="javax.ws.rs.ext"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A> in <A HREF="../../../../../javax/ws/rs/ext/package-summary.html">javax.ws.rs.ext</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../javax/ws/rs/ext/package-summary.html">javax.ws.rs.ext</A> with parameters of type <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../javax/ws/rs/ext/EntityProvider.html" title="type parameter in EntityProvider">T</A></CODE></FONT></TD>
+<TD><CODE><B>EntityProvider.</B><B><A HREF="../../../../../javax/ws/rs/ext/EntityProvider.html#readFrom(java.lang.Class, javax.ws.rs.core.MediaType, javax.ws.rs.core.MultivaluedMap, java.io.InputStream)">readFrom</A></B>(java.lang.Class&lt;<A HREF="../../../../../javax/ws/rs/ext/EntityProvider.html" title="type parameter in EntityProvider">T</A>&gt;&nbsp;type,
+         <A HREF="../../../../../javax/ws/rs/core/MediaType.html" title="class in javax.ws.rs.core">MediaType</A>&nbsp;mediaType,
+         <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.String&gt;&nbsp;httpHeaders,
+         java.io.InputStream&nbsp;entityStream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read a type from the <CODE>InputStream</CODE>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>EntityProvider.</B><B><A HREF="../../../../../javax/ws/rs/ext/EntityProvider.html#writeTo(T, javax.ws.rs.core.MediaType, javax.ws.rs.core.MultivaluedMap, java.io.OutputStream)">writeTo</A></B>(<A HREF="../../../../../javax/ws/rs/ext/EntityProvider.html" title="type parameter in EntityProvider">T</A>&nbsp;t,
+        <A HREF="../../../../../javax/ws/rs/core/MediaType.html" title="class in javax.ws.rs.core">MediaType</A>&nbsp;mediaType,
+        <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core">MultivaluedMap</A>&lt;java.lang.String,java.lang.Object&gt;&nbsp;httpHeaders,
+        java.io.OutputStream&nbsp;entityStream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write a type to an HTTP response.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../javax/ws/rs/core/MultivaluedMap.html" title="interface in javax.ws.rs.core"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?javax/ws/rs/core//class-useMultivaluedMap.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="MultivaluedMap.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

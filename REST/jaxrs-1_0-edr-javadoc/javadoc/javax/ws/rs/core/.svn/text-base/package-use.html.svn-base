@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<TITLE>
+Uses of Package javax.ws.rs.core (JSR 311 API Draft)
+</TITLE>
+
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="Uses of Package javax.ws.rs.core (JSR 311 API Draft)";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/package-use.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-use.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<CENTER>
+<H2>
+<B>Uses of Package<br>javax.ws.rs.core</B></H2>
+</CENTER>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Packages that use <A HREF="../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#javax.ws.rs"><B>javax.ws.rs</B></A></TD>
+<TD>High-level interfaces and annotations used to create RESTful service 
+    resources.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#javax.ws.rs.core"><B>javax.ws.rs.core</B></A></TD>
+<TD>Low-level interfaces and annotations used to create RESTful service
+    resources.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#javax.ws.rs.ext"><B>javax.ws.rs.ext</B></A></TD>
+<TD>APIs that provide extensions to the types supported by the JAX-RS API.&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="javax.ws.rs"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A> used by <A HREF="../../../../javax/ws/rs/package-summary.html">javax.ws.rs</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/Response.html#javax.ws.rs"><B>Response</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defines the contract between a returned instance and the runtime when
+ an application needs to provide metadata to the runtime.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="javax.ws.rs.core"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A> used by <A HREF="../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/CacheControl.html#javax.ws.rs.core"><B>CacheControl</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstraction for the value of a HTTP Cache-Control response header.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/Cookie.html#javax.ws.rs.core"><B>Cookie</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a HTTP cookie.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/EntityTag.html#javax.ws.rs.core"><B>EntityTag</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstraction for the value of a HTTP Entity Tag, used as the value of an ETag response header.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/MediaType.html#javax.ws.rs.core"><B>MediaType</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstraction for a media type.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/MultivaluedMap.html#javax.ws.rs.core"><B>MultivaluedMap</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A map of key-values pairs.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/NewCookie.html#javax.ws.rs.core"><B>NewCookie</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a new cookie that will be sent in a response.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/PathSegment.html#javax.ws.rs.core"><B>PathSegment</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a URI path segment and any associated matrix parameters.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/Response.html#javax.ws.rs.core"><B>Response</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Defines the contract between a returned instance and the runtime when
+ an application needs to provide metadata to the runtime.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/Response.Builder.html#javax.ws.rs.core"><B>Response.Builder</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A class used to build Response instances that contain metadata instead of or in addition
+ to an entity.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/UriBuilder.html#javax.ws.rs.core"><B>UriBuilder</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;URI template aware utility class for building URIs from their components.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/UriBuilderException.html#javax.ws.rs.core"><B>UriBuilderException</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A runtime exception thrown by <A HREF="../../../../javax/ws/rs/core/UriBuilder.html#build()"><CODE>UriBuilder.build()</CODE></A> methods when a <CODE>URI</CODE> cannot be constructed based on the current state of the
+ builder.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="javax.ws.rs.ext"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../javax/ws/rs/core/package-summary.html">javax.ws.rs.core</A> used by <A HREF="../../../../javax/ws/rs/ext/package-summary.html">javax.ws.rs.ext</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/MediaType.html#javax.ws.rs.ext"><B>MediaType</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstraction for a media type.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../javax/ws/rs/core/class-use/MultivaluedMap.html#javax.ws.rs.ext"><B>MultivaluedMap</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A map of key-values pairs.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../index-files/index-1.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../index.html?javax/ws/rs/core/package-use.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-use.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

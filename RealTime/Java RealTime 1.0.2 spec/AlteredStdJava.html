@@ -1,0 +1,64 @@
+<html>
+	<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+
+	<body>
+		<h1>Standard Java Classes</h1>
+		<p>In several cases the semantics of the RTSJ influence the semantics of classes from the standard Java class libraries. Specifically:</p>
+		<ul>
+			<li>The set and get methods for priority in<code> java.lang.Thread</code> for real-time threads.
+			<li>The <code>ThreadGroup</code> class' behavior with respect to real-time threads.
+			<li>The behavior of the <code>ThreadGroup</code>-related methods in <code>Thread</code> when they are applied to real-time threads.
+		</ul>
+		<h2>Priority</h2>
+		<p>The methods <code>setPriority</code> and <code>getPriority</code> in <code>java.lang.Threa</code>d are <code>final</code>. The real-time thread classes are consequently not able to override them and modify their behavior to suit the requirements of the RTSJ scheduler. To bring the <code>java.lang.Thread</code> class in line with its real-time sub-classes, the semantics of the <code>getPriority</code> and <code>setPriority</code> methods are modified as follows:</p>
+		<ul>
+			<li><code>Thread.setPriority():</code>
+		</ul>
+		<ol>
+			<ol>
+				<li type="a">Use of<code> Thread.setPriority()</code>must not affect the correctness of the priority inversion avoidance algorithms controlled by <a href="javax/realtime/PriorityCeilingEmulation.html"><code>PriorityCeilingEmulation</code></a> and <a href="javax/realtime/PriorityInheritance.html"><code>PriorityInheritance</code></a>. Changes to the base priority of a real-time thread as a result of invoking <code>Thread.setPriority()</code>are governed by semantics from <a href="sync_overview-summary.html"><em>Synchronization</em></a>.
+				<li type="a">Real-time threads may use <code>setPriority</code> to access the expanded range of priorities available to real-time threads. If the real-time thread's priority parameters object is not shared, <code>setPriority</code> behaves effectively as if it included the code snippet:<br>
+					<code>PriorityParameters pp = getSchedulingParameters();<br>
+						pp.setPriority(newPriority);</code>
+				<li type="a">If the real-time thread's priority parameters object is shared with other schedulable objects, <code>setPriority</code> must give the thread an unshared <code>PriorityParameters</code> instance allocated in the same memory area as the real-time thread object and containing the new priority value.
+				<li type="a"><code>setPriority</code> throws <code>IllegalArgumentException</code> if the thread is a real-time thread and the new priority is outside the range allowed by the real-time thread's scheduler.
+				<li type="a"><code>setPriority</code> throws <code>ClassCastException</code> if the thread is a real-time thread and its scheduling parameters object is not an instance of <code>PriorityParameters</code>.
+			</ol>
+		</ol>
+		<ul>
+			<li><code>Thread.getPriority():</code>
+		</ul>
+		<ol>
+			<ol>
+				<li>When used on a real-time thread, <code>getPriority </code>behaves effectively as if it included the code snippet:<br>
+					((<code>PriorityParameters)t.getSchedulingParameters()).getPriority()</code>;
+				<li>If the scheduling parameters are not of type <code>PriorityParameters</code>, then a <code>ClassCastException</code> is thrown.
+			</ol>
+		</ol>
+		<p>All supported <a href="javax/realtime/MonitorControl.html">monitor control</a> policies must apply to Java threads as well as to all schedulable objects.</p>
+		<h2>Thread Groups</h2>
+		<p>Thread groups are rooted at a base <code>ThreadGroup</code> object which may be created in heap or immortal memory. All thread group objects hold references to all their member threads, and subgroups, and a reference to their parent group. Since heap and immortal memory can not hold references to scoped memory, it follows that a thread group can never be allocated in scoped memory. It then follows that no thread allocated in scoped memory may be referenced from any thread group, and consequently such threads are not part of any thread group and will hold a null thread group reference. Similarly, a <code>NoHeapRealtimeThread</code> can not be a member of a heap allocated thread group.</p>
+		<ol>
+			<li>Real-time threads with <code>null</code> thread groups are not included when thread groups are enumerated, interrupted, stopped, resumed, or suspended. However, when the current thread is a real-time thread with a null thread group:
+				<ol type="a">
+					<li>The <code>Thread.enumerate</code> class method returns the integer 1, and populates its array argument with the current real-time thread.
+					<li><code>Thread.activeCount </code>returns 1.
+					<li><code>Thread.getThreadGroup</code> returns null in all cases, not only when the thread has terminated.
+				</ol>
+			<li>A Java thread that is created from a real-time thread inherits the thread group of the real-time thread, if it has one; otherwise an attempt is made to add it to the application root thread group.  The constructor shall throw a <code>SecurityException</code> if the Java thread is not permitted to use the application root thread group.
+				
+			
+			<li>The thread group of a Java thread created by an async event handler is assigned as if it was created by a real-time thread without a thread group (as described in 2.)<li>A thread group cannot be created in scoped memory.  The constructor shall throw an <code>IllegalAssignmentError</code>.
+			<li>Limits on priority set in the thread group have no influence on real-time threads.
+			<li>Except as specified previously, real-time threads have the same <code>ThreadGroup</code> membership rules as the parent <code>Thread</code> class.
+		</ol>
+		<h2>InterruptedException</h2>
+		<p>The interruptible methods in the standard libraries (such as Object.wait, Thread.sleep, and Thread.join) have their contract expanded slightly such 
+		that they will respond to interruption not only when the interrupt method is invoked on the current thread, but also, for schedulable objects, when 
+		executing within a call to <code>AIE.doInterruptible</code> and that AIE is fired. See 
+		<a href="javax/asynchrony.html">Asynchrony</a>.</p>
+		<h2>System Properties</h2>
+		<p>System properties and their <code>String</code> values allocated during system initialization shall be allocated in immortal memory.</p>
+	</body>
+
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="75"
+   name=""
+   committed-date="2007-08-30T18:07:41.977251Z"
+   url="https://jsr311.dev.java.net/svn/jsr311/trunk/www/javadoc/resources"
+   last-author="mhadley"
+   kind="dir"
+   repos="https://jsr311.dev.java.net/svn/jsr311"
+   revision="78"/>
+<entry
+   committed-rev="75"
+   name="inherit.gif"
+   text-time="2007-09-07T19:29:37.000000Z"
+   committed-date="2007-08-30T18:07:41.977251Z"
+   checksum="220f4eda0bd49915699315f18b8b03cf"
+   last-author="mhadley"
+   kind="file"
+   prop-time="2007-08-30T18:07:16.000000Z"/>
+</wc-entries>

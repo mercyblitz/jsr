@@ -1,0 +1,216 @@
+<html xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>message
+          (jsf-ri-1.2MR1)
+        </title>
+<meta name="keywords" content="$title">
+<link rel="stylesheet" type="text/css" href="../stylesheet.css" title="Style">
+</head>
+<script>
+            function asd()
+            {
+            parent.document.title="message (jsf-ri-1.2MR1)";
+            }
+          </script>
+<body bgcolor="white" onload="asd();">
+<a name="navbar_top"></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td COLSPAN="3" BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><a NAME="navbar_top_firstrow"></a>
+<table BORDER="0" CELLPADDING="0" CELLSPACING="3">
+<tr ALIGN="center" VALIGN="top">
+<td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="../overview-summary.html"><font CLASS="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="tld-summary.html"><font CLASS="NavBarFont1"><b>Library</b></font></a>&nbsp;</td><td BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<font CLASS="NavBarFont1Rev">&nbsp;Tag&nbsp;</font>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a HREF="../help-doc.html"><font CLASS="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+</tr>
+</table>
+</td><td ALIGN="right" VALIGN="top" ROWSPAN="3"><em></em></td>
+</tr>
+<tr>
+<td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2"></font></td><td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2">
+                &nbsp;<a HREF="../index.html" TARGET="_top"><b>FRAMES</b></a>&nbsp;
+                &nbsp;<a href="message.html" target="_top"><b>NO FRAMES</b></a>&nbsp;
+                <script></script>
+<noscript>
+<a HREF="../alltags-noframe.html" TARGET=""><b>All Tags</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<hr>
+<h2>
+<font size="-1">h</font>
+<br>
+            Tag message</h2>
+<hr><p>Render a single message for a specific component.</p> <p>Set-up for Rendering</p> <ul> <p>Obtain the "summary" and "detail" properties from <code>UIMessage</code> component. If not present, keep the empty string as the value, respectively. Obtain the first <code>FacesMessage</code> to render from the component, using the "for" property of the <code>UIMessage</code>. This will be the only message we render. Obtain the severity style for this message. If the severity of the message is <code>FacesMessage.SEVERITY_INFO</code>, the severity style comes from the value of the "infoStyle" attribute. If the severity of the message is <code>FacesMessage.SEVERITY_WARN</code>, the severity style comes from the value of the "warnStyle" attribute, and so on for each of the severities, <code>INFO, WARN, ERROR</code> and <code>FATAL</code>. The same rules apply for obtaining the severity style class, but instead of "infoStyle, warnStyle", etc use "infoClass, warnClass", etc. Obtain the "style", "styleClass" and "layout" attributes from the <code>UIMessage</code> component. If we have a "style" attribute and a severity style attribute, use the severity style attribute as the value of the "style" attribute. If we have no "style" attribute, but do have a severity style, use the severity style as the value of the "style" attribute. The same precedence rules apply for the style class. Obtain the value of the <code>dir</code> and <code>lang</code> attributes.</p> </ul> <p>Rendering</p> <ul> <p>For the message renderer, we only render one row, for the first message. For the messages renderer, we render as many rows as we have messages. If any of the "dir", "lang", "style" or "styleClass" attributes has a non-null value (as determined above), render a "span" element, outputting the value of the "style" attribute as the the value of the "style" attribute, and outputting the value of the "styleClass" attribute as the value of the "class" attribute on the "span" element. Output the "dir" and "lang" attributes as well, if they are present. If the <code>UIMessage</code> has a "tooltip" attribute with the value of "true", and the <code>UIMessage</code> has "showSummary" and "showDetail" properties with the value "true", if we haven't already written out the "span", output the "summary" as the value of the "title" attribute on the "span". If we haven't already written out a "title" attribute, and "showSummary" is true, output the summary. If "showDetail" is true, output the detail. Close out the span if necessary.</p> </ul><br>
+<p></p>
+<hr>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="2"><font size="+2"><b>Tag Information</b></font></td>
+</tr>
+<tr>
+<td>Tag Class</td><td>com.sun.faces.taglib.html_basic.MessageTag</td>
+</tr>
+<tr>
+<td>TagExtraInfo Class</td><td>com.sun.faces.taglib.FacesTagExtraInfo</td>
+</tr>
+<tr>
+<td>Body Content</td><td>JSP</td>
+</tr>
+<tr>
+<td>Display Name</td><td><i>None</i></td>
+</tr>
+</table>
+<br>
+<p></p>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="5"><font size="+2"><b>Attributes</b></font></td>
+</tr>
+<tr>
+<td><b>Name</b></td><td><b>Required</b></td><td><b>Request-time</b></td><td><b>Type</b></td><td><b>Description</b></td>
+</tr>
+<tr valign="top">
+<td>for</td><td>true</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Client identifier of the component for which to display messages.</td>
+</tr>
+<tr valign="top">
+<td>id</td><td>false</td><td>true</td><td><code>java.lang.String</code></td><td>The component identifier for this component. This value must be unique within the closest parent component that is a naming container.</td>
+</tr>
+<tr valign="top">
+<td>rendered</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether or not this component should be rendered (during Render Response Phase), or processed on any subsequent form submit. The default value for this property is true.</td>
+</tr>
+<tr valign="top">
+<td>showDetail</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether the summary portion of displayed messages should be included. Default value is "true".</td>
+</tr>
+<tr valign="top">
+<td>showSummary</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether the summary portion of displayed messages should be included. Default value is "false".</td>
+</tr>
+<tr valign="top">
+<td>dir</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Direction indication for text that does not inherit directionality. Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+</tr>
+<tr valign="top">
+<td>errorClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "ERROR".</td>
+</tr>
+<tr valign="top">
+<td>errorStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "ERROR".</td>
+</tr>
+<tr valign="top">
+<td>fatalClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "FATAL".</td>
+</tr>
+<tr valign="top">
+<td>fatalStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "FATAL".</td>
+</tr>
+<tr valign="top">
+<td>infoClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "INFO".</td>
+</tr>
+<tr valign="top">
+<td>infoStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "INFO".</td>
+</tr>
+<tr valign="top">
+<td>lang</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Code describing the language used in the generated markup for this component.</td>
+</tr>
+<tr valign="top">
+<td>style</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to be applied when this component is rendered.</td>
+</tr>
+<tr valign="top">
+<td>styleClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Space-separated list of CSS style class(es) to be applied when this element is rendered. This value must be passed through as the "class" attribute on generated markup.</td>
+</tr>
+<tr valign="top">
+<td>title</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Advisory title information about markup elements generated for this component.</td>
+</tr>
+<tr valign="top">
+<td>tooltip</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether the detail portion of the message should be displayed as a tooltip.</td>
+</tr>
+<tr valign="top">
+<td>warnClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "WARN".</td>
+</tr>
+<tr valign="top">
+<td>warnStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "WARN".</td>
+</tr>
+<tr valign="top">
+<td>binding</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>javax.faces.component.UIComponent</code>)
+                    </td><td>The ValueExpression linking this component to a property in a backing bean</td>
+</tr>
+</table>
+<br>
+<p></p>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="5"><font size="+2"><b>Variables</b></font></td>
+</tr>
+<td colspan="2"><i>No Variables Defined.</i></td>
+</table>
+<br>
+<p></p>
+<a name="navbar_bottom"></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td COLSPAN="3" BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><a NAME="navbar_bottom_firstrow"></a>
+<table BORDER="0" CELLPADDING="0" CELLSPACING="3">
+<tr ALIGN="center" VALIGN="top">
+<td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="../overview-summary.html"><font CLASS="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="tld-summary.html"><font CLASS="NavBarFont1"><b>Library</b></font></a>&nbsp;</td><td BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<font CLASS="NavBarFont1Rev">&nbsp;Tag&nbsp;</font>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a HREF="../help-doc.html"><font CLASS="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+</tr>
+</table>
+</td><td ALIGN="right" VALIGN="top" ROWSPAN="3"><em></em></td>
+</tr>
+<tr>
+<td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2"></font></td><td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2">
+                &nbsp;<a HREF="../index.html" TARGET="_top"><b>FRAMES</b></a>&nbsp;
+                &nbsp;<a href="message.html" target="_top"><b>NO FRAMES</b></a>&nbsp;
+                <script></script>
+<noscript>
+<a HREF="../alltags-noframe.html" TARGET=""><b>All Tags</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<hr>
+<small><i>
+            Output Generated by 
+            <a href="http://taglibrarydoc.dev.java.net/" target="_blank">Tag Library Documentation Generator</a>.
+            Java, JSP, and JavaServer Pages are trademarks or 
+            registered trademarks of Sun Microsystems, Inc. in the US and other
+            countries.  Copyright 2002-4 Sun Microsystems, Inc.
+            4150 Network Circle
+            Santa Clara, CA 95054, U.S.A.
+            All Rights Reserved. 
+            </i></small>
+</body>
+</html>

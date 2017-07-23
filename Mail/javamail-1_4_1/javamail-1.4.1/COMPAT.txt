@@ -1,0 +1,95 @@
+			COMPATIBILITY NOTES
+			===================
+
+		    JavaMail(TM) API 1.4.1 release
+		    ------------------------------
+
+The JavaMail 1.4 specification is fully compatible with the JavaMail
+1.3 specification.  However, changes in the implementation may impact
+applications that depend on behavior beyond what is defined by the
+JavaMail specification, or that use features specific to the Sun
+implementation.  This note summarizes potential compatibility issues
+with this release of the JavaMail API.
+
+
+- mail.smtp.quitwait default changed
+
+	In previous releases, JavaMail would drop the SMTP connection
+	to the server immediately after sending the QUIT command.
+	This violates the SMTP spec.  The property "mail.stmp.quitwait"
+	controls this behavior.  In this release the default behavior
+	(if the property isn't specified) has changed so that JavaMail
+	will wait for the response from the server before dropping the
+	connection.  In some cases, with some servers, this additional
+	wait time may be noticable.
+
+
+- MessagingException.getMessage output changed
+
+	The MessagingException class, which is the base class for all
+	JavaMail exceptions, has been retrofitted to support the
+	exception chaining feature added to the java.lang.Throwable
+	class in J2SE 1.4.  The visible impact of this change is that
+	the String returned by the getMessage method will only return
+	the immediate message for the top level exception, instead of
+	including messages for all nested exceptions.
+
+
+- connection timeouts no longer use a thread
+
+	To support connection timeouts in older versions of the JDK,
+	it was necessary for JavaMail to create a thread to make the
+	connection, so that it could interrupt and abandon that
+	thread if the connection timeout expired.  J2SE 1.4 added
+	the ability to specify the connection timeout directly, so
+	JavaMail no longer uses an additional thread for this purpose.
+
+
+- ByteArrayDataSource now part of javax.mail.util
+
+	The ByteArrayDataSource class, which was previously included
+	in source form in the demo directory, is now a standard part
+	of the JavaMail API in the new javax.mail.util package.
+	Applications that are modified to make use of classes in the
+	new package, and that also included a copy of the demo version
+	of ByteArrayDataSource, should be careful to avoid potential
+	name conflicts between these two classes.
+
+
+- mail.SSLSocketFactory.class property no longer supported
+
+	The JavaMail implementation previously used this undocumented
+	property to locate the SSLSocketFactory from which it would
+	create SSLSockets when making an SSL or TLS connection.  This
+	property is no longer used.  The standard
+	javax.net.ssl.SSLSocketFactory is used instead, which supports
+	a standard way of overriding the choice of default SSLSocketFactory.
+	See the SSLSocketFactory javadocs for details.  Most applications
+	should never need to override the default SSLSocketFactory.
+
+
+- Quota class moved from com.sun.mail.imap to javax.mail
+
+	The new Quota APIs in JavaMail are taken directly from the old
+	IMAP-specific classes in the com.sun.mail.imap package.  If you've
+	been using these classes, you'll need to update your application
+	to use the new classes in the javax.mail package.
+
+
+- getProtocol method removed from com.sun.mail.imap.IMAPFolder
+
+	The getProtocol method returns an instance of IMAPProtocol.
+	This was originally intended to allow applications to
+	experiment with extending the IMAP protocol support to use IMAP
+	commands not directly implemented by the IMAP protocol
+	provider.  Unfortunately, to safely use the IMAPProtocol
+	object, you need to obey the locking requirements of the
+	IMAPFolder object, and there's no way to do that from outside
+	the IMAPFolder object.  The doCommand method was added to
+	IMAPFolder to resolve this problem.  Now, with the introduction
+	of IDLE support to the IMAP protocol provider, it's critical to
+	obey the locking requirements.  To prevent mistakes, the old,
+	unsafe, getProtocol method has been removed.  Applications
+	should use the doCommand method for simple IMAP extensions.
+	Use of more complex IMAP extensions may require modification
+	of the IMAP protocol provider.

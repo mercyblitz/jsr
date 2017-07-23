@@ -1,0 +1,19 @@
+-classpath '/Users/mh124079/Development/Java/jsr311-api/target/classes'
+ -encoding
+'ISO-8859-1'
+-protected
+-sourcepath
+'/Users/mh124079/Development/Java/jsr311-api/src'
+-author
+-bottom
+'Copyright &#169; 2008 <a href="http://www.sun.com/">Sun Microsystems, Inc</a>. All Rights Reserved.'
+-charset
+'ISO-8859-1'
+-d
+'/Users/mh124079/Development/Java/jsr311-api/target/docs/api'
+-doctitle
+'jsr311-api 0.10-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'jsr311-api 0.10-SNAPSHOT API'

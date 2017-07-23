@@ -1,0 +1,197 @@
+
+		JavaBeans Activation Framework 1.1
+		==================================
+
+Please send comments and feedback to activation-comments@sun.com.
+
+The JavaBeans Activation Framework (JAF) 1.0 has been in use for eight
+years.  In that time it has served its original purpose quite well,
+with only a few enhancements being requested.
+
+JAF 1.1 proposes a few minor changes to the JAF APIs to address the
+most commonly requested enhancements.  Following is a description of
+the new APIs that are being introduced in JAF 1.1.  The numbers in
+parentheses are bug numbers; you can find more information about the
+bug reports at:
+
+    http://bugs.sun.com
+
+The JAF 1.1 RI will require J2SE 1.4 or later.  (The JAF 1.0.2 RI
+requires only JDK 1.1.6.)  JAF 1.1 will be included in J2EE 5.0
+and J2SE 6.0.
+
+The JAF 1.1 RI and TCK will be available under the same terms as the
+JAF 1.0 RI and TCK.
+
+
+===================================================================
+
+1.  Need way to find all known MIME types (4134676)
+---------------------------------------------------
+
+To support this we add a new method to CommandMap:
+
+    /**
+     * Get all the MIME types known to this command map.
+     * If the command map doesn't support this operation,
+     * null is returned.
+     *
+     * @return		array of MIME types as strings, or null if not supported
+     * @since	JAF 1.1
+     */
+    public String[] getMimeTypes()
+
+The default implementation of this method returns null for
+compatibility with applications that have provided a CommandMap
+implementation based on JAF 1.0.  The JAF 1.1 implementation of
+MailcapCommandMap will return all the MIME types known to the
+command map.
+
+
+===================================================================
+
+2.  CommandMap needs file name to choose proper command on Windows (5090200)
+----------------------------------------------------------------------------
+
+This RFE requests additional CommandMap methods that allow
+the CommandMap implementation to determine the file name, to
+better support systems such as Windows that use the file name
+extension to choose between the commands available to support
+a given MIME type.  We add the following methods to CommandMap:
+
+    /**
+     * Get the preferred command list from a MIME Type. The actual semantics
+     * are determined by the implementation of the CommandMap. <p>
+     *
+     * The <code>DataSource</code> provides extra information, such as
+     * the file name, that a CommandMap implementation may use to further
+     * refine the list of commands that are returned.  The implementation
+     * in this class simply calls the <code>getPreferredCommands</code>
+     * method that ignores this argument.
+     *
+     * @param mimeType	the MIME type
+     * @param ds	a DataSource for the data
+     * @return the CommandInfo classes that represent the command Beans.
+     * @since	JAF 1.1
+     */
+    public CommandInfo[] getPreferredCommands(String mimeType, DataSource ds)
+
+    /**
+     * Get all the available commands for this type. This method
+     * should return all the possible commands for this MIME type. <p>
+     *
+     * The <code>DataSource</code> provides extra information, such as
+     * the file name, that a CommandMap implementation may use to further
+     * refine the list of commands that are returned.  The implementation
+     * in this class simply calls the <code>getAllCommands</code>
+     * method that ignores this argument.
+     *
+     * @param mimeType	the MIME type
+     * @param ds	a DataSource for the data
+     * @return the CommandInfo objects representing all the commands.
+     * @since	JAF 1.1
+     */
+    public CommandInfo[] getAllCommands(String mimeType, DataSource ds)
+
+    /**
+     * Get the default command corresponding to the MIME type. <p>
+     *
+     * The <code>DataSource</code> provides extra information, such as
+     * the file name, that a CommandMap implementation may use to further
+     * refine the command that is chosen.  The implementation
+     * in this class simply calls the <code>getCommand</code>
+     * method that ignores this argument.
+     *
+     * @param mimeType	the MIME type
+     * @param cmdName	the command name
+     * @param ds	a DataSource for the data
+     * @return the CommandInfo corresponding to the command.
+     * @since	JAF 1.1
+     */
+    public CommandInfo getCommand(String mimeType, String cmdName,
+				DataSource ds)
+
+    /**
+     * Locate a DataContentHandler that corresponds to the MIME type.
+     * The mechanism and semantics for determining this are determined
+     * by the implementation of the particular CommandMap. <p>
+     *
+     * The <code>DataSource</code> provides extra information, such as
+     * the file name, that a CommandMap implementation may use to further
+     * refine the choice of DataContentHandler.  The implementation
+     * in this class simply calls the <code>createDataContentHandler</code>
+     * method that ignores this argument.
+     *
+     * @param mimeType	the MIME type
+     * @param ds	a DataSource for the data
+     * @return		the DataContentHandler for the MIME type
+     * @since	JAF 1.1
+     */
+    public DataContentHandler createDataContentHandler(String mimeType,
+				DataSource ds)
+
+
+As described, the default implementations of these methods simply
+call the existing CommandMap methods that don't require a
+DataSource object.  The DataHandler implementation is changed to
+call these new methods if created with a DataSource.
+
+The JAF 1.1 Reference Implementation would not provide a CommandMap
+implementation that uses these new methods.
+
+
+===================================================================
+
+3.  MailcapCommandMap needs support for "fallback" entries (6252930)
+--------------------------------------------------------------------
+
+This RFE describes a problem with wildcard matching and providing
+fallbacks for JAF commands, in particular DataContentHandlers used
+by JavaMail.  To support the scenario described in that bug report,
+we add a special "command" entry that can be added to a mailcap
+entry to indicate that the mailcap entry defines fallback commands
+that should only be used if no regular entry is available.  An
+attribute of the form
+
+	x-java-fallback-entry=true
+
+in the mailcap entry indicates a fallback entry.  For example:
+
+	text/*;; x-java-fallback-entry=true; x-java-view=com.sun.TextViewer
+
+The MailcapCommandMap implementation supports this attribute.
+Methods that return an array of commands will include commands
+from fallback entries after commands from regular entries.
+Methods that use or return only a single command will search
+fallback entries after regular entries.  This two level hierarchy,
+in combination with the existing search rules for mailcap files,
+is sufficient to handle the common use cases.
+
+
+===================================================================
+
+4.  MailcapCommandMap should store *ALL* mailcap entries (4848096)
+------------------------------------------------------------------
+
+This RFE requests the ability to retrieve the native command
+line associated with a mailcap entry.  To support this we add
+a method to MailcapCommandMap:
+
+    /**
+     * Get the native commands for the given MIME type.
+     * Returns an array of strings where each string is
+     * an entire mailcap file entry.  The application
+     * will need to parse the entry to extract the actual
+     * command as well as any attributes it needs. See
+     * <A HREF="http://www.ietf.org/rfc/rfc1524.txt">RFC 1524</A>
+     * for details of the mailcap entry syntax.  Only mailcap
+     * entries that specify a view command for the specified
+     * MIME type are returned.
+     *
+     * @return	array of native command entries
+     * @since	JAF 1.1
+     */
+    public String[] getNativeCommands(String mimeType)
+
+An application can choose to use these native "view" commands
+using (e.g.) the Runtime.exec method.

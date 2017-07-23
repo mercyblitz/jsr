@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Version IDs and Version Strings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+</head>
+
+<body>
+<hr>
+<h1>A Version IDs and Version Strings </h1>
+<hr>
+<p>This section is simply a formal encoding of common conventions for dot-notations. 
+  The formal syntax is to ensure predictable behavior of the download protocols. 
+</p>
+<p>This section describes the formal syntax of the version-ids and version strings 
+  used in this specification. A version-id is an exact version that is associated 
+  with a resource, such as a JAR file. A version string is a key that can match 
+  one or more version-ids. </p>
+<p>The version-id used in this specification must conform to the following syntax:</p>
+<blockquote> 
+  <p><code>version-id ::= string ( separator string ) *<br>
+    string &nbsp;&nbsp;&nbsp;&nbsp;::= char ( char ) *<br>
+    char &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::= any ASCII character except a 
+    space, an ampersand, a <SPAN LANG="en-US">separator</SPAN>, or a modifier. 
+    <br>
+    separator &nbsp;::= &quot;.&quot; | &quot;-&quot; | &quot;_&quot; </code></p>
+</blockquote>
+<p>A version string is a list of version-ids separated with spaces. Each version-id 
+  can be postfixed with a '+' to indicate a greater-than-or-equal match, a &quot;*&quot; 
+  to indicated a prefix match, or have no postfix to indicate an exact match. 
+  The syntax of version-strings is:</p>
+<blockquote> 
+  <p><code>version-string&nbsp;&nbsp;&nbsp;&nbsp; ::=&nbsp; version-range ( &quot; 
+    &quot; element) * <BR>
+    version-range&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;::=&nbsp; simple-range ( &quot;&amp;&quot; 
+    simple-element) * <BR>
+    simple-range&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;::=&nbsp; version-id | version-id 
+    modifier <BR>
+    modifier&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::=&nbsp; 
+    `+` | '*' </code></p>
+</blockquote>
+<p>A version-id can be described as a tuple of values. A version-id string is 
+  broken in parts for each separator ('.', '-', or '_'). For example, &quot;1.3.0-rc2-w&quot; 
+  becomes (1,3,0,rc2,w), and &quot;1.2.2-001&quot; becomes (1,2,2,001).</p>
+<p>Each element in a tuple is treated as either a numeric or alphanumeric. Two 
+  elements are compared numerically if they can both be parsed as Java <code>ints</code>, 
+  otherwise they are compared lexicographically according to the ASCII value<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#15','','scrollbars=yes,resizable=yes,width=500,height=700')">15</a></SUP> 
+  of the individual characters. </p>
+<p>Before two version-ids are compared the two tuples are <em>normalized</em>. 
+  This means that the shortest tuple is padded with 0 (zero element) entries at 
+  the end. Two normalized tuples are always of the same length. For example, comparing 
+  (1, 3) and (1, 3, 1), will result in comparing (1, 3, 0) and (1, 3, 1). </p>
+<h2>A.1 Ordering</h2>
+<p>The version-ids are ordered by the natural ordering of dot-notations. </p>
+<p>A normalized version-id tuple can be written as (<em>Head Tail</em>), where 
+  <em>Head</em> is the first element in the tuple, and <em>Tail</em> is the rest<SUP><a href="javascript:;" onClick="MM_openBrWindow('notes.html#16','','scrollbars=yes,resizable=yes,width=500,height=700')">16</a></SUP>. 
+</p>
+<p>Given two version-ids, (HA TA) and (HB TB), then (HA TA) is greater than (HB 
+  TB) if and only if:</p>
+<ul>
+  <li>HA is greater than HB, or</li>
+  <li>HA is equal to HB, TA and TB are not empty, and TA is greater than TB recursively</li>
+</ul>
+<p>In other words, A is greater than B if, when represented as normalized tuples, 
+  there exists some element of A which is greater than the corresponding element 
+  of B, and all earlier elements of A are the same as in B.</p>
+<p>For example, &quot;1.2.2&quot; is greater than &quot;1.2&quot;, and less than 
+  &quot;1.3&quot; (i.e., in effect, comparing &quot;1.2.2&quot;, &quot;1.2.0&quot;, 
+  and &quot;1.3.0&quot;)</p>
+<h2>A.2 Exact Match</h2>
+<p>Two normalized version-ids, (HA TA) and (HB TB), match exactly if and only 
+  if:</p>
+<ul>
+  <li>HA is equal to HB and </li>
+  <li>TA and TB are both empty, or TA matches TB exactly.</li>
+</ul>
+<p>In other words, A is an exact match of B if, when represented as normalized 
+  tuples, the elements of A are the same as the elements of B.</p>
+<p>For example, given the above definition &quot;1.2.2-004&quot; will be an exact 
+  match for &quot;1.2.2.4&quot;, and &quot;1.3&quot; is an exact match of &quot;1.3.0&quot;.</p>
+<h2>A.3 Prefix Match</h2>
+<p>Given two version-ids, (HA TA) and (HB TB), then first (HB TB) is padded with 
+  0 (zero element) entries at the end so it is at least the same length as the 
+  (HA TA) tuple. </p>
+<p>(HA TA) is a prefix match of (HB TB) if and only if:</p>
+<ul>
+  <li>HA is equal to HB, and
+    <ul>
+      <li>TA is empty, or</li>
+      <li>TA is a prefix match of TB</li>
+    </ul>
+  </li>
+</ul>
+<p>In other words, A is a prefix match of B if, when represented as tuples, the 
+  elements of A are the same as the first elements of B. The padding ensures that 
+  B has at least as many elements as A.</p>
+<p>For example, given the above definition &quot;1.2.1&quot; will be a prefix 
+  match to &quot;1.2.1-004&quot;, but not to &quot;1.2.0&quot; or &quot;1.2.10&quot;. 
+  The padding step ensures that &quot;1.2.0.0&quot; is a prefix of &quot;1.2&quot;. 
+  Note that prefix matching and ordering are distinct: &quot;1.3&quot; is greater 
+  than &quot;1.2&quot;, and less than &quot;1.4&quot;, but not a prefix of either.</p>
+<h2>A.4 Version Selection </h2>
+<p> If two or more available resources match the given version-string, the JNLP 
+  Client should use the one matching the earlier version-range in the version-string. 
+  If two or more available resources match a given version-range, the JNLP Client 
+  should use the one with the<SPAN LANG="en-US"> highest </SPAN>version-id. </p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<html xmlns:javaee="http://java.sun.com/xml/ns/javaee" xmlns:fo="http://www.w3.org/1999/XSL/Format">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>messages
+          (jsf-ri-1.2MR1)
+        </title>
+<meta name="keywords" content="$title">
+<link rel="stylesheet" type="text/css" href="../stylesheet.css" title="Style">
+</head>
+<script>
+            function asd()
+            {
+            parent.document.title="messages (jsf-ri-1.2MR1)";
+            }
+          </script>
+<body bgcolor="white" onload="asd();">
+<a name="navbar_top"></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td COLSPAN="3" BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><a NAME="navbar_top_firstrow"></a>
+<table BORDER="0" CELLPADDING="0" CELLSPACING="3">
+<tr ALIGN="center" VALIGN="top">
+<td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="../overview-summary.html"><font CLASS="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="tld-summary.html"><font CLASS="NavBarFont1"><b>Library</b></font></a>&nbsp;</td><td BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<font CLASS="NavBarFont1Rev">&nbsp;Tag&nbsp;</font>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a HREF="../help-doc.html"><font CLASS="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+</tr>
+</table>
+</td><td ALIGN="right" VALIGN="top" ROWSPAN="3"><em></em></td>
+</tr>
+<tr>
+<td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2"></font></td><td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2">
+                &nbsp;<a HREF="../index.html" TARGET="_top"><b>FRAMES</b></a>&nbsp;
+                &nbsp;<a href="messages.html" target="_top"><b>NO FRAMES</b></a>&nbsp;
+                <script></script>
+<noscript>
+<a HREF="../alltags-noframe.html" TARGET=""><b>All Tags</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<hr>
+<h2>
+<font size="-1">h</font>
+<br>
+            Tag messages</h2>
+<hr><p>The same as for the Message renderer, but output all the messages. If the value of the "layout" attribute is "table", render nested "table", "tr", and "td" elements, in that order. If the value of the "layout" attribute is "list", or the "layout" attribute is not specified, render nested "ul", "li" elements, in that order. Output the value of the "style" attribute as the value of the "style" attribute, output the value of the "styleClass" attribute as the value of the "class" attribute, and output the dir and lang attributes. Output these values on the "table" element or the "ul" element. The component is a <code>UIMessages</code>, and there is no "for" attribute. Therefore, use either <code>null</code> to obtain the messages from the <code>FacesContext</code> or the empty string if the components "globalOnly" property is <code>true</code>. If the layout was "table" close out the table elements, otherwise, close out the list elements.</p><br>
+<p></p>
+<hr>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="2"><font size="+2"><b>Tag Information</b></font></td>
+</tr>
+<tr>
+<td>Tag Class</td><td>com.sun.faces.taglib.html_basic.MessagesTag</td>
+</tr>
+<tr>
+<td>TagExtraInfo Class</td><td>com.sun.faces.taglib.FacesTagExtraInfo</td>
+</tr>
+<tr>
+<td>Body Content</td><td>JSP</td>
+</tr>
+<tr>
+<td>Display Name</td><td><i>None</i></td>
+</tr>
+</table>
+<br>
+<p></p>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="5"><font size="+2"><b>Attributes</b></font></td>
+</tr>
+<tr>
+<td><b>Name</b></td><td><b>Required</b></td><td><b>Request-time</b></td><td><b>Type</b></td><td><b>Description</b></td>
+</tr>
+<tr valign="top">
+<td>globalOnly</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating that only global messages (that is, messages not associated with any client identifier) are to be displayed. Default value is "false".</td>
+</tr>
+<tr valign="top">
+<td>id</td><td>false</td><td>true</td><td><code>java.lang.String</code></td><td>The component identifier for this component. This value must be unique within the closest parent component that is a naming container.</td>
+</tr>
+<tr valign="top">
+<td>rendered</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether or not this component should be rendered (during Render Response Phase), or processed on any subsequent form submit. The default value for this property is true.</td>
+</tr>
+<tr valign="top">
+<td>showDetail</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether the summary portion of displayed messages should be included. Default value is "false".</td>
+</tr>
+<tr valign="top">
+<td>showSummary</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether the summary portion of displayed messages should be included. Default value is "true".</td>
+</tr>
+<tr valign="top">
+<td>dir</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Direction indication for text that does not inherit directionality. Valid values are "LTR" (left-to-right) and "RTL" (right-to-left).</td>
+</tr>
+<tr valign="top">
+<td>errorClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "ERROR".</td>
+</tr>
+<tr valign="top">
+<td>errorStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "ERROR".</td>
+</tr>
+<tr valign="top">
+<td>fatalClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "FATAL".</td>
+</tr>
+<tr valign="top">
+<td>fatalStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "FATAL".</td>
+</tr>
+<tr valign="top">
+<td>infoClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "INFO".</td>
+</tr>
+<tr valign="top">
+<td>infoStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "INFO".</td>
+</tr>
+<tr valign="top">
+<td>lang</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Code describing the language used in the generated markup for this component.</td>
+</tr>
+<tr valign="top">
+<td>layout</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>The type of layout markup to use when rendering error messages. Valid values are "table" (an HTML table) and "list" (an HTML list). If not specified, the default value is "list".</td>
+</tr>
+<tr valign="top">
+<td>style</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to be applied when this component is rendered.</td>
+</tr>
+<tr valign="top">
+<td>styleClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Space-separated list of CSS style class(es) to be applied when this element is rendered. This value must be passed through as the "class" attribute on generated markup.</td>
+</tr>
+<tr valign="top">
+<td>title</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>Advisory title information about markup elements generated for this component.</td>
+</tr>
+<tr valign="top">
+<td>tooltip</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>boolean</code>)
+                    </td><td>Flag indicating whether the detail portion of the message should be displayed as a tooltip.</td>
+</tr>
+<tr valign="top">
+<td>warnClass</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style class to apply to any message with a severity class of "WARN".</td>
+</tr>
+<tr valign="top">
+<td>warnStyle</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>java.lang.String</code>)
+                    </td><td>CSS style(s) to apply to any message with a severity class of "WARN".</td>
+</tr>
+<tr valign="top">
+<td>binding</td><td>false</td><td>false</td><td><code>javax.el.ValueExpression</code>
+<br>(<i>must evaluate to </i><code>javax.faces.component.UIComponent</code>)
+                    </td><td>The ValueExpression linking this component to a property in a backing bean</td>
+</tr>
+</table>
+<br>
+<p></p>
+<table border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr bgcolor="#CCCCFF" class="TableHeadingColor">
+<td colspan="5"><font size="+2"><b>Variables</b></font></td>
+</tr>
+<td colspan="2"><i>No Variables Defined.</i></td>
+</table>
+<br>
+<p></p>
+<a name="navbar_bottom"></a>
+<table border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td COLSPAN="3" BGCOLOR="#EEEEFF" CLASS="NavBarCell1"><a NAME="navbar_bottom_firstrow"></a>
+<table BORDER="0" CELLPADDING="0" CELLSPACING="3">
+<tr ALIGN="center" VALIGN="top">
+<td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="../overview-summary.html"><font CLASS="NavBarFont1"><b>Overview</b></font></a>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a href="tld-summary.html"><font CLASS="NavBarFont1"><b>Library</b></font></a>&nbsp;</td><td BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<font CLASS="NavBarFont1Rev">&nbsp;Tag&nbsp;</font>&nbsp;</td><td BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    &nbsp;<a HREF="../help-doc.html"><font CLASS="NavBarFont1"><b>Help</b></font></a>&nbsp;</td>
+</tr>
+</table>
+</td><td ALIGN="right" VALIGN="top" ROWSPAN="3"><em></em></td>
+</tr>
+<tr>
+<td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2"></font></td><td BGCOLOR="white" CLASS="NavBarCell2"><font SIZE="-2">
+                &nbsp;<a HREF="../index.html" TARGET="_top"><b>FRAMES</b></a>&nbsp;
+                &nbsp;<a href="messages.html" target="_top"><b>NO FRAMES</b></a>&nbsp;
+                <script></script>
+<noscript>
+<a HREF="../alltags-noframe.html" TARGET=""><b>All Tags</b></a>
+</noscript>
+</font></td>
+</tr>
+</table>
+<hr>
+<small><i>
+            Output Generated by 
+            <a href="http://taglibrarydoc.dev.java.net/" target="_blank">Tag Library Documentation Generator</a>.
+            Java, JSP, and JavaServer Pages are trademarks or 
+            registered trademarks of Sun Microsystems, Inc. in the US and other
+            countries.  Copyright 2002-4 Sun Microsystems, Inc.
+            4150 Network Circle
+            Santa Clara, CA 95054, U.S.A.
+            All Rights Reserved. 
+            </i></small>
+</body>
+</html>
