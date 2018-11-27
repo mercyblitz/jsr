@@ -1,9 +1,10 @@
-.css
-.js
-.html
-.htm
-.jsp
-.class
-.java
-.jar
+*.css
+*.js
+*.html
+*.htm
+*.jsp
+*.class
+*.java
+*.jar
+.DS_Store
 
